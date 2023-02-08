@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [How to Run](#how-to-run)
 - [Links](#links)
 - [Process](#process)
   - [Programming Languages](#programming-languages)
@@ -15,7 +16,15 @@ The MyFlix movie app will provide users with access to information about differe
 
 The server-side comprises a well-designed REST API and a MongoDB Database, whereas the client-side user interface is built using the React framework, completing the MERN-stack. It is still unter construction.
 
-At its current state, the app can be started by running `parcel [path to index.html]` in the terminal. This will return a localhost port that can be used to access the app in the browser.
+## How to Run in terminal
+
+1. Clone repository using command `git clone https://github.com/ElenaUJ/MyFlix-movie-app.git`
+
+2. Install dependencies using commands `npm install react@18.2.0 react-dom@18.2.0` and `npm install --save-dev parcel@2.8.3`
+
+3. Run the app using `parcel src/index.html`
+
+4. After this, app should be available in the browser at `http://localhost:1234`.
 
 ## Links
 
