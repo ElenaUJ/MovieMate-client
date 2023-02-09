@@ -22,8 +22,16 @@ function MainView() {
             ID: movie._id,
             Title: movie.Title,
             Description: movie.Description,
-            Genre: movie.Genre.Name,
-            Director: movie.Director.Name,
+            Genre: {
+              Name: movie.Genre.Name,
+              Description: movie.Genre.Description,
+            },
+            Director: {
+              Name: movie.Director.Name,
+              Bio: movie.Director.Bio,
+              Birth: movie.Director.Birth,
+              Death: movie.Director.Death,
+            },
             Image: movie.ImagePath,
             Featured: movie.Featured,
           };

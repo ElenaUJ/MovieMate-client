@@ -27174,8 +27174,16 @@ function MainView() {
                     ID: movie._id,
                     Title: movie.Title,
                     Description: movie.Description,
-                    Genre: movie.Genre.Name,
-                    Director: movie.Director.Name,
+                    Genre: {
+                        Name: movie.Genre.Name,
+                        Description: movie.Genre.Description
+                    },
+                    Director: {
+                        Name: movie.Director.Name,
+                        Bio: movie.Director.Bio,
+                        Birth: movie.Director.Birth,
+                        Death: movie.Director.Death
+                    },
                     Image: movie.ImagePath,
                     Featured: movie.Featured
                 };
@@ -27191,7 +27199,7 @@ function MainView() {
         }
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 39,
+        lineNumber: 47,
         columnNumber: 7
     }, this);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
