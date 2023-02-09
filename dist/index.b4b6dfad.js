@@ -27189,6 +27189,15 @@ function MainView() {
                 };
             });
             setMovies(moviesFromApi);
+        }).catch(function(error) {
+            console.error(error);
+            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: "Error: Movies could not be fetched."
+            }, void 0, false, {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 44,
+                columnNumber: 16
+            }, this);
         });
     // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
     }, []);
@@ -27199,14 +27208,14 @@ function MainView() {
         }
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 47,
+        lineNumber: 51,
         columnNumber: 7
     }, this);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 57,
+        lineNumber: 61,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27224,13 +27233,13 @@ function MainView() {
                 }
             }, movie.ID, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 70,
+                lineNumber: 74,
                 columnNumber: 11
             }, this);
         })
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 67,
+        lineNumber: 71,
         columnNumber: 5
     }, this));
 }

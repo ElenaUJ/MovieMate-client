@@ -38,6 +38,10 @@ function MainView() {
         });
 
         setMovies(moviesFromApi);
+      })
+      .catch(function (error) {
+        console.error(error);
+        return <div>Error: Movies could not be fetched.</div>;
       });
     // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
   }, []);
