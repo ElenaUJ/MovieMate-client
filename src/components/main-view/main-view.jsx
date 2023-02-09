@@ -5,7 +5,7 @@ import { MovieView } from '../movie-view/movie-view.jsx';
 
 // Function returns visual representation of component
 function MainView() {
-  // Empty arry is initial value of movies (state variable); usetMovies is a method to update movies variable setState() returns array of paired values that are desrtructured
+  // Empty array is initial value of movies (state variable); usetMovies is a method to update movies variable setState() returns array of paired values that are desrtructured
   const [movies, setMovies] = useState([]);
 
   // Default: no movie is selected
