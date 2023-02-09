@@ -27161,37 +27161,29 @@ var _s = $RefreshSig$();
 function MainView() {
     _s();
     // Empty arry is initial value of movies (state variable); usetMovies is a method to update movies variable seState() returns array of paired values that are desrtructured
-    const [movies, setMovies] = (0, _react.useState)([
-        {
-            _id: 1,
-            Title: "Ice Age",
-            Description: "Ice Age is a movie about a group of animals trying to return a human baby to its tribe during the ice age.",
-            Genre: "Animation",
-            Director: "Chris Wedge",
-            ImagePath: "https://m.media-amazon.com/images/M/MV5BOGEwMTQyMDktMWUwZC00MzExLTg1MGMtYWJiNWNhMzIyMGU5XkEyXkFqcGdeQXVyOTYyMTY2NzQ@._V1_.jpg",
-            Featured: false
-        },
-        {
-            _id: 2,
-            Title: "The Truman Show",
-            Description: "The Truman Show is a movie about a man who discovers his entire life is actually a reality TV show broadcast to the world and must decide whether to continue living in the fabricated world or leave it to discover the truth of his existence.",
-            Genre: "Drama",
-            Director: "Peter Weir",
-            ImagePath: "https://m.media-amazon.com/images/M/MV5BMDIzODcyY2EtMmY2MC00ZWVlLTgwMzAtMjQwOWUyNmJjNTYyXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg",
-            Featured: false
-        },
-        {
-            _id: 3,
-            Title: "Dead Poets Society",
-            Description: "Dead Poets Society is a movie about an English teacher at a conservative, all-boys school in the 1950s who inspires his students through his teachings of poetry and self-expression.",
-            Genre: "Drama",
-            Director: "Peter Weir",
-            ImagePath: "https://m.media-amazon.com/images/M/MV5BOGYwYWNjMzgtNGU4ZC00NWQ2LWEwZjUtMzE1Zjc3NjY3YTU1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
-            Featured: false
-        }
-    ]);
+    const [movies, setMovies] = (0, _react.useState)([]);
     // Default: no movie is selected
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    // Hook for async tasks, runs callback whenever dependencies change
+    (0, _react.useEffect)(function() {
+        fetch("https://myflix-movie-app-elenauj.onrender.com/movies").then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            const moviesFromApi = data.map(function(movie) {
+                return {
+                    ID: movie._id,
+                    Title: movie.Title,
+                    Description: movie.Description,
+                    Genre: movie.Genre.Name,
+                    Director: movie.Director.Name,
+                    Image: movie.ImagePath,
+                    Featured: movie.Featured
+                };
+            });
+            setMovies(moviesFromApi);
+        });
+    // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
+    }, []);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
         movie: selectedMovie,
         onBackClick: function() {
@@ -27199,14 +27191,14 @@ function MainView() {
         }
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 49,
+        lineNumber: 39,
         columnNumber: 7
     }, this);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 59,
+        lineNumber: 49,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27222,19 +27214,19 @@ function MainView() {
                 onMovieClick: function(newSelectedMovie) {
                     setSelectedMovie(newSelectedMovie);
                 }
-            }, movie._id, false, {
+            }, movie.ID, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 72,
+                lineNumber: 62,
                 columnNumber: 11
             }, this);
         })
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 69,
+        lineNumber: 59,
         columnNumber: 5
     }, this));
 }
-_s(MainView, "4hA/rI/iv1YWzjBN7dhYNHkIvdU=");
+_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27489,7 +27481,7 @@ function MovieView({ movie , onBackClick  }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                src: movie.ImagePath
+                src: movie.Image
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
                 lineNumber: 11,

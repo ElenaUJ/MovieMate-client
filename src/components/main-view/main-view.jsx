@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
 
@@ -9,6 +9,30 @@ function MainView() {
 
   // Default: no movie is selected
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  // Hook for async tasks, runs callback whenever dependencies change
+  useEffect(function () {
+    fetch('https://myflix-movie-app-elenauj.onrender.com/movies')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        const moviesFromApi = data.map(function (movie) {
+          return {
+            ID: movie._id,
+            Title: movie.Title,
+            Description: movie.Description,
+            Genre: movie.Genre.Name,
+            Director: movie.Director.Name,
+            Image: movie.ImagePath,
+            Featured: movie.Featured,
+          };
+        });
+
+        setMovies(moviesFromApi);
+      });
+    // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
+  }, []);
 
   if (selectedMovie) {
     return (
@@ -36,7 +60,7 @@ function MainView() {
       {movies.map(function (movie) {
         return (
           <MovieCard
-            key={movie._id}
+            key={movie.ID}
             movie={movie}
             onMovieClick={function (newSelectedMovie) {
               setSelectedMovie(newSelectedMovie);

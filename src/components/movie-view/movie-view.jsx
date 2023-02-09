@@ -8,7 +8,7 @@ function MovieView({ movie, onBackClick }) {
         Genre: {movie.Genre}
       </p>
       <p>Description: {movie.Description}</p>
-      <img src={movie.ImagePath} />
+      <img src={movie.Image} />
       <br />
       <button onClick={onBackClick}>Back</button>
     </div>
