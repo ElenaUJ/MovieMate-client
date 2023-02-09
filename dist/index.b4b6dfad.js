@@ -27203,10 +27203,10 @@ function MainView() {
         columnNumber: 7
     }, this);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: "The list is empty!"
+        children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 49,
+        lineNumber: 57,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27224,13 +27224,13 @@ function MainView() {
                 }
             }, movie.ID, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 62,
+                lineNumber: 70,
                 columnNumber: 11
             }, this);
         })
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 59,
+        lineNumber: 67,
         columnNumber: 5
     }, this));
 }
