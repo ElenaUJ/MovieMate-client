@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
 
 // Function returns visual representation of component
 function MainView() {
-  // Empty arry is initial value of movies (state variable); usetMovies is a method to update movies variable seState() returns array of paired values that are desrtructured
+  // Empty arry is initial value of movies (state variable); usetMovies is a method to update movies variable setState() returns array of paired values that are desrtructured
   const [movies, setMovies] = useState([]);
 
   // Default: no movie is selected
@@ -86,3 +87,29 @@ function MainView() {
 
 // Exposure of MainView component
 export { MainView };
+
+const moviePropTypes = PropTypes.shape({
+  ID: PropTypes.string.isRequired,
+  Title: PropTypes.string.isRequired,
+  Description: PropTypes.string.isRequired,
+  Genre: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+  }).isRequired,
+  Director: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+    Bio: PropTypes.string.isRequired,
+    Birth: PropTypes.string.isRequired,
+    Death: PropTypes.string,
+  }).isRequired,
+  Image: PropTypes.string.isRequired,
+  Featured: PropTypes.bool.isRequired,
+});
+
+// Question: anything missing? What about onMovieClick and onBackClick? Or am I overdoing it? Do I have to do this here at all, because it's also checked in the other components? I don't understand 100% how to identify props in the main view...
+// Other Question: I tried to export the moviePropTypes variable into the other components to use in there, but it didn't let me, I got this error: ReferenceError: Cannot access 'moviePropTypes' before initialization...is there a way to solve this easily?
+MainView.propTypes = {
+  movies: PropTypes.arrayOf(moviePropTypes).isRequired,
+  selectedMovie: moviePropTypes,
+  setSelectedMovie: PropTypes.func.isRequired,
+};
