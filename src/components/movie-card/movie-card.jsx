@@ -19,7 +19,7 @@ export { MovieCard };
 MovieCard.propTypes = {
   // shape({}) means it's an object
   movie: PropTypes.shape({
-    ID: PropTypes.string.isRequired,
+    Id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
@@ -35,5 +35,5 @@ MovieCard.propTypes = {
     Image: PropTypes.string.isRequired,
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
-  onBackClick: PropTypes.func.isRequired,
+  onMovieClick: PropTypes.func.isRequired,
 };

@@ -27172,7 +27172,7 @@ function MainView() {
         }).then(function(data) {
             const moviesFromApi = data.map(function(movie) {
                 return {
-                    ID: movie._id,
+                    Id: movie._id,
                     Title: movie.Title,
                     Description: movie.Description,
                     Genre: {
@@ -27202,21 +27202,68 @@ function MainView() {
         });
     // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
     }, []);
-    if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
-        movie: selectedMovie,
-        onBackClick: function() {
-            setSelectedMovie(null);
-        }
-    }, void 0, false, {
-        fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 52,
-        columnNumber: 7
-    }, this);
+    if (selectedMovie) {
+        const similarMovies = movies.filter(function(movie) {
+            return movie.Genre.Name === selectedMovie.Genre.Name;
+        })// Excluding selectedMovie from the list
+        .filter(function(movie) {
+            return movie.Title !== selectedMovie.Title;
+        });
+        return(// Question: Could I not have added the similar movies in the MovieView component? What if I want to display the list above the image?
+        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
+                    movie: selectedMovie,
+                    onBackClick: function() {
+                        setSelectedMovie(null);
+                    }
+                }, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 63,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 69,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: "Similar movies:"
+                }, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 70,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    children: similarMovies.map(function(movie) {
+                        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
+                            movie: movie,
+                            onMovieClick: function(newSelectedMovie) {
+                                setSelectedMovie(newSelectedMovie);
+                            }
+                        }, movie.Id, false, {
+                            fileName: "src/components/main-view/main-view.jsx",
+                            lineNumber: 74,
+                            columnNumber: 15
+                        }, this);
+                    })
+                }, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 71,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/main-view/main-view.jsx",
+            lineNumber: 62,
+            columnNumber: 7
+        }, this));
+    }
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 62,
+        lineNumber: 89,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27232,22 +27279,22 @@ function MainView() {
                 onMovieClick: function(newSelectedMovie) {
                     setSelectedMovie(newSelectedMovie);
                 }
-            }, movie.ID, false, {
+            }, movie.Id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 75,
+                lineNumber: 102,
                 columnNumber: 11
             }, this);
         })
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 72,
+        lineNumber: 99,
         columnNumber: 5
     }, this));
 }
 _s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 const moviePropTypes = (0, _propTypes.PropTypes).shape({
-    ID: (0, _propTypes.PropTypes).string.isRequired,
+    Id: (0, _propTypes.PropTypes).string.isRequired,
     Title: (0, _propTypes.PropTypes).string.isRequired,
     Description: (0, _propTypes.PropTypes).string.isRequired,
     Genre: (0, _propTypes.PropTypes).shape({
@@ -27263,12 +27310,12 @@ const moviePropTypes = (0, _propTypes.PropTypes).shape({
     Image: (0, _propTypes.PropTypes).string.isRequired,
     Featured: (0, _propTypes.PropTypes).bool.isRequired
 });
-// Question: anything missing? What about onMovieClick and onBackClick? Or am I overdoing it? Do I have to do this here at all, because it's also checked in the other components? I don't understand 100% how to identify props in the main view...
-// Other Question: I tried to export the moviePropTypes variable into the other components to use in there, but it didn't let me, I got this error: ReferenceError: Cannot access 'moviePropTypes' before initialization...is there a way to solve this easily?
+// Question: I don't understand how to identify props in the MainView component... Do I have to do this here at all? When I add .isRequired to the propTypes here, it comes up with an error message in the console, that the props are undefinded. Which makes me think that I might not need any propTypes here at all?
+// Other Question: I tried to export the moviePropTypes variable into the other components to use in there, but it didn't let me, I got this error: ReferenceError: Cannot access 'moviePropTypes' before initialization...is there an easy way to solve this?
 MainView.propTypes = {
-    movies: (0, _propTypes.PropTypes).arrayOf(moviePropTypes).isRequired,
+    movies: (0, _propTypes.PropTypes).arrayOf(moviePropTypes),
     selectedMovie: moviePropTypes,
-    setSelectedMovie: (0, _propTypes.PropTypes).func.isRequired
+    setSelectedMovie: (0, _propTypes.PropTypes).func
 };
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27278,63 +27325,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../movie-card/movie-card.jsx":"bwuIu","../movie-view/movie-view.jsx":"ggaUx","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw","prop-types":"7wKI2"}],"bwuIu":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$67b2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$67b2.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _propTypes = require("prop-types");
-// props argument is destructured/ movie is the name of the prop
-function MovieCard({ movie , onMovieClick  }) {
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        onClick: function() {
-            onMovieClick(movie);
-        },
-        children: movie.Title
-    }, void 0, false, {
-        fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 6,
-        columnNumber: 5
-    }, this);
-}
-_c = MovieCard;
-// Prop types contraints
-MovieCard.propTypes = {
-    // shape({}) means it's an object
-    movie: (0, _propTypes.PropTypes).shape({
-        ID: (0, _propTypes.PropTypes).string.isRequired,
-        Title: (0, _propTypes.PropTypes).string.isRequired,
-        Description: (0, _propTypes.PropTypes).string.isRequired,
-        Genre: (0, _propTypes.PropTypes).shape({
-            Name: (0, _propTypes.PropTypes).string.isRequired,
-            Description: (0, _propTypes.PropTypes).string.isRequired
-        }).isRequired,
-        Director: (0, _propTypes.PropTypes).shape({
-            Name: (0, _propTypes.PropTypes).string.isRequired,
-            Bio: (0, _propTypes.PropTypes).string.isRequired,
-            Birth: (0, _propTypes.PropTypes).string.isRequired,
-            Death: (0, _propTypes.PropTypes).string
-        }).isRequired,
-        Image: (0, _propTypes.PropTypes).string.isRequired,
-        Featured: (0, _propTypes.PropTypes).bool.isRequired
-    }).isRequired,
-    onBackClick: (0, _propTypes.PropTypes).func.isRequired
-};
-var _c;
-$RefreshReg$(_c, "MovieCard");
-
-  $parcel$ReactRefreshHelpers$67b2.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","prop-types":"7wKI2","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"7wKI2":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","../movie-card/movie-card.jsx":"bwuIu","../movie-view/movie-view.jsx":"ggaUx","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"7wKI2":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -28081,7 +28072,63 @@ printWarning = function(text) {
 };
 module.exports = checkPropTypes;
 
-},{"87b3caf8252cb0e9":"jZTZJ","b45b2ec47c022a2c":"fqKuf"}],"l558H":[function(require,module,exports) {
+},{"87b3caf8252cb0e9":"jZTZJ","b45b2ec47c022a2c":"fqKuf"}],"bwuIu":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$67b2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$67b2.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _propTypes = require("prop-types");
+// props argument is destructured/ movie is the name of the prop
+function MovieCard({ movie , onMovieClick  }) {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        onClick: function() {
+            onMovieClick(movie);
+        },
+        children: movie.Title
+    }, void 0, false, {
+        fileName: "src/components/movie-card/movie-card.jsx",
+        lineNumber: 6,
+        columnNumber: 5
+    }, this);
+}
+_c = MovieCard;
+// Prop types contraints
+MovieCard.propTypes = {
+    // shape({}) means it's an object
+    movie: (0, _propTypes.PropTypes).shape({
+        Id: (0, _propTypes.PropTypes).string.isRequired,
+        Title: (0, _propTypes.PropTypes).string.isRequired,
+        Description: (0, _propTypes.PropTypes).string.isRequired,
+        Genre: (0, _propTypes.PropTypes).shape({
+            Name: (0, _propTypes.PropTypes).string.isRequired,
+            Description: (0, _propTypes.PropTypes).string.isRequired
+        }).isRequired,
+        Director: (0, _propTypes.PropTypes).shape({
+            Name: (0, _propTypes.PropTypes).string.isRequired,
+            Bio: (0, _propTypes.PropTypes).string.isRequired,
+            Birth: (0, _propTypes.PropTypes).string.isRequired,
+            Death: (0, _propTypes.PropTypes).string
+        }).isRequired,
+        Image: (0, _propTypes.PropTypes).string.isRequired,
+        Featured: (0, _propTypes.PropTypes).bool.isRequired
+    }).isRequired,
+    onMovieClick: (0, _propTypes.PropTypes).func.isRequired
+};
+var _c;
+$RefreshReg$(_c, "MovieCard");
+
+  $parcel$ReactRefreshHelpers$67b2.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","prop-types":"7wKI2","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"l558H":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -28323,7 +28370,7 @@ function MovieView({ movie , onBackClick  }) {
 _c = MovieView;
 MovieView.propTypes = {
     movie: (0, _propTypes.PropTypes).shape({
-        ID: (0, _propTypes.PropTypes).string.isRequired,
+        Id: (0, _propTypes.PropTypes).string.isRequired,
         Title: (0, _propTypes.PropTypes).string.isRequired,
         Description: (0, _propTypes.PropTypes).string.isRequired,
         Genre: (0, _propTypes.PropTypes).shape({

@@ -20,7 +20,7 @@ function MainView() {
       .then(function (data) {
         const moviesFromApi = data.map(function (movie) {
           return {
-            ID: movie._id,
+            Id: movie._id,
             Title: movie.Title,
             Description: movie.Description,
             Genre: {
@@ -48,13 +48,40 @@ function MainView() {
   }, []);
 
   if (selectedMovie) {
+    const similarMovies = movies
+      .filter(function (movie) {
+        return movie.Genre.Name === selectedMovie.Genre.Name;
+      })
+      // Excluding selectedMovie from the list
+      .filter(function (movie) {
+        return movie.Title !== selectedMovie.Title;
+      });
+
     return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClick={function () {
-          setSelectedMovie(null);
-        }}
-      ></MovieView>
+      // Question: Could I not have added the similar movies in the MovieView component? What if I want to display the list above the image?
+      <div>
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={function () {
+            setSelectedMovie(null);
+          }}
+        ></MovieView>
+        <hr />
+        <p>Similar movies:</p>
+        <p>
+          {similarMovies.map(function (movie) {
+            return (
+              <MovieCard
+                key={movie.Id}
+                movie={movie}
+                onMovieClick={function (newSelectedMovie) {
+                  setSelectedMovie(newSelectedMovie);
+                }}
+              ></MovieCard>
+            );
+          })}
+        </p>
+      </div>
     );
   }
 
@@ -73,7 +100,7 @@ function MainView() {
       {movies.map(function (movie) {
         return (
           <MovieCard
-            key={movie.ID}
+            key={movie.Id}
             movie={movie}
             onMovieClick={function (newSelectedMovie) {
               setSelectedMovie(newSelectedMovie);
@@ -89,7 +116,7 @@ function MainView() {
 export { MainView };
 
 const moviePropTypes = PropTypes.shape({
-  ID: PropTypes.string.isRequired,
+  Id: PropTypes.string.isRequired,
   Title: PropTypes.string.isRequired,
   Description: PropTypes.string.isRequired,
   Genre: PropTypes.shape({
@@ -106,10 +133,10 @@ const moviePropTypes = PropTypes.shape({
   Featured: PropTypes.bool.isRequired,
 });
 
-// Question: anything missing? What about onMovieClick and onBackClick? Or am I overdoing it? Do I have to do this here at all, because it's also checked in the other components? I don't understand 100% how to identify props in the main view...
-// Other Question: I tried to export the moviePropTypes variable into the other components to use in there, but it didn't let me, I got this error: ReferenceError: Cannot access 'moviePropTypes' before initialization...is there a way to solve this easily?
+// Question: I don't understand how to identify props in the MainView component... Do I have to do this here at all? When I add .isRequired to the propTypes here, it comes up with an error message in the console, that the props are undefinded. Which makes me think that I might not need any propTypes here at all?
+// Other Question: I tried to export the moviePropTypes variable into the other components to use in there, but it didn't let me, I got this error: ReferenceError: Cannot access 'moviePropTypes' before initialization...is there an easy way to solve this?
 MainView.propTypes = {
-  movies: PropTypes.arrayOf(moviePropTypes).isRequired,
+  movies: PropTypes.arrayOf(moviePropTypes),
   selectedMovie: moviePropTypes,
-  setSelectedMovie: PropTypes.func.isRequired,
+  setSelectedMovie: PropTypes.func,
 };
