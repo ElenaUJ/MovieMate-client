@@ -21,7 +21,7 @@ export { MovieView };
 
 MovieView.propTypes = {
   movie: PropTypes.shape({
-    ID: PropTypes.string.isRequired,
+    Id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
