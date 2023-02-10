@@ -27161,7 +27161,7 @@ var _s = $RefreshSig$();
 // Function returns visual representation of component
 function MainView() {
     _s();
-    // Empty array is initial value of movies (state variable); usetMovies is a method to update movies variable setState() returns array of paired values that are desrtructured
+    // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
     const [movies, setMovies] = (0, _react.useState)([]);
     // Default: no movie is selected
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
