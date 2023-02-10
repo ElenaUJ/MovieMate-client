@@ -27209,6 +27209,20 @@ function MainView() {
         .filter(function(movie) {
             return movie.Title !== selectedMovie.Title;
         });
+        // Checking if there are similar movies at all
+        if (similarMovies.length === 0) printSimilarMovies = "No similar movies in database.";
+        else printSimilarMovies = similarMovies.map(function(movie) {
+            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
+                movie: movie,
+                onMovieClick: function(newSelectedMovie) {
+                    setSelectedMovie(newSelectedMovie);
+                }
+            }, movie.Id, false, {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 66,
+                columnNumber: 11
+            }, this);
+        });
         return(// Question: Could I not have added the similar movies in the MovieView component? What if I want to display the list above the image?
         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             children: [
@@ -27219,43 +27233,26 @@ function MainView() {
                     }
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 63,
+                    lineNumber: 80,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 69,
+                    lineNumber: 86,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                     children: "Similar movies:"
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 70,
+                    lineNumber: 87,
                     columnNumber: 9
                 }, this),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                    children: similarMovies.map(function(movie) {
-                        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
-                            movie: movie,
-                            onMovieClick: function(newSelectedMovie) {
-                                setSelectedMovie(newSelectedMovie);
-                            }
-                        }, movie.Id, false, {
-                            fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 74,
-                            columnNumber: 15
-                        }, this);
-                    })
-                }, void 0, false, {
-                    fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 71,
-                    columnNumber: 9
-                }, this)
+                printSimilarMovies
             ]
         }, void 0, true, {
             fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 62,
+            lineNumber: 79,
             columnNumber: 7
         }, this));
     }
@@ -27263,7 +27260,7 @@ function MainView() {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 89,
+        lineNumber: 94,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27281,13 +27278,13 @@ function MainView() {
                 }
             }, movie.Id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 102,
+                lineNumber: 107,
                 columnNumber: 11
             }, this);
         })
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 99,
+        lineNumber: 104,
         columnNumber: 5
     }, this));
 }

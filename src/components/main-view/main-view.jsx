@@ -57,6 +57,23 @@ function MainView() {
         return movie.Title !== selectedMovie.Title;
       });
 
+    // Checking if there are similar movies at all
+    if (similarMovies.length === 0) {
+      printSimilarMovies = 'No similar movies in database.';
+    } else {
+      printSimilarMovies = similarMovies.map(function (movie) {
+        return (
+          <MovieCard
+            key={movie.Id}
+            movie={movie}
+            onMovieClick={function (newSelectedMovie) {
+              setSelectedMovie(newSelectedMovie);
+            }}
+          ></MovieCard>
+        );
+      });
+    }
+
     return (
       // Question: Could I not have added the similar movies in the MovieView component? What if I want to display the list above the image?
       <div>
@@ -68,19 +85,7 @@ function MainView() {
         ></MovieView>
         <hr />
         <h2>Similar movies:</h2>
-        <div>
-          {similarMovies.map(function (movie) {
-            return (
-              <MovieCard
-                key={movie.Id}
-                movie={movie}
-                onMovieClick={function (newSelectedMovie) {
-                  setSelectedMovie(newSelectedMovie);
-                }}
-              ></MovieCard>
-            );
-          })}
-        </div>
+        {printSimilarMovies}
       </div>
     );
   }
