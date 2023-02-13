@@ -27347,7 +27347,8 @@ function LoginView({ onLoggedIn  }) {
                         value: username,
                         onChange: function(event) {
                             setUsername(event.target.value);
-                        }
+                        },
+                        required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
                         lineNumber: 39,
@@ -27367,16 +27368,17 @@ function LoginView({ onLoggedIn  }) {
                         value: password,
                         onChange: function(event) {
                             setPassword(event.target.value);
-                        }
+                        },
+                        required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 49,
+                        lineNumber: 50,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 47,
+                lineNumber: 48,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27384,7 +27386,7 @@ function LoginView({ onLoggedIn  }) {
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 57,
+                lineNumber: 59,
                 columnNumber: 7
             }, this)
         ]

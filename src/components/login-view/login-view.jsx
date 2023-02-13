@@ -42,6 +42,7 @@ function LoginView({ onLoggedIn }) {
           onChange={function (event) {
             setUsername(event.target.value);
           }}
+          required
         />
       </label>
       <label>
@@ -52,6 +53,7 @@ function LoginView({ onLoggedIn }) {
           onChange={function (event) {
             setPassword(event.target.value);
           }}
+          required
         />
       </label>
       <button type="submit">Submit</button>
