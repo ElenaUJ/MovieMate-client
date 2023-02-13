@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
+import { LoginView } from '../login-view/login-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
 
@@ -7,6 +7,8 @@ import { MovieView } from '../movie-view/movie-view.jsx';
 function MainView() {
   // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
   const [movies, setMovies] = useState([]);
+
+  const [user, setUser] = useState(null);
 
   // Default: no movie is selected
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -42,10 +44,15 @@ function MainView() {
       })
       .catch(function (error) {
         console.error(error);
+        // This has to be fixed, as the message wouldn't be rendered. I have to store the message in a state variable somehow
         return <div>Error: Movies could not be fetched.</div>;
       });
     // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
   }, []);
+
+  if (!user) {
+    return <LoginView onLoggedIn={setUser}></LoginView>;
+  }
 
   if (selectedMovie) {
     const similarMovies = movies.filter(function (movie) {
