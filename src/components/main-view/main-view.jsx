@@ -103,17 +103,26 @@ function MainView() {
     // movie object from each iteration of map() function is passed to <MovieCard> as a prop
     // onMovieClick is a function executing setSelectedMovie, which be passed to MovieCard component within callback of onClick event listener
     // onClick cannot be added dirctly to the component because it will be understood as prop
-    <div>
-      {movies.map(function (movie) {
-        return (
-          <MovieCard
-            key={movie.Id}
-            movie={movie}
-            onMovieClick={setSelectedMovie}
-          ></MovieCard>
-        );
-      })}
-    </div>
+    <>
+      <div>
+        {movies.map(function (movie) {
+          return (
+            <MovieCard
+              key={movie.Id}
+              movie={movie}
+              onMovieClick={setSelectedMovie}
+            ></MovieCard>
+          );
+        })}
+      </div>
+      <button
+        onClick={function () {
+          setUser(null);
+        }}
+      >
+        Logout
+      </button>
+    </>
   );
 }
 

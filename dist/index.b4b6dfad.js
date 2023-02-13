@@ -27272,22 +27272,36 @@ function MainView() {
     // movie object from each iteration of map() function is passed to <MovieCard> as a prop
     // onMovieClick is a function executing setSelectedMovie, which be passed to MovieCard component within callback of onClick event listener
     // onClick cannot be added dirctly to the component because it will be understood as prop
-    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: movies.map(function(movie) {
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
-                movie: movie,
-                onMovieClick: setSelectedMovie
-            }, movie.Id, false, {
+    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: movies.map(function(movie) {
+                    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
+                        movie: movie,
+                        onMovieClick: setSelectedMovie
+                    }, movie.Id, false, {
+                        fileName: "src/components/main-view/main-view.jsx",
+                        lineNumber: 110,
+                        columnNumber: 13
+                    }, this);
+                })
+            }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 109,
-                columnNumber: 11
-            }, this);
-        })
-    }, void 0, false, {
-        fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 106,
-        columnNumber: 5
-    }, this));
+                lineNumber: 107,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                onClick: function() {
+                    setUser(null);
+                },
+                children: "Logout"
+            }, void 0, false, {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 118,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true));
 }
 _s(MainView, "iuny6W87hVetPxQOYOtabQEtl/k=");
 _c = MainView;
