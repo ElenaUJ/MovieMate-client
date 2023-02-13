@@ -27204,27 +27204,21 @@ function MainView() {
     }, []);
     if (selectedMovie) {
         const similarMovies = movies.filter(function(movie) {
-            return movie.Genre.Name === selectedMovie.Genre.Name;
-        })// Excluding selectedMovie from the list
-        .filter(function(movie) {
-            return movie.Title !== selectedMovie.Title;
+            return movie.Genre.Name === selectedMovie.Genre.Name && movie.Title !== selectedMovie.Title;
         });
         // Checking if there are similar movies at all
         if (similarMovies.length === 0) printSimilarMovies = "No similar movies in database.";
         else printSimilarMovies = similarMovies.map(function(movie) {
             return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                 movie: movie,
-                onMovieClick: function(newSelectedMovie) {
-                    setSelectedMovie(newSelectedMovie);
-                }
+                onMovieClick: setSelectedMovie
             }, movie.Id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 66,
+                lineNumber: 64,
                 columnNumber: 11
             }, this);
         });
-        return(// Question: Could I not have added the similar movies in the MovieView component? What if I want to display the list above the image?
-        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             children: [
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
                     movie: selectedMovie,
@@ -27233,34 +27227,34 @@ function MainView() {
                     }
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 80,
+                    lineNumber: 75,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 86,
+                    lineNumber: 81,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                     children: "Similar movies:"
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 87,
+                    lineNumber: 82,
                     columnNumber: 9
                 }, this),
                 printSimilarMovies
             ]
         }, void 0, true, {
             fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 79,
+            lineNumber: 74,
             columnNumber: 7
-        }, this));
+        }, this);
     }
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 94,
+        lineNumber: 89,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27273,47 +27267,21 @@ function MainView() {
         children: movies.map(function(movie) {
             return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                 movie: movie,
-                onMovieClick: function(newSelectedMovie) {
-                    setSelectedMovie(newSelectedMovie);
-                }
+                onMovieClick: setSelectedMovie
             }, movie.Id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 107,
+                lineNumber: 102,
                 columnNumber: 11
             }, this);
         })
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 104,
+        lineNumber: 99,
         columnNumber: 5
     }, this));
 }
 _s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
-const moviePropTypes = (0, _propTypes.PropTypes).shape({
-    Id: (0, _propTypes.PropTypes).string.isRequired,
-    Title: (0, _propTypes.PropTypes).string.isRequired,
-    Description: (0, _propTypes.PropTypes).string.isRequired,
-    Genre: (0, _propTypes.PropTypes).shape({
-        Name: (0, _propTypes.PropTypes).string.isRequired,
-        Description: (0, _propTypes.PropTypes).string.isRequired
-    }).isRequired,
-    Director: (0, _propTypes.PropTypes).shape({
-        Name: (0, _propTypes.PropTypes).string.isRequired,
-        Bio: (0, _propTypes.PropTypes).string.isRequired,
-        Birth: (0, _propTypes.PropTypes).string.isRequired,
-        Death: (0, _propTypes.PropTypes).string
-    }).isRequired,
-    Image: (0, _propTypes.PropTypes).string.isRequired,
-    Featured: (0, _propTypes.PropTypes).bool.isRequired
-});
-// Question: I don't understand how to identify props in the MainView component... Do I have to do this here at all? When I add .isRequired to the propTypes here, it comes up with an error message in the console, that the props are undefinded. Which makes me think that I might not need any propTypes here at all?
-// Other Question: I tried to export the moviePropTypes variable into the other components to use in there, but it didn't let me, I got this error: ReferenceError: Cannot access 'moviePropTypes' before initialization...is there an easy way to solve this?
-MainView.propTypes = {
-    movies: (0, _propTypes.PropTypes).arrayOf(moviePropTypes),
-    selectedMovie: moviePropTypes,
-    setSelectedMovie: (0, _propTypes.PropTypes).func
-};
 var _c;
 $RefreshReg$(_c, "MainView");
 

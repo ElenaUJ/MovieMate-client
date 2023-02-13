@@ -48,14 +48,12 @@ function MainView() {
   }, []);
 
   if (selectedMovie) {
-    const similarMovies = movies
-      .filter(function (movie) {
-        return movie.Genre.Name === selectedMovie.Genre.Name;
-      })
-      // Excluding selectedMovie from the list
-      .filter(function (movie) {
-        return movie.Title !== selectedMovie.Title;
-      });
+    const similarMovies = movies.filter(function (movie) {
+      return (
+        movie.Genre.Name === selectedMovie.Genre.Name &&
+        movie.Title !== selectedMovie.Title
+      );
+    });
 
     // Checking if there are similar movies at all
     if (similarMovies.length === 0) {
@@ -66,16 +64,13 @@ function MainView() {
           <MovieCard
             key={movie.Id}
             movie={movie}
-            onMovieClick={function (newSelectedMovie) {
-              setSelectedMovie(newSelectedMovie);
-            }}
+            onMovieClick={setSelectedMovie}
           ></MovieCard>
         );
       });
     }
 
     return (
-      // Question: Could I not have added the similar movies in the MovieView component? What if I want to display the list above the image?
       <div>
         <MovieView
           movie={selectedMovie}
@@ -107,9 +102,7 @@ function MainView() {
           <MovieCard
             key={movie.Id}
             movie={movie}
-            onMovieClick={function (newSelectedMovie) {
-              setSelectedMovie(newSelectedMovie);
-            }}
+            onMovieClick={setSelectedMovie}
           ></MovieCard>
         );
       })}
@@ -119,29 +112,3 @@ function MainView() {
 
 // Exposure of MainView component
 export { MainView };
-
-const moviePropTypes = PropTypes.shape({
-  Id: PropTypes.string.isRequired,
-  Title: PropTypes.string.isRequired,
-  Description: PropTypes.string.isRequired,
-  Genre: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-  }).isRequired,
-  Director: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
-    Bio: PropTypes.string.isRequired,
-    Birth: PropTypes.string.isRequired,
-    Death: PropTypes.string,
-  }).isRequired,
-  Image: PropTypes.string.isRequired,
-  Featured: PropTypes.bool.isRequired,
-});
-
-// Question: I don't understand how to identify props in the MainView component... Do I have to do this here at all? When I add .isRequired to the propTypes here, it comes up with an error message in the console, that the props are undefinded. Which makes me think that I might not need any propTypes here at all?
-// Other Question: I tried to export the moviePropTypes variable into the other components to use in there, but it didn't let me, I got this error: ReferenceError: Cannot access 'moviePropTypes' before initialization...is there an easy way to solve this?
-MainView.propTypes = {
-  movies: PropTypes.arrayOf(moviePropTypes),
-  selectedMovie: moviePropTypes,
-  setSelectedMovie: PropTypes.func,
-};
