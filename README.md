@@ -20,7 +20,7 @@ The server-side comprises a well-designed REST API and a MongoDB Database, where
 
 1. Clone repository using command `git clone https://github.com/ElenaUJ/MyFlix-movie-app.git`
 
-2. Install dependencies using commands `npm install react@18.2.0 react-dom@18.2.0` and `npm install --save-dev parcel@2.8.3`
+2. Install dependencies using commands `npm install react@18.2.0 react-dom@18.2.0 prop-types@15.8.1` and `npm install --save-dev parcel@2.8.3`
 
 3. Run the app using `parcel src/index.html`
 
@@ -42,6 +42,7 @@ The server-side comprises a well-designed REST API and a MongoDB Database, where
 
 - react version 18.2.0
 - react-dom version 18.2.0
+- prop-types version 15.8.1
 - [ESLint rules](https://github.com/mydea/simple-pokedex-app/blob/master/.eslintrc)
 - [Prettier configuration](https://stackoverflow.com/questions/55430906/prettier-single-quote-for-javascript-and-json-double-quote-for-html-sass-and-c)
 

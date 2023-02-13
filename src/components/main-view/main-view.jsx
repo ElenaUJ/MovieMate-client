@@ -1,62 +1,92 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
 
 // Function returns visual representation of component
 function MainView() {
-  // Empty arry is initial value of movies (state variable); usetMovies is a method to update movies variable seState() returns array of paired values that are desrtructured
-  const [movies, setMovies] = useState([
-    {
-      _id: 1,
-      Title: 'Ice Age',
-      Description:
-        'Ice Age is a movie about a group of animals trying to return a human baby to its tribe during the ice age.',
-      Genre: 'Animation',
-      Director: 'Chris Wedge',
-      ImagePath:
-        'https://m.media-amazon.com/images/M/MV5BOGEwMTQyMDktMWUwZC00MzExLTg1MGMtYWJiNWNhMzIyMGU5XkEyXkFqcGdeQXVyOTYyMTY2NzQ@._V1_.jpg',
-      Featured: false,
-    },
-    {
-      _id: 2,
-      Title: 'The Truman Show',
-      Description:
-        'The Truman Show is a movie about a man who discovers his entire life is actually a reality TV show broadcast to the world and must decide whether to continue living in the fabricated world or leave it to discover the truth of his existence.',
-      Genre: 'Drama',
-      Director: 'Peter Weir',
-      ImagePath:
-        'https://m.media-amazon.com/images/M/MV5BMDIzODcyY2EtMmY2MC00ZWVlLTgwMzAtMjQwOWUyNmJjNTYyXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg',
-      Featured: false,
-    },
-    {
-      _id: 3,
-      Title: 'Dead Poets Society',
-      Description:
-        'Dead Poets Society is a movie about an English teacher at a conservative, all-boys school in the 1950s who inspires his students through his teachings of poetry and self-expression.',
-      Genre: 'Drama',
-      Director: 'Peter Weir',
-      ImagePath:
-        'https://m.media-amazon.com/images/M/MV5BOGYwYWNjMzgtNGU4ZC00NWQ2LWEwZjUtMzE1Zjc3NjY3YTU1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
-      Featured: false,
-    },
-  ]);
+  // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
+  const [movies, setMovies] = useState([]);
 
   // Default: no movie is selected
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+  // Hook for async tasks, runs callback whenever dependencies change
+  useEffect(function () {
+    fetch('https://myflix-movie-app-elenauj.onrender.com/movies')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        const moviesFromApi = data.map(function (movie) {
+          return {
+            Id: movie._id,
+            Title: movie.Title,
+            Description: movie.Description,
+            Genre: {
+              Name: movie.Genre.Name,
+              Description: movie.Genre.Description,
+            },
+            Director: {
+              Name: movie.Director.Name,
+              Bio: movie.Director.Bio,
+              Birth: movie.Director.Birth,
+              Death: movie.Director.Death,
+            },
+            Image: movie.ImagePath,
+            Featured: movie.Featured,
+          };
+        });
+
+        setMovies(moviesFromApi);
+      })
+      .catch(function (error) {
+        console.error(error);
+        return <div>Error: Movies could not be fetched.</div>;
+      });
+    // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
+  }, []);
+
   if (selectedMovie) {
+    const similarMovies = movies.filter(function (movie) {
+      return (
+        movie.Genre.Name === selectedMovie.Genre.Name &&
+        movie.Title !== selectedMovie.Title
+      );
+    });
+
+    // Checking if there are similar movies at all
+    if (similarMovies.length === 0) {
+      printSimilarMovies = 'No similar movies in database.';
+    } else {
+      printSimilarMovies = similarMovies.map(function (movie) {
+        return (
+          <MovieCard
+            key={movie.Id}
+            movie={movie}
+            onMovieClick={setSelectedMovie}
+          ></MovieCard>
+        );
+      });
+    }
+
     return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClick={function () {
-          setSelectedMovie(null);
-        }}
-      ></MovieView>
+      <div>
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={function () {
+            setSelectedMovie(null);
+          }}
+        ></MovieView>
+        <hr />
+        <h2>Similar movies:</h2>
+        {printSimilarMovies}
+      </div>
     );
   }
 
   if (movies.length === 0) {
-    return <div>The list is empty!</div>;
+    return <div>Fetching movies...</div>;
   }
 
   return (
@@ -70,11 +100,9 @@ function MainView() {
       {movies.map(function (movie) {
         return (
           <MovieCard
-            key={movie._id}
+            key={movie.Id}
             movie={movie}
-            onMovieClick={function (newSelectedMovie) {
-              setSelectedMovie(newSelectedMovie);
-            }}
+            onMovieClick={setSelectedMovie}
           ></MovieCard>
         );
       })}

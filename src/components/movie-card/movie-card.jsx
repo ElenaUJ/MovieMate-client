@@ -1,3 +1,5 @@
+import { PropTypes } from 'prop-types';
+
 // props argument is destructured/ movie is the name of the prop
 function MovieCard({ movie, onMovieClick }) {
   return (
@@ -12,3 +14,26 @@ function MovieCard({ movie, onMovieClick }) {
 }
 
 export { MovieCard };
+
+// Prop types contraints
+MovieCard.propTypes = {
+  // shape({}) means it's an object
+  movie: PropTypes.shape({
+    Id: PropTypes.string.isRequired,
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+    }).isRequired,
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Bio: PropTypes.string.isRequired,
+      Birth: PropTypes.string.isRequired,
+      Death: PropTypes.string,
+    }).isRequired,
+    Image: PropTypes.string.isRequired,
+    Featured: PropTypes.bool.isRequired,
+  }).isRequired,
+  onMovieClick: PropTypes.func.isRequired,
+};
