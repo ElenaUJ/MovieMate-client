@@ -9,49 +9,67 @@ function MainView() {
   const [movies, setMovies] = useState([]);
 
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   // Default: no movie is selected
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   // Hook for async tasks, runs callback whenever dependencies change
-  useEffect(function () {
-    fetch('https://myflix-movie-app-elenauj.onrender.com/movies')
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        const moviesFromApi = data.map(function (movie) {
-          return {
-            Id: movie._id,
-            Title: movie.Title,
-            Description: movie.Description,
-            Genre: {
-              Name: movie.Genre.Name,
-              Description: movie.Genre.Description,
-            },
-            Director: {
-              Name: movie.Director.Name,
-              Bio: movie.Director.Bio,
-              Birth: movie.Director.Birth,
-              Death: movie.Director.Death,
-            },
-            Image: movie.ImagePath,
-            Featured: movie.Featured,
-          };
-        });
+  useEffect(
+    function () {
+      if (!token) {
+        return;
+      }
 
-        setMovies(moviesFromApi);
+      fetch('https://myflix-movie-app-elenauj.onrender.com/movies', {
+        // ${} is template literal, will extract value of token and convert it to string, Bearer keyword specified type of authorization being sent
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch(function (error) {
-        console.error(error);
-        // This has to be fixed, as the message wouldn't be rendered. I have to store the message in a state variable somehow
-        return <div>Error: Movies could not be fetched.</div>;
-      });
-    // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
-  }, []);
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          const moviesFromApi = data.map(function (movie) {
+            return {
+              Id: movie._id,
+              Title: movie.Title,
+              Description: movie.Description,
+              Genre: {
+                Name: movie.Genre.Name,
+                Description: movie.Genre.Description,
+              },
+              Director: {
+                Name: movie.Director.Name,
+                Bio: movie.Director.Bio,
+                Birth: movie.Director.Birth,
+                Death: movie.Director.Death,
+              },
+              Image: movie.ImagePath,
+              Featured: movie.Featured,
+            };
+          });
+
+          setMovies(moviesFromApi);
+        })
+        .catch(function (error) {
+          console.error(error);
+          // This has to be fixed, as the message wouldn't be rendered. I have to store the message in a state variable somehow
+          return <div>Error: Movies could not be fetched.</div>;
+        });
+    },
+    // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
+    [token]
+  );
 
   if (!user) {
-    return <LoginView onLoggedIn={setUser}></LoginView>;
+    return (
+      <LoginView
+        onLoggedIn={function (user, token) {
+          setUser(user);
+          setToken(token);
+        }}
+      ></LoginView>
+    );
   }
 
   if (selectedMovie) {
@@ -118,6 +136,7 @@ function MainView() {
       <button
         onClick={function () {
           setUser(null);
+          setToken(null);
         }}
       >
         Logout

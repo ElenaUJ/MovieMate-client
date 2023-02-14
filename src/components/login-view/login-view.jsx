@@ -16,19 +16,28 @@ function LoginView({ onLoggedIn }) {
 
     fetch('https://myflix-movie-app-elenauj.onrender.com/login', {
       method: 'POST',
+      // Specifies content being sent in request body so server can deal with it better
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
     })
+      // Extracts JWT from response content in JSON format
       .then(function (response) {
-        // .ok indicated whether HTTP status code indicates success
-        if (response.ok) {
-          onLoggedIn(username);
+        return response.json();
+      })
+      .then(function (data) {
+        console.log('Login response: ', data);
+
+        if (data.user) {
+          // User and token are defined in the API's auth.js file!
+          onLoggedIn(data.user, data.token);
         } else {
-          alert('Error: Wrong username or password');
+          alert('No such user');
         }
       })
       .catch(function (error) {
-        console.error(error);
-        alert('Error: Login failed.');
+        alert('Error: Something went wrong.');
       });
   };
 

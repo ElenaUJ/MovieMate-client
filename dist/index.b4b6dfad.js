@@ -27164,11 +27164,18 @@ function MainView() {
     // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
     const [movies, setMovies] = (0, _react.useState)([]);
     const [user, setUser] = (0, _react.useState)(null);
+    const [token, setToken] = (0, _react.useState)(null);
     // Default: no movie is selected
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     // Hook for async tasks, runs callback whenever dependencies change
     (0, _react.useEffect)(function() {
-        fetch("https://myflix-movie-app-elenauj.onrender.com/movies").then(function(response) {
+        if (!token) return;
+        fetch("https://myflix-movie-app-elenauj.onrender.com/movies", {
+            // ${} is template literal, will extract value of token and convert it to string, Bearer keyword specified type of authorization being sent
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(function(response) {
             return response.json();
         }).then(function(data) {
             const moviesFromApi = data.map(function(movie) {
@@ -27198,18 +27205,23 @@ function MainView() {
                 children: "Error: Movies could not be fetched."
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 48,
-                columnNumber: 16
+                lineNumber: 57,
+                columnNumber: 18
             }, this);
         });
-    // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
-    }, []);
+    }, // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
+    [
+        token
+    ]);
     if (!user) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginViewJsx.LoginView), {
-        onLoggedIn: setUser
+        onLoggedIn: function(user, token) {
+            setUser(user);
+            setToken(token);
+        }
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 54,
-        columnNumber: 12
+        lineNumber: 66,
+        columnNumber: 7
     }, this);
     if (selectedMovie) {
         const similarMovies = movies.filter(function(movie) {
@@ -27223,7 +27235,7 @@ function MainView() {
                 onMovieClick: setSelectedMovie
             }, movie.Id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 71,
+                lineNumber: 89,
                 columnNumber: 11
             }, this);
         });
@@ -27236,26 +27248,26 @@ function MainView() {
                     }
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 82,
+                    lineNumber: 100,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 88,
+                    lineNumber: 106,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                     children: "Similar movies:"
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 89,
+                    lineNumber: 107,
                     columnNumber: 9
                 }, this),
                 printSimilarMovies
             ]
         }, void 0, true, {
             fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 81,
+            lineNumber: 99,
             columnNumber: 7
         }, this);
     }
@@ -27263,7 +27275,7 @@ function MainView() {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 96,
+        lineNumber: 114,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27281,29 +27293,30 @@ function MainView() {
                         onMovieClick: setSelectedMovie
                     }, movie.Id, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 110,
+                        lineNumber: 128,
                         columnNumber: 13
                     }, this);
                 })
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 107,
+                lineNumber: 125,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 onClick: function() {
                     setUser(null);
+                    setToken(null);
                 },
                 children: "Logout"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 118,
+                lineNumber: 136,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true));
 }
-_s(MainView, "iuny6W87hVetPxQOYOtabQEtl/k=");
+_s(MainView, "lm4QD1JBIIXvAl6s+SaNeJUl00I=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27340,14 +27353,21 @@ function LoginView({ onLoggedIn  }) {
         };
         fetch("https://myflix-movie-app-elenauj.onrender.com/login", {
             method: "POST",
+            // Specifies content being sent in request body so server can deal with it better
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(data)
-        }).then(function(response) {
-            // .ok indicated whether HTTP status code indicates success
-            if (response.ok) onLoggedIn(username);
-            else alert("Error: Wrong username or password");
+        })// Extracts JWT from response content in JSON format
+        .then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log("Login response: ", data);
+            if (data.user) // User and token are defined in the API's auth.js file!
+            onLoggedIn(data.user, data.token);
+            else alert("No such user");
         }).catch(function(error) {
-            console.error(error);
-            alert("Error: Login failed.");
+            alert("Error: Something went wrong.");
         });
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -27365,13 +27385,13 @@ function LoginView({ onLoggedIn  }) {
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 39,
+                        lineNumber: 48,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 37,
+                lineNumber: 46,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -27386,13 +27406,13 @@ function LoginView({ onLoggedIn  }) {
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 50,
+                        lineNumber: 59,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 48,
+                lineNumber: 57,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27400,13 +27420,13 @@ function LoginView({ onLoggedIn  }) {
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 59,
+                lineNumber: 68,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 36,
+        lineNumber: 45,
         columnNumber: 5
     }, this);
 }
