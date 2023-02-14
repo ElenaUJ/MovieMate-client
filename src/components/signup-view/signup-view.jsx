@@ -9,6 +9,13 @@ function SignupView() {
   const handleSubmit = function (event) {
     event.preventDefault();
 
+    const secondPassword = document.querySelector('.secondPassword').value;
+
+    if (secondPassword !== password) {
+      alert('Passwords do not match');
+      return;
+    }
+
     const data = {
       Username: username,
       Password: password,
@@ -40,7 +47,6 @@ function SignupView() {
   };
 
   return (
-    // !!!!!!Include logic to match passwords
     <form onSubmit={handleSubmit}>
       <label>
         Username:
@@ -67,7 +73,7 @@ function SignupView() {
       </label>
       <label>
         Retype password:
-        <input type="password" required />
+        <input className="secondPassword" type="password" required />
       </label>
       <label>
         Email:
