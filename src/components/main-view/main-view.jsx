@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LoginView } from '../login-view/login-view.jsx';
+import { SignupView } from '../signup-view/signup-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
 
@@ -46,12 +47,16 @@ function MainView() {
 
   if (!user) {
     return (
-      <LoginView
-        onLoggedIn={function (user, token) {
-          setUser(user);
-          setToken(token);
-        }}
-      ></LoginView>
+      <>
+        <LoginView
+          onLoggedIn={function (user, token) {
+            setUser(user);
+            setToken(token);
+          }}
+        ></LoginView>
+        Or sign up here
+        <SignupView></SignupView>
+      </>
     );
   }
 
@@ -79,7 +84,7 @@ function MainView() {
     }
 
     return (
-      <div>
+      <>
         <MovieView
           movie={selectedMovie}
           onBackClick={function () {
@@ -89,7 +94,7 @@ function MainView() {
         <hr />
         <h2>Similar movies:</h2>
         {printSimilarMovies}
-      </div>
+      </>
     );
   }
 
