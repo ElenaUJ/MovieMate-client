@@ -27161,10 +27161,13 @@ var _s = $RefreshSig$();
 // Function returns visual representation of component
 function MainView() {
     _s();
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("token");
+    // if-else statement can not be used in useState hook (only expressions are allowerd, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
+    const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
+    const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
     const [movies, setMovies] = (0, _react.useState)([]);
-    const [user, setUser] = (0, _react.useState)(null);
-    const [token, setToken] = (0, _react.useState)(null);
     // Default: no movie is selected
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     // Hook for async tasks, runs callback whenever dependencies change
@@ -27177,27 +27180,8 @@ function MainView() {
             }
         }).then(function(response) {
             return response.json();
-        }).then(function(data) {
-            const moviesFromApi = data.map(function(movie) {
-                return {
-                    Id: movie._id,
-                    Title: movie.Title,
-                    Description: movie.Description,
-                    Genre: {
-                        Name: movie.Genre.Name,
-                        Description: movie.Genre.Description
-                    },
-                    Director: {
-                        Name: movie.Director.Name,
-                        Bio: movie.Director.Bio,
-                        Birth: movie.Director.Birth,
-                        Death: movie.Director.Death
-                    },
-                    Image: movie.ImagePath,
-                    Featured: movie.Featured
-                };
-            });
-            setMovies(moviesFromApi);
+        }).then(function(movies) {
+            setMovies(movies);
         }).catch(function(error) {
             console.error(error);
             // This has to be fixed, as the message wouldn't be rendered. I have to store the message in a state variable somehow
@@ -27205,7 +27189,7 @@ function MainView() {
                 children: "Error: Movies could not be fetched."
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 57,
+                lineNumber: 40,
                 columnNumber: 18
             }, this);
         });
@@ -27220,7 +27204,7 @@ function MainView() {
         }
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 66,
+        lineNumber: 49,
         columnNumber: 7
     }, this);
     if (selectedMovie) {
@@ -27233,9 +27217,9 @@ function MainView() {
             return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                 movie: movie,
                 onMovieClick: setSelectedMovie
-            }, movie.Id, false, {
+            }, movie._id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 89,
+                lineNumber: 72,
                 columnNumber: 11
             }, this);
         });
@@ -27248,26 +27232,26 @@ function MainView() {
                     }
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 100,
+                    lineNumber: 83,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 106,
+                    lineNumber: 89,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                     children: "Similar movies:"
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 107,
+                    lineNumber: 90,
                     columnNumber: 9
                 }, this),
                 printSimilarMovies
             ]
         }, void 0, true, {
             fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 99,
+            lineNumber: 82,
             columnNumber: 7
         }, this);
     }
@@ -27275,7 +27259,7 @@ function MainView() {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 114,
+        lineNumber: 97,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27291,32 +27275,33 @@ function MainView() {
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                         movie: movie,
                         onMovieClick: setSelectedMovie
-                    }, movie.Id, false, {
+                    }, movie._id, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 128,
+                        lineNumber: 111,
                         columnNumber: 13
                     }, this);
                 })
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 125,
+                lineNumber: 108,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 onClick: function() {
                     setUser(null);
                     setToken(null);
+                    localStorage.clear();
                 },
                 children: "Logout"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 136,
+                lineNumber: 119,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true));
 }
-_s(MainView, "lm4QD1JBIIXvAl6s+SaNeJUl00I=");
+_s(MainView, "9wJBvfUyU2IigbyWC+M5y3EH9h4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27363,9 +27348,13 @@ function LoginView({ onLoggedIn  }) {
             return response.json();
         }).then(function(data) {
             console.log("Login response: ", data);
-            if (data.user) // User and token are defined in the API's auth.js file!
-            onLoggedIn(data.user, data.token);
-            else alert("No such user");
+            if (data.user) {
+                // After successful login, user object and token will be stored using localStorage
+                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("token", data.token);
+                // User and token are defined in the API's auth.js file!
+                onLoggedIn(data.user, data.token);
+            } else alert("No such user");
         }).catch(function(error) {
             alert("Error: Something went wrong.");
         });
@@ -27385,13 +27374,13 @@ function LoginView({ onLoggedIn  }) {
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 48,
+                        lineNumber: 51,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 46,
+                lineNumber: 49,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -27406,13 +27395,13 @@ function LoginView({ onLoggedIn  }) {
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 59,
+                        lineNumber: 62,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 57,
+                lineNumber: 60,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27420,13 +27409,13 @@ function LoginView({ onLoggedIn  }) {
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 68,
+                lineNumber: 71,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 45,
+        lineNumber: 48,
         columnNumber: 5
     }, this);
 }
@@ -28383,7 +28372,7 @@ _c = MovieCard;
 MovieCard.propTypes = {
     // shape({}) means it's an object
     movie: (0, _propTypes.PropTypes).shape({
-        Id: (0, _propTypes.PropTypes).string.isRequired,
+        _id: (0, _propTypes.PropTypes).string.isRequired,
         Title: (0, _propTypes.PropTypes).string.isRequired,
         Description: (0, _propTypes.PropTypes).string.isRequired,
         Genre: (0, _propTypes.PropTypes).shape({
@@ -28396,7 +28385,7 @@ MovieCard.propTypes = {
             Birth: (0, _propTypes.PropTypes).string.isRequired,
             Death: (0, _propTypes.PropTypes).string
         }).isRequired,
-        Image: (0, _propTypes.PropTypes).string.isRequired,
+        ImagePath: (0, _propTypes.PropTypes).string.isRequired,
         Featured: (0, _propTypes.PropTypes).bool.isRequired
     }).isRequired,
     onMovieClick: (0, _propTypes.PropTypes).func.isRequired
@@ -28459,7 +28448,7 @@ function MovieView({ movie , onBackClick  }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                src: movie.Image
+                src: movie.ImagePath
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
                 lineNumber: 13,
@@ -28488,7 +28477,7 @@ function MovieView({ movie , onBackClick  }) {
 _c = MovieView;
 MovieView.propTypes = {
     movie: (0, _propTypes.PropTypes).shape({
-        Id: (0, _propTypes.PropTypes).string.isRequired,
+        _id: (0, _propTypes.PropTypes).string.isRequired,
         Title: (0, _propTypes.PropTypes).string.isRequired,
         Description: (0, _propTypes.PropTypes).string.isRequired,
         Genre: (0, _propTypes.PropTypes).shape({
@@ -28501,7 +28490,7 @@ MovieView.propTypes = {
             Birth: (0, _propTypes.PropTypes).string.isRequired,
             Death: (0, _propTypes.PropTypes).string
         }).isRequired,
-        Image: (0, _propTypes.PropTypes).string.isRequired,
+        ImagePath: (0, _propTypes.PropTypes).string.isRequired,
         Featured: (0, _propTypes.PropTypes).bool.isRequired
     }).isRequired,
     onBackClick: (0, _propTypes.PropTypes).func.isRequired

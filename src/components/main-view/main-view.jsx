@@ -31,28 +31,8 @@ function MainView() {
         .then(function (response) {
           return response.json();
         })
-        .then(function (data) {
-          const moviesFromApi = data.map(function (movie) {
-            return {
-              Id: movie._id,
-              Title: movie.Title,
-              Description: movie.Description,
-              Genre: {
-                Name: movie.Genre.Name,
-                Description: movie.Genre.Description,
-              },
-              Director: {
-                Name: movie.Director.Name,
-                Bio: movie.Director.Bio,
-                Birth: movie.Director.Birth,
-                Death: movie.Director.Death,
-              },
-              Image: movie.ImagePath,
-              Featured: movie.Featured,
-            };
-          });
-
-          setMovies(moviesFromApi);
+        .then(function (movies) {
+          setMovies(movies);
         })
         .catch(function (error) {
           console.error(error);
@@ -90,7 +70,7 @@ function MainView() {
       printSimilarMovies = similarMovies.map(function (movie) {
         return (
           <MovieCard
-            key={movie.Id}
+            key={movie._id}
             movie={movie}
             onMovieClick={setSelectedMovie}
           ></MovieCard>
@@ -129,7 +109,7 @@ function MainView() {
         {movies.map(function (movie) {
           return (
             <MovieCard
-              key={movie.Id}
+              key={movie._id}
               movie={movie}
               onMovieClick={setSelectedMovie}
             ></MovieCard>
