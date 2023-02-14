@@ -5,11 +5,14 @@ import { MovieView } from '../movie-view/movie-view.jsx';
 
 // Function returns visual representation of component
 function MainView() {
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const storedToken = localStorage.getItem('token');
+  // if-else statement can not be used in useState hook (only expressions are allowerd, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
   // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
   const [movies, setMovies] = useState([]);
-
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
 
   // Default: no movie is selected
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -137,6 +140,7 @@ function MainView() {
         onClick={function () {
           setUser(null);
           setToken(null);
+          localStorage.clear();
         }}
       >
         Logout

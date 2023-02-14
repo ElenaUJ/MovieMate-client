@@ -30,6 +30,9 @@ function LoginView({ onLoggedIn }) {
         console.log('Login response: ', data);
 
         if (data.user) {
+          // After successful login, user object and token will be stored using localStorage
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('token', data.token);
           // User and token are defined in the API's auth.js file!
           onLoggedIn(data.user, data.token);
         } else {
