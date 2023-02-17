@@ -18,6 +18,8 @@ function MainView() {
   // Default: no movie is selected
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+  const [errorMessage, setErrorMessage] = useState(null);
+
   // Hook for async tasks, runs callback whenever dependencies change
   useEffect(
     function () {
@@ -30,6 +32,9 @@ function MainView() {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(function (response) {
+          if (response.status === 401) {
+            throw new Error('Unauthorized.');
+          }
           return response.json();
         })
         .then(function (movies) {
@@ -37,8 +42,14 @@ function MainView() {
         })
         .catch(function (error) {
           console.error(error);
-          // This has to be fixed, as the message wouldn't be rendered. I have to store the message in a state variable somehow
-          return <div>Error: Movies could not be fetched.</div>;
+          if (error.message === 'Unauthorized.') {
+            setErrorMessage('Error: Unauthorized. Please log in again.');
+            setUser(null);
+            setToken(null);
+            localStorage.clear();
+          } else {
+            setErrorMessage('Error: Movies could not be fetched.');
+          }
         });
     },
     // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
@@ -68,6 +79,7 @@ function MainView() {
       );
     });
 
+    let printSimilarMovies;
     // Checking if there are similar movies at all
     if (similarMovies.length === 0) {
       printSimilarMovies = 'No similar movies in database.';
@@ -100,6 +112,10 @@ function MainView() {
 
   if (movies.length === 0) {
     return <div>Fetching movies...</div>;
+  }
+
+  if (errorMessage) {
+    return <div>{errorMessage}</div>;
   }
 
   return (

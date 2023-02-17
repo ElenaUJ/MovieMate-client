@@ -27171,6 +27171,7 @@ function MainView() {
     const [movies, setMovies] = (0, _react.useState)([]);
     // Default: no movie is selected
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    const [errorMessage, setErrorMessage] = (0, _react.useState)(null);
     // Hook for async tasks, runs callback whenever dependencies change
     (0, _react.useEffect)(function() {
         if (!token) return;
@@ -27180,19 +27181,18 @@ function MainView() {
                 Authorization: `Bearer ${token}`
             }
         }).then(function(response) {
+            if (response.status === 401) throw new Error("Unauthorized.");
             return response.json();
         }).then(function(movies) {
             setMovies(movies);
         }).catch(function(error) {
             console.error(error);
-            // This has to be fixed, as the message wouldn't be rendered. I have to store the message in a state variable somehow
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: "Error: Movies could not be fetched."
-            }, void 0, false, {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 41,
-                columnNumber: 18
-            }, this);
+            if (error.message === "Unauthorized.") {
+                setErrorMessage("Error: Unauthorized. Please log in again.");
+                setUser(null);
+                setToken(null);
+                localStorage.clear();
+            } else setErrorMessage("Error: Movies could not be fetched.");
         });
     }, // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
     [
@@ -27207,13 +27207,13 @@ function MainView() {
                 }
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 51,
+                lineNumber: 62,
                 columnNumber: 9
             }, this),
             "Or sign up here",
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupViewJsx.SignupView), {}, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 58,
+                lineNumber: 69,
                 columnNumber: 9
             }, this)
         ]
@@ -27222,6 +27222,7 @@ function MainView() {
         const similarMovies = movies.filter(function(movie) {
             return movie.Genre.Name === selectedMovie.Genre.Name && movie.Title !== selectedMovie.Title;
         });
+        let printSimilarMovies;
         // Checking if there are similar movies at all
         if (similarMovies.length === 0) printSimilarMovies = "No similar movies in database.";
         else printSimilarMovies = similarMovies.map(function(movie) {
@@ -27230,7 +27231,7 @@ function MainView() {
                 onMovieClick: setSelectedMovie
             }, movie._id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 77,
+                lineNumber: 89,
                 columnNumber: 11
             }, this);
         });
@@ -27243,19 +27244,19 @@ function MainView() {
                     }
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 88,
+                    lineNumber: 100,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 94,
+                    lineNumber: 106,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                     children: "Similar movies:"
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 95,
+                    lineNumber: 107,
                     columnNumber: 9
                 }, this),
                 printSimilarMovies
@@ -27266,7 +27267,14 @@ function MainView() {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 102,
+        lineNumber: 114,
+        columnNumber: 12
+    }, this);
+    if (errorMessage) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: errorMessage
+    }, void 0, false, {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 118,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27284,13 +27292,13 @@ function MainView() {
                         onMovieClick: setSelectedMovie
                     }, movie._id, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 116,
+                        lineNumber: 132,
                         columnNumber: 13
                     }, this);
                 })
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 113,
+                lineNumber: 129,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27302,13 +27310,13 @@ function MainView() {
                 children: "Logout"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 124,
+                lineNumber: 140,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true));
 }
-_s(MainView, "9wJBvfUyU2IigbyWC+M5y3EH9h4=");
+_s(MainView, "KUGjjVfnPMb33o09xAUhrw25W2I=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
