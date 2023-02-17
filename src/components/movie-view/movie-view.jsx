@@ -10,7 +10,7 @@ function MovieView({ movie, onBackClick }) {
         Genre: {movie.Genre.Name}
       </p>
       <p>Description: {movie.Description}</p>
-      <img src={movie.Image} />
+      <img src={movie.ImagePath} />
       <br />
       <button onClick={onBackClick}>Back</button>
     </div>
@@ -21,7 +21,7 @@ export { MovieView };
 
 MovieView.propTypes = {
   movie: PropTypes.shape({
-    Id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
@@ -34,7 +34,7 @@ MovieView.propTypes = {
       Birth: PropTypes.string.isRequired,
       Death: PropTypes.string,
     }).isRequired,
-    Image: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
   onBackClick: PropTypes.func.isRequired,

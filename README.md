@@ -16,7 +16,7 @@ The MyFlix movie app will provide users with access to information about differe
 
 The server-side comprises a well-designed REST API and a MongoDB Database, whereas the client-side user interface is built using the React framework, completing the MERN-stack. It is still unter construction.
 
-## How to Run in terminal
+## How to Run
 
 1. Clone repository using command `git clone https://github.com/ElenaUJ/MyFlix-movie-app.git`
 
@@ -25,6 +25,8 @@ The server-side comprises a well-designed REST API and a MongoDB Database, where
 3. Run the app using `parcel src/index.html`
 
 4. After this, app should be available in the browser at `http://localhost:1234`.
+
+5. To access movies, register a new account or use following credentials: _Username:_ Test; _Password:_ test.
 
 ## Links
 

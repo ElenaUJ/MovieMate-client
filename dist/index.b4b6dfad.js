@@ -27154,71 +27154,88 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MainView", ()=>MainView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
-var _propTypes = require("prop-types");
+var _loginViewJsx = require("../login-view/login-view.jsx");
+var _signupViewJsx = require("../signup-view/signup-view.jsx");
 var _movieCardJsx = require("../movie-card/movie-card.jsx");
 var _movieViewJsx = require("../movie-view/movie-view.jsx");
 var _s = $RefreshSig$();
 // Function returns visual representation of component
 function MainView() {
     _s();
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("token");
+    // if-else statement can not be used in useState hook (only expressions are allowerd, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
+    const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
+    const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
     const [movies, setMovies] = (0, _react.useState)([]);
     // Default: no movie is selected
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    const [errorMessage, setErrorMessage] = (0, _react.useState)(null);
     // Hook for async tasks, runs callback whenever dependencies change
     (0, _react.useEffect)(function() {
-        fetch("https://myflix-movie-app-elenauj.onrender.com/movies").then(function(response) {
+        if (!token) return;
+        fetch("https://myflix-movie-app-elenauj.onrender.com/movies", {
+            // ${} is template literal, will extract value of token and convert it to string, Bearer keyword specified type of authorization being sent
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(function(response) {
+            if (response.status === 401) throw new Error("Unauthorized.");
             return response.json();
-        }).then(function(data) {
-            const moviesFromApi = data.map(function(movie) {
-                return {
-                    Id: movie._id,
-                    Title: movie.Title,
-                    Description: movie.Description,
-                    Genre: {
-                        Name: movie.Genre.Name,
-                        Description: movie.Genre.Description
-                    },
-                    Director: {
-                        Name: movie.Director.Name,
-                        Bio: movie.Director.Bio,
-                        Birth: movie.Director.Birth,
-                        Death: movie.Director.Death
-                    },
-                    Image: movie.ImagePath,
-                    Featured: movie.Featured
-                };
-            });
-            setMovies(moviesFromApi);
+        }).then(function(movies) {
+            setMovies(movies);
         }).catch(function(error) {
             console.error(error);
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: "Error: Movies could not be fetched."
+            if (error.message === "Unauthorized.") {
+                setErrorMessage("Error: Unauthorized. Please log in again.");
+                setUser(null);
+                setToken(null);
+                localStorage.clear();
+            } else setErrorMessage("Error: Movies could not be fetched.");
+        });
+    }, // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
+    [
+        token
+    ]);
+    if (!user) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginViewJsx.LoginView), {
+                onLoggedIn: function(user, token) {
+                    setUser(user);
+                    setToken(token);
+                }
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 45,
-                columnNumber: 16
-            }, this);
-        });
-    // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
-    }, []);
+                lineNumber: 62,
+                columnNumber: 9
+            }, this),
+            "Or sign up here",
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupViewJsx.SignupView), {}, void 0, false, {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 69,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true);
     if (selectedMovie) {
         const similarMovies = movies.filter(function(movie) {
             return movie.Genre.Name === selectedMovie.Genre.Name && movie.Title !== selectedMovie.Title;
         });
+        let printSimilarMovies;
         // Checking if there are similar movies at all
         if (similarMovies.length === 0) printSimilarMovies = "No similar movies in database.";
         else printSimilarMovies = similarMovies.map(function(movie) {
             return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                 movie: movie,
                 onMovieClick: setSelectedMovie
-            }, movie.Id, false, {
+            }, movie._id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 64,
+                lineNumber: 89,
                 columnNumber: 11
             }, this);
         });
-        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
             children: [
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
                     movie: selectedMovie,
@@ -27227,34 +27244,37 @@ function MainView() {
                     }
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 75,
+                    lineNumber: 100,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 81,
+                    lineNumber: 106,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                     children: "Similar movies:"
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 82,
+                    lineNumber: 107,
                     columnNumber: 9
                 }, this),
                 printSimilarMovies
             ]
-        }, void 0, true, {
-            fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 74,
-            columnNumber: 7
-        }, this);
+        }, void 0, true);
     }
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Fetching movies..."
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 89,
+        lineNumber: 114,
+        columnNumber: 12
+    }, this);
+    if (errorMessage) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: errorMessage
+    }, void 0, false, {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 118,
         columnNumber: 12
     }, this);
     return(// Root element (only one per component)
@@ -27263,24 +27283,40 @@ function MainView() {
     // movie object from each iteration of map() function is passed to <MovieCard> as a prop
     // onMovieClick is a function executing setSelectedMovie, which be passed to MovieCard component within callback of onClick event listener
     // onClick cannot be added dirctly to the component because it will be understood as prop
-    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: movies.map(function(movie) {
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
-                movie: movie,
-                onMovieClick: setSelectedMovie
-            }, movie.Id, false, {
+    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: movies.map(function(movie) {
+                    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
+                        movie: movie,
+                        onMovieClick: setSelectedMovie
+                    }, movie._id, false, {
+                        fileName: "src/components/main-view/main-view.jsx",
+                        lineNumber: 132,
+                        columnNumber: 13
+                    }, this);
+                })
+            }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 102,
-                columnNumber: 11
-            }, this);
-        })
-    }, void 0, false, {
-        fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 99,
-        columnNumber: 5
-    }, this));
+                lineNumber: 129,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                onClick: function() {
+                    setUser(null);
+                    setToken(null);
+                    localStorage.clear();
+                },
+                children: "Logout"
+            }, void 0, false, {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 140,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true));
 }
-_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
+_s(MainView, "KUGjjVfnPMb33o09xAUhrw25W2I=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27290,7 +27326,128 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","../movie-card/movie-card.jsx":"bwuIu","../movie-view/movie-view.jsx":"ggaUx","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"7wKI2":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../login-view/login-view.jsx":"9YtA0","../signup-view/signup-view.jsx":"4OGiN","../movie-card/movie-card.jsx":"bwuIu","../movie-view/movie-view.jsx":"ggaUx","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"9YtA0":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$9fee = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$9fee.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LoginView", ()=>LoginView);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _propTypes = require("prop-types");
+var _s = $RefreshSig$();
+function LoginView({ onLoggedIn  }) {
+    _s();
+    const [username, setUsername] = (0, _react.useState)("");
+    const [password, setPassword] = (0, _react.useState)("");
+    const handleSubmit = function(event) {
+        // Preventing default behaviour which would be to reload entire page
+        event.preventDefault();
+        const data = {
+            Username: username,
+            Password: password
+        };
+        fetch("https://myflix-movie-app-elenauj.onrender.com/login", {
+            method: "POST",
+            // Specifies content being sent in request body so server can deal with it better
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })// Extracts JWT from response content in JSON format
+        .then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log("Login response: ", data);
+            if (data.user) {
+                // After successful login, user object and token will be stored using localStorage
+                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("token", data.token);
+                // User and token are defined in the API's auth.js file!
+                onLoggedIn(data.user, data.token);
+            } else alert("No such user");
+        }).catch(function(error) {
+            alert("Error: Something went wrong.");
+        });
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+        onSubmit: handleSubmit,
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Username:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "text",
+                        value: username,
+                        onChange: function(event) {
+                            setUsername(event.target.value);
+                        },
+                        required: true
+                    }, void 0, false, {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 51,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/login-view/login-view.jsx",
+                lineNumber: 49,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Password:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "password",
+                        value: password,
+                        onChange: function(event) {
+                            setPassword(event.target.value);
+                        },
+                        required: true
+                    }, void 0, false, {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 62,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/login-view/login-view.jsx",
+                lineNumber: 60,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                type: "submit",
+                children: "Submit"
+            }, void 0, false, {
+                fileName: "src/components/login-view/login-view.jsx",
+                lineNumber: 71,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "src/components/login-view/login-view.jsx",
+        lineNumber: 48,
+        columnNumber: 5
+    }, this);
+}
+_s(LoginView, "wuQOK7xaXdVz4RMrZQhWbI751Oc=");
+_c = LoginView;
+LoginView.propTypes = {
+    onLoggedIn: (0, _propTypes.PropTypes).func.isRequired
+};
+var _c;
+$RefreshReg$(_c, "LoginView");
+
+  $parcel$ReactRefreshHelpers$9fee.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"7wKI2":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -28037,63 +28194,7 @@ printWarning = function(text) {
 };
 module.exports = checkPropTypes;
 
-},{"87b3caf8252cb0e9":"jZTZJ","b45b2ec47c022a2c":"fqKuf"}],"bwuIu":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$67b2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$67b2.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _propTypes = require("prop-types");
-// props argument is destructured/ movie is the name of the prop
-function MovieCard({ movie , onMovieClick  }) {
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        onClick: function() {
-            onMovieClick(movie);
-        },
-        children: movie.Title
-    }, void 0, false, {
-        fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 6,
-        columnNumber: 5
-    }, this);
-}
-_c = MovieCard;
-// Prop types contraints
-MovieCard.propTypes = {
-    // shape({}) means it's an object
-    movie: (0, _propTypes.PropTypes).shape({
-        Id: (0, _propTypes.PropTypes).string.isRequired,
-        Title: (0, _propTypes.PropTypes).string.isRequired,
-        Description: (0, _propTypes.PropTypes).string.isRequired,
-        Genre: (0, _propTypes.PropTypes).shape({
-            Name: (0, _propTypes.PropTypes).string.isRequired,
-            Description: (0, _propTypes.PropTypes).string.isRequired
-        }).isRequired,
-        Director: (0, _propTypes.PropTypes).shape({
-            Name: (0, _propTypes.PropTypes).string.isRequired,
-            Bio: (0, _propTypes.PropTypes).string.isRequired,
-            Birth: (0, _propTypes.PropTypes).string.isRequired,
-            Death: (0, _propTypes.PropTypes).string
-        }).isRequired,
-        Image: (0, _propTypes.PropTypes).string.isRequired,
-        Featured: (0, _propTypes.PropTypes).bool.isRequired
-    }).isRequired,
-    onMovieClick: (0, _propTypes.PropTypes).func.isRequired
-};
-var _c;
-$RefreshReg$(_c, "MovieCard");
-
-  $parcel$ReactRefreshHelpers$67b2.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","prop-types":"7wKI2","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"l558H":[function(require,module,exports) {
+},{"87b3caf8252cb0e9":"jZTZJ","b45b2ec47c022a2c":"fqKuf"}],"l558H":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -28256,7 +28357,246 @@ function registerExportsForReactRefresh(module1) {
     }
 }
 
-},{"3efe15a52f60a803":"h6upO"}],"ggaUx":[function(require,module,exports) {
+},{"3efe15a52f60a803":"h6upO"}],"4OGiN":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$73d1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$73d1.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "SignupView", ()=>SignupView);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _s = $RefreshSig$();
+function SignupView() {
+    _s();
+    const [username, setUsername] = (0, _react.useState)("");
+    const [password, setPassword] = (0, _react.useState)("");
+    const [email, setEmail] = (0, _react.useState)("");
+    const [birthday, setBirthday] = (0, _react.useState)("");
+    const handleSubmit = function(event) {
+        event.preventDefault();
+        const secondPassword = document.querySelector(".secondPassword").value;
+        if (secondPassword !== password) {
+            alert("Passwords do not match");
+            return;
+        }
+        const data = {
+            Username: username,
+            Password: password,
+            Email: email,
+            Birthday: birthday
+        };
+        fetch("https://myflix-movie-app-elenauj.onrender.com/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if (response.ok) {
+                console.log(response.json());
+                alert("Successfully registered!");
+                window.location.reload();
+            } else {
+                console.log("Registration failed.");
+                alert("Registration failed.");
+            }
+        }).catch(function(error) {
+            console.error(error);
+            alert("Error: Something went wrong.");
+        });
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+        onSubmit: handleSubmit,
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Username:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "text",
+                        value: username,
+                        onChange: function(event) {
+                            setUsername(event.target.value);
+                        },
+                        required: true,
+                        pattern: "[a-zA-Z0-9]+"
+                    }, void 0, false, {
+                        fileName: "src/components/signup-view/signup-view.jsx",
+                        lineNumber: 53,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/signup-view/signup-view.jsx",
+                lineNumber: 51,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Password:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "password",
+                        value: password,
+                        onChange: function(event) {
+                            setPassword(event.target.value);
+                        },
+                        required: true
+                    }, void 0, false, {
+                        fileName: "src/components/signup-view/signup-view.jsx",
+                        lineNumber: 65,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/signup-view/signup-view.jsx",
+                lineNumber: 63,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Retype password:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        className: "secondPassword",
+                        type: "password",
+                        required: true
+                    }, void 0, false, {
+                        fileName: "src/components/signup-view/signup-view.jsx",
+                        lineNumber: 76,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/signup-view/signup-view.jsx",
+                lineNumber: 74,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Email:",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "email",
+                        value: email,
+                        onChange: function(event) {
+                            setEmail(event.target.value);
+                        },
+                        required: true
+                    }, void 0, false, {
+                        fileName: "src/components/signup-view/signup-view.jsx",
+                        lineNumber: 80,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/signup-view/signup-view.jsx",
+                lineNumber: 78,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                children: [
+                    "Birthday",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        type: "date",
+                        value: birthday,
+                        onChange: function(event) {
+                            setBirthday(event.target.value);
+                        },
+                        required: true
+                    }, void 0, false, {
+                        fileName: "src/components/signup-view/signup-view.jsx",
+                        lineNumber: 91,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/signup-view/signup-view.jsx",
+                lineNumber: 89,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                type: "submit",
+                children: "Register"
+            }, void 0, false, {
+                fileName: "src/components/signup-view/signup-view.jsx",
+                lineNumber: 100,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "src/components/signup-view/signup-view.jsx",
+        lineNumber: 50,
+        columnNumber: 5
+    }, this);
+}
+_s(SignupView, "tdA1KK8yaZidqYo0wscqshHt/KE=");
+_c = SignupView;
+var _c;
+$RefreshReg$(_c, "SignupView");
+
+  $parcel$ReactRefreshHelpers$73d1.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"bwuIu":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$67b2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$67b2.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _propTypes = require("prop-types");
+// props argument is destructured/ movie is the name of the prop
+function MovieCard({ movie , onMovieClick  }) {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        onClick: function() {
+            onMovieClick(movie);
+        },
+        children: movie.Title
+    }, void 0, false, {
+        fileName: "src/components/movie-card/movie-card.jsx",
+        lineNumber: 6,
+        columnNumber: 5
+    }, this);
+}
+_c = MovieCard;
+// Prop types contraints
+MovieCard.propTypes = {
+    // shape({}) means it's an object
+    movie: (0, _propTypes.PropTypes).shape({
+        _id: (0, _propTypes.PropTypes).string.isRequired,
+        Title: (0, _propTypes.PropTypes).string.isRequired,
+        Description: (0, _propTypes.PropTypes).string.isRequired,
+        Genre: (0, _propTypes.PropTypes).shape({
+            Name: (0, _propTypes.PropTypes).string.isRequired,
+            Description: (0, _propTypes.PropTypes).string.isRequired
+        }).isRequired,
+        Director: (0, _propTypes.PropTypes).shape({
+            Name: (0, _propTypes.PropTypes).string.isRequired,
+            Bio: (0, _propTypes.PropTypes).string.isRequired,
+            Birth: (0, _propTypes.PropTypes).string.isRequired,
+            Death: (0, _propTypes.PropTypes).string
+        }).isRequired,
+        ImagePath: (0, _propTypes.PropTypes).string.isRequired,
+        Featured: (0, _propTypes.PropTypes).bool.isRequired
+    }).isRequired,
+    onMovieClick: (0, _propTypes.PropTypes).func.isRequired
+};
+var _c;
+$RefreshReg$(_c, "MovieCard");
+
+  $parcel$ReactRefreshHelpers$67b2.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","prop-types":"7wKI2","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"ggaUx":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$e9f6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -28306,7 +28646,7 @@ function MovieView({ movie , onBackClick  }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                src: movie.Image
+                src: movie.ImagePath
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
                 lineNumber: 13,
@@ -28335,7 +28675,7 @@ function MovieView({ movie , onBackClick  }) {
 _c = MovieView;
 MovieView.propTypes = {
     movie: (0, _propTypes.PropTypes).shape({
-        Id: (0, _propTypes.PropTypes).string.isRequired,
+        _id: (0, _propTypes.PropTypes).string.isRequired,
         Title: (0, _propTypes.PropTypes).string.isRequired,
         Description: (0, _propTypes.PropTypes).string.isRequired,
         Genre: (0, _propTypes.PropTypes).shape({
@@ -28348,7 +28688,7 @@ MovieView.propTypes = {
             Birth: (0, _propTypes.PropTypes).string.isRequired,
             Death: (0, _propTypes.PropTypes).string
         }).isRequired,
-        Image: (0, _propTypes.PropTypes).string.isRequired,
+        ImagePath: (0, _propTypes.PropTypes).string.isRequired,
         Featured: (0, _propTypes.PropTypes).bool.isRequired
     }).isRequired,
     onBackClick: (0, _propTypes.PropTypes).func.isRequired

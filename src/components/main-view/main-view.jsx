@@ -1,51 +1,75 @@
 import { useState, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
+import { LoginView } from '../login-view/login-view.jsx';
+import { SignupView } from '../signup-view/signup-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
 
 // Function returns visual representation of component
 function MainView() {
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const storedToken = localStorage.getItem('token');
+  // if-else statement can not be used in useState hook (only expressions are allowerd, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
   // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
   const [movies, setMovies] = useState([]);
 
   // Default: no movie is selected
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  // Hook for async tasks, runs callback whenever dependencies change
-  useEffect(function () {
-    fetch('https://myflix-movie-app-elenauj.onrender.com/movies')
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        const moviesFromApi = data.map(function (movie) {
-          return {
-            Id: movie._id,
-            Title: movie.Title,
-            Description: movie.Description,
-            Genre: {
-              Name: movie.Genre.Name,
-              Description: movie.Genre.Description,
-            },
-            Director: {
-              Name: movie.Director.Name,
-              Bio: movie.Director.Bio,
-              Birth: movie.Director.Birth,
-              Death: movie.Director.Death,
-            },
-            Image: movie.ImagePath,
-            Featured: movie.Featured,
-          };
-        });
+  const [errorMessage, setErrorMessage] = useState(null);
 
-        setMovies(moviesFromApi);
+  // Hook for async tasks, runs callback whenever dependencies change
+  useEffect(
+    function () {
+      if (!token) {
+        return;
+      }
+
+      fetch('https://myflix-movie-app-elenauj.onrender.com/movies', {
+        // ${} is template literal, will extract value of token and convert it to string, Bearer keyword specified type of authorization being sent
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch(function (error) {
-        console.error(error);
-        return <div>Error: Movies could not be fetched.</div>;
-      });
-    // Empty dependency array [] tells React that there are no dependencies, so this cb fn doesn't have to be rerun
-  }, []);
+        .then(function (response) {
+          if (response.status === 401) {
+            throw new Error('Unauthorized.');
+          }
+          return response.json();
+        })
+        .then(function (movies) {
+          setMovies(movies);
+        })
+        .catch(function (error) {
+          console.error(error);
+          if (error.message === 'Unauthorized.') {
+            setErrorMessage('Error: Unauthorized. Please log in again.');
+            setUser(null);
+            setToken(null);
+            localStorage.clear();
+          } else {
+            setErrorMessage('Error: Movies could not be fetched.');
+          }
+        });
+    },
+    // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
+    [token]
+  );
+
+  if (!user) {
+    return (
+      <>
+        <LoginView
+          onLoggedIn={function (user, token) {
+            setUser(user);
+            setToken(token);
+          }}
+        ></LoginView>
+        Or sign up here
+        <SignupView></SignupView>
+      </>
+    );
+  }
 
   if (selectedMovie) {
     const similarMovies = movies.filter(function (movie) {
@@ -55,6 +79,7 @@ function MainView() {
       );
     });
 
+    let printSimilarMovies;
     // Checking if there are similar movies at all
     if (similarMovies.length === 0) {
       printSimilarMovies = 'No similar movies in database.';
@@ -62,7 +87,7 @@ function MainView() {
       printSimilarMovies = similarMovies.map(function (movie) {
         return (
           <MovieCard
-            key={movie.Id}
+            key={movie._id}
             movie={movie}
             onMovieClick={setSelectedMovie}
           ></MovieCard>
@@ -71,7 +96,7 @@ function MainView() {
     }
 
     return (
-      <div>
+      <>
         <MovieView
           movie={selectedMovie}
           onBackClick={function () {
@@ -81,12 +106,16 @@ function MainView() {
         <hr />
         <h2>Similar movies:</h2>
         {printSimilarMovies}
-      </div>
+      </>
     );
   }
 
   if (movies.length === 0) {
     return <div>Fetching movies...</div>;
+  }
+
+  if (errorMessage) {
+    return <div>{errorMessage}</div>;
   }
 
   return (
@@ -96,17 +125,28 @@ function MainView() {
     // movie object from each iteration of map() function is passed to <MovieCard> as a prop
     // onMovieClick is a function executing setSelectedMovie, which be passed to MovieCard component within callback of onClick event listener
     // onClick cannot be added dirctly to the component because it will be understood as prop
-    <div>
-      {movies.map(function (movie) {
-        return (
-          <MovieCard
-            key={movie.Id}
-            movie={movie}
-            onMovieClick={setSelectedMovie}
-          ></MovieCard>
-        );
-      })}
-    </div>
+    <>
+      <div>
+        {movies.map(function (movie) {
+          return (
+            <MovieCard
+              key={movie._id}
+              movie={movie}
+              onMovieClick={setSelectedMovie}
+            ></MovieCard>
+          );
+        })}
+      </div>
+      <button
+        onClick={function () {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      >
+        Logout
+      </button>
+    </>
   );
 }
 
