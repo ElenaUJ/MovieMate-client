@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types';
+import Button from 'react-bootstrap/Button';
 
 function MovieView({ movie, onBackClick }) {
   return (
@@ -10,9 +11,12 @@ function MovieView({ movie, onBackClick }) {
         Genre: {movie.Genre.Name}
       </p>
       <p>Description: {movie.Description}</p>
-      <img src={movie.ImagePath} />
-      <br />
-      <button onClick={onBackClick}>Back</button>
+      <img className="w-100 mb-4" src={movie.ImagePath} />
+      <div className="align-right">
+        <Button variant="primary" onClick={onBackClick}>
+          Back
+        </Button>
+      </div>
     </div>
   );
 }

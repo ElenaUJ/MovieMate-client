@@ -103,9 +103,11 @@ function SignupView() {
           required
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Register
-      </Button>
+      <div className="align-right mt-3">
+        <Button variant="primary" type="submit">
+          Register
+        </Button>
+      </div>
     </Form>
   );
 }

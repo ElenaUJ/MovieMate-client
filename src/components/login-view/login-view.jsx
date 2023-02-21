@@ -72,9 +72,11 @@ function LoginView({ onLoggedIn }) {
           required
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
+      <div className="align-right mt-3">
+        <Button className="mb-5" variant="primary" type="submit">
+          Submit
+        </Button>
+      </div>
     </Form>
   );
 }

@@ -3,6 +3,9 @@ import { LoginView } from '../login-view/login-view.jsx';
 import { SignupView } from '../signup-view/signup-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 // Function returns visual representation of component
 function MainView() {
@@ -56,23 +59,9 @@ function MainView() {
     [token]
   );
 
-  if (!user) {
-    return (
-      <>
-        <LoginView
-          onLoggedIn={function (user, token) {
-            setUser(user);
-            setToken(token);
-          }}
-        ></LoginView>
-        Or sign up here
-        <SignupView></SignupView>
-      </>
-    );
-  }
-
+  // Question: I did not manage to transfer this code block into the return block. I couldn't figure out how to declare my variables and use the `similarMovies.length === 0` conditional inside the JSX expression. That's why I left it out... is that ok? Or too confusing/not good practice? Is there a way to do it?
   if (selectedMovie) {
-    const similarMovies = movies.filter(function (movie) {
+    let similarMovies = movies.filter(function (movie) {
       return (
         movie.Genre.Name === selectedMovie.Genre.Name &&
         movie.Title !== selectedMovie.Title
@@ -85,37 +74,38 @@ function MainView() {
       printSimilarMovies = 'No similar movies in database.';
     } else {
       printSimilarMovies = similarMovies.map(function (movie) {
+        // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
         return (
-          <MovieCard
-            key={movie._id}
-            movie={movie}
-            onMovieClick={setSelectedMovie}
-          ></MovieCard>
+          <Col key={movie._id} md={3} sm={4} xs={6}>
+            <MovieCard
+              movie={movie}
+              onMovieClick={setSelectedMovie}
+            ></MovieCard>
+          </Col>
         );
       });
     }
 
+    // Use of md breakpoint makes it so all devices with a screen smaller than md will use entire width of the screen
     return (
       <>
-        <MovieView
-          movie={selectedMovie}
-          onBackClick={function () {
-            setSelectedMovie(null);
-          }}
-        ></MovieView>
-        <hr />
-        <h2>Similar movies:</h2>
-        {printSimilarMovies}
+        <Row className="justify-content-md-center">
+          <Col md={8}>
+            <MovieView
+              movie={selectedMovie}
+              onBackClick={function () {
+                setSelectedMovie(null);
+              }}
+            ></MovieView>
+            <hr />
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center">
+          <h2>Similar movies:</h2>
+          {printSimilarMovies}
+        </Row>
       </>
     );
-  }
-
-  if (movies.length === 0) {
-    return <div>Fetching movies...</div>;
-  }
-
-  if (errorMessage) {
-    return <div>{errorMessage}</div>;
   }
 
   return (
@@ -125,28 +115,53 @@ function MainView() {
     // movie object from each iteration of map() function is passed to <MovieCard> as a prop
     // onMovieClick is a function executing setSelectedMovie, which be passed to MovieCard component within callback of onClick event listener
     // onClick cannot be added dirctly to the component because it will be understood as prop
-    <>
-      <div>
-        {movies.map(function (movie) {
-          return (
-            <MovieCard
-              key={movie._id}
-              movie={movie}
-              onMovieClick={setSelectedMovie}
-            ></MovieCard>
-          );
-        })}
-      </div>
-      <button
-        onClick={function () {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      >
-        Logout
-      </button>
-    </>
+    <Row className="justify-content-md-center">
+      {!user ? (
+        <Col md={4}>
+          <LoginView
+            onLoggedIn={function (user, token) {
+              setUser(user);
+              setToken(token);
+            }}
+          ></LoginView>
+          <h2 className="mb-3">Or sign up here</h2>
+          <SignupView></SignupView>
+        </Col>
+      ) : movies.length === 0 ? (
+        <Col md={3}>
+          <p>Fetching movies...</p>
+        </Col>
+      ) : errorMessage ? (
+        <Col md={3}>
+          <p>{errorMessage}</p>
+        </Col>
+      ) : (
+        <>
+          {movies.map(function (movie) {
+            return (
+              <Col className="mb-4" key={movie._id} md={3} sm={4} xs={6}>
+                <MovieCard
+                  movie={movie}
+                  onMovieClick={setSelectedMovie}
+                ></MovieCard>
+              </Col>
+            );
+          })}
+          <div className="align-right">
+            <Button
+              variant="primary"
+              onClick={function () {
+                setUser(null);
+                setToken(null);
+                localStorage.clear();
+              }}
+            >
+              Logout
+            </Button>
+          </div>
+        </>
+      )}
+    </Row>
   );
 }
 

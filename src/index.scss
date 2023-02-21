@@ -1,5 +1,13 @@
-$color: steelblue;
+$primary: SeaGreen;
+$body-bg: Honeydew;
 
-.my-flix {
-  color: $color;
+h2 {
+  text-align: center;
 }
+
+.align-right {
+  text-align: right;
+}
+
+// Imports React Bootstrap utility classes
+@import '~bootstrap/scss/bootstrap.scss';
