@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 function LoginView({ onLoggedIn }) {
   const [username, setUsername] = useState('');
@@ -40,26 +42,28 @@ function LoginView({ onLoggedIn }) {
         }
       })
       .catch(function (error) {
+        console.error(error);
         alert('Error: Something went wrong.');
       });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="loginFormUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control
           type="text"
           value={username}
           onChange={function (event) {
             setUsername(event.target.value);
           }}
           required
+          pattern="[a-zA-Z0-9]+"
         />
-      </label>
-      <label>
-        Password:
-        <input
+      </Form.Group>
+      <Form.Group controlId="loginFormPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
           type="password"
           value={password}
           onChange={function (event) {
@@ -67,9 +71,11 @@ function LoginView({ onLoggedIn }) {
           }}
           required
         />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
   );
 }
 

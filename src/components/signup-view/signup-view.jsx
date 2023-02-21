@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function SignupView() {
   const [username, setUsername] = useState('');
@@ -47,10 +49,10 @@ function SignupView() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="signupFormUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control
           type="text"
           value={username}
           onChange={function (event) {
@@ -59,10 +61,14 @@ function SignupView() {
           required
           pattern="[a-zA-Z0-9]+"
         />
-      </label>
-      <label>
-        Password:
-        <input
+        <Form.Text>
+          Please choose a username using only alphanumeric characters (letters
+          and numbers).
+        </Form.Text>
+      </Form.Group>
+      <Form.Group controlId="signupFormPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
           type="password"
           value={password}
           onChange={function (event) {
@@ -70,14 +76,14 @@ function SignupView() {
           }}
           required
         />
-      </label>
-      <label>
-        Retype password:
-        <input className="secondPassword" type="password" required />
-      </label>
-      <label>
-        Email:
-        <input
+      </Form.Group>
+      <Form.Group controlId="signupFormSecondPassword">
+        <Form.Label>Retype password:</Form.Label>
+        <Form.Control className="secondPassword" type="password" required />
+      </Form.Group>
+      <Form.Group controlId="signupFormEmail">
+        <Form.Label>Email:</Form.Label>
+        <Form.Control
           type="email"
           value={email}
           onChange={function (event) {
@@ -85,10 +91,10 @@ function SignupView() {
           }}
           required
         />
-      </label>
-      <label>
-        Birthday
-        <input
+      </Form.Group>
+      <Form.Group controlId="signupFormBirthday">
+        <Form.Label>Birthday:</Form.Label>
+        <Form.Control
           type="date"
           value={birthday}
           onChange={function (event) {
@@ -96,9 +102,11 @@ function SignupView() {
           }}
           required
         />
-      </label>
-      <button type="submit">Register</button>
-    </form>
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Register
+      </Button>
+    </Form>
   );
 }
 
