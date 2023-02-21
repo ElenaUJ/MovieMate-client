@@ -1,15 +1,20 @@
 import { PropTypes } from 'prop-types';
+import Card from 'react-bootstrap/Card';
 
 // props argument is destructured/ movie is the name of the prop
 function MovieCard({ movie, onMovieClick }) {
   return (
-    <div
+    <Card
       onClick={function () {
         onMovieClick(movie);
       }}
     >
-      {movie.Title}
-    </div>
+      <Card.Img variant="top" src={movie.ImagePath} />
+      <Card.Body>
+        <Card.Title>{movie.Title}</Card.Title>
+        <Card.Text>by {movie.Director.Name}</Card.Text>
+      </Card.Body>
+    </Card>
   );
 }
 
