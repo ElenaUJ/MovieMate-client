@@ -117,14 +117,13 @@ function MainView() {
     // onClick cannot be added dirctly to the component because it will be understood as prop
     <Row className="justify-content-md-center">
       {!user ? (
-        <Col md={4}>
+        <Col md={6}>
           <LoginView
             onLoggedIn={function (user, token) {
               setUser(user);
               setToken(token);
             }}
           ></LoginView>
-          <h2 className="mb-3">Or sign up here</h2>
           <SignupView></SignupView>
         </Col>
       ) : movies.length === 0 ? (

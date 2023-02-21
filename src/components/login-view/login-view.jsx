@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
+import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
@@ -48,36 +49,41 @@ function LoginView({ onLoggedIn }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="loginFormUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          onChange={function (event) {
-            setUsername(event.target.value);
-          }}
-          required
-          pattern="[a-zA-Z0-9]+"
-        />
-      </Form.Group>
-      <Form.Group controlId="loginFormPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={function (event) {
-            setPassword(event.target.value);
-          }}
-          required
-        />
-      </Form.Group>
-      <div className="align-right mt-3">
-        <Button className="mb-5" variant="primary" type="submit">
-          Submit
-        </Button>
-      </div>
-    </Form>
+    <Card className="mt-5 mb-4">
+      <Card.Body>
+        <Card.Title>Login</Card.Title>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="loginFormUsername">
+            <Form.Label>Username:</Form.Label>
+            <Form.Control
+              type="text"
+              value={username}
+              onChange={function (event) {
+                setUsername(event.target.value);
+              }}
+              required
+              pattern="[a-zA-Z0-9]+"
+            />
+          </Form.Group>
+          <Form.Group controlId="loginFormPassword">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={function (event) {
+                setPassword(event.target.value);
+              }}
+              required
+            />
+          </Form.Group>
+          <div className="align-right mt-3">
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </div>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 }
 
