@@ -27383,7 +27383,7 @@ function MainView() {
                             setToken(null);
                             localStorage.clear();
                         },
-                        children: "Logout"
+                        children: "Click here to log out"
                     }, void 0, false, {
                         fileName: "src/components/main-view/main-view.jsx",
                         lineNumber: 150,

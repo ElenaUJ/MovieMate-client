@@ -155,7 +155,7 @@ function MainView() {
                 localStorage.clear();
               }}
             >
-              Logout
+              Click here to log out
             </Button>
           </div>
         </>
