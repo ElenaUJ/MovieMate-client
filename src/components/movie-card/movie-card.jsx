@@ -1,22 +1,21 @@
 import { PropTypes } from 'prop-types';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 
 // props argument is destructured/ movie is the name of the prop
-function MovieCard({ movie, onMovieClick }) {
+function MovieCard({ movie }) {
   // Bootstrap utility class h-100 sets moviecards to 100% -- same size
+  // Typically, ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
   return (
-    <Card
-      className="h-100"
-      onClick={function () {
-        onMovieClick(movie);
-      }}
-    >
-      <Card.Img src={movie.ImagePath} />
-      <Card.Body>
-        <Card.Title>{movie.Title}</Card.Title>
-        <Card.Text>by {movie.Director.Name}</Card.Text>
-      </Card.Body>
-    </Card>
+    <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+      <Card className="h-100">
+        <Card.Img src={movie.ImagePath} />
+        <Card.Body>
+          <Card.Title>{movie.Title}</Card.Title>
+          <Card.Text>by {movie.Director.Name}</Card.Text>
+        </Card.Body>
+      </Card>
+    </Link>
   );
 }
 
@@ -42,5 +41,4 @@ MovieCard.propTypes = {
     ImagePath: PropTypes.string.isRequired,
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
 };
