@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import { NavigationBar } from '../navigation-bar/navigation-bar.jsx';
 import { LoginView } from '../login-view/login-view.jsx';
 import { SignupView } from '../signup-view/signup-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Function returns visual representation of component
 function MainView() {
@@ -61,104 +63,101 @@ function MainView() {
     // replace keyword when navigating to login page means the current URL is replaced in the history stack, so the user can't go back hitting the back button
     // Route to path="/movies/:movieId" contains URL param, allowing Routes to match dynamic URLs
     <BrowserRouter>
-      <Row className="justify-content-md-center">
-        <Routes>
-          <Route
-            path="/signup"
-            element={
-              <>
-                {user ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Col md={6}>
-                    <SignupView />
-                  </Col>
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <>
-                {user ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Col md={6}>
-                    <LoginView
-                      onLoggedIn={function (user, token) {
-                        setUser(user);
-                        setToken(token);
-                      }}
-                    />
-                  </Col>
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/movies/:movieId"
-            element={
-              <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : errorMessage ? (
-                  <Col md={3}>{errorMessage}</Col>
-                ) : movies.length === 0 ? (
-                  <Col md={3}>Fetching movies...</Col>
-                ) : (
-                  <Col md={8}>
-                    <MovieView movies={movies} />
-                  </Col>
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : errorMessage ? (
-                  <Col md={3}>{errorMessage}</Col>
-                ) : movies.length === 0 ? (
-                  <Col md={3}>Fetching movies...</Col>
-                ) : (
-                  <>
-                    {movies.map(function (movie) {
-                      return (
-                        <Col
-                          className="mb-4"
-                          key={movie._id}
-                          md={3}
-                          sm={4}
-                          xs={6}
-                        >
-                          <MovieCard movie={movie} />
-                        </Col>
-                      );
-                    })}
-                  </>
-                )}
-                <Link to={`/login`}>
-                  <div className="align-right">
-                    <button
-                      onClick={function () {
-                        setUser(null);
-                        setToken(null);
-                        localStorage.clear();
-                      }}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </Link>
-              </>
-            }
-          />
-        </Routes>
-      </Row>
+      <NavigationBar
+        user={user}
+        onLoggedOut={function () {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      />
+      <Container>
+        <Row className="justify-content-md-center" mt={5}>
+          <Routes>
+            <Route
+              path="/signup"
+              element={
+                <>
+                  {user ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Col md={6}>
+                      <SignupView />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <>
+                  {user ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Col md={6}>
+                      <LoginView
+                        onLoggedIn={function (user, token) {
+                          setUser(user);
+                          setToken(token);
+                        }}
+                      />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/movies/:movieId"
+              element={
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : errorMessage ? (
+                    <Col md={3}>{errorMessage}</Col>
+                  ) : movies.length === 0 ? (
+                    <Col md={3}>Fetching movies...</Col>
+                  ) : (
+                    <Col md={8}>
+                      <MovieView movies={movies} />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : errorMessage ? (
+                    <Col md={3}>{errorMessage}</Col>
+                  ) : movies.length === 0 ? (
+                    <Col md={3}>Fetching movies...</Col>
+                  ) : (
+                    <>
+                      {movies.map(function (movie) {
+                        return (
+                          <Col
+                            className="mt-4"
+                            key={movie._id}
+                            md={3}
+                            sm={4}
+                            xs={6}
+                          >
+                            <MovieCard movie={movie} />
+                          </Col>
+                        );
+                      })}
+                    </>
+                  )}
+                </>
+              }
+            />
+          </Routes>
+        </Row>
+      </Container>
     </BrowserRouter>
   );
 }

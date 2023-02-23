@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // props argument is destructured/ movie is the name of the prop
 function MovieCard({ movie }) {
   // Bootstrap utility class h-100 sets moviecards to 100% -- same size
-  // Typically, ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
+  // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
   return (
     <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
       <Card className="h-100">
