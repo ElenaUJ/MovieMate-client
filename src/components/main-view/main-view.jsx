@@ -4,6 +4,7 @@ import { LoginView } from '../login-view/login-view.jsx';
 import { SignupView } from '../signup-view/signup-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
+import { ProfileView } from '../profile-view/profile-view.jsx';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -150,6 +151,24 @@ function MainView() {
                         );
                       })}
                     </>
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : (
+                    <Col>
+                      <ProfileView
+                        user={user}
+                        token={token}
+                        setUser={setUser}
+                      />
+                    </Col>
                   )}
                 </>
               }
