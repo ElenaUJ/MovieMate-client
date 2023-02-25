@@ -9,6 +9,7 @@ function MovieView({ movies }) {
   const movie = movies.find(function (m) {
     return m._id === movieId;
   });
+
   return (
     <>
       <h1>{movie.Title}</h1>
@@ -17,7 +18,7 @@ function MovieView({ movies }) {
         <br />
         Genre: {movie.Genre.Name}
       </p>
-      <p>Description: {movie.Description}</p>
+      <p>{movie.Description}</p>
       <img className="w-100 mb-4" src={movie.ImagePath} />
       <Link to={`/`}>
         <div className="align-right">

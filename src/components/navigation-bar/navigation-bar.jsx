@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 function NavigationBar({ user, onLoggedOut }) {
   // className="me-auto" aligns navigation menu to right side of page
-  // {!user && (...)} is using ternary operator - if !user is truthy, code inside () will be rendered, otherwise not
   return (
     <Navbar collapseOnSelect bg="light" expand="md" sticky="top">
       <Container mb={5}>
@@ -48,7 +47,7 @@ NavigationBar.propTypes = {
     Username: PropTypes.string.isRequired,
     Password: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.instanceOf(Date).isRequired,
+    Birthday: PropTypes.string.isRequired,
     TopMovies: PropTypes.array,
   }),
   onLoggedOut: PropTypes.func.isRequired,

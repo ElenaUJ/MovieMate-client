@@ -37,7 +37,6 @@ function SignupView() {
         if (response.ok) {
           console.log(response.json());
           alert('Successfully registered!');
-          window.location.reload();
         } else {
           console.log('Registration failed.');
           alert('Registration failed.');

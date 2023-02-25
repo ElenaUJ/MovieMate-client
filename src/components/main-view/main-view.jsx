@@ -25,7 +25,6 @@ function MainView() {
   // Hook for async tasks, runs callback whenever dependencies change
   useEffect(
     function () {
-      // Question: Do I need this at all?
       if (!token) {
         return;
       }
@@ -116,7 +115,7 @@ function MainView() {
                   ) : errorMessage ? (
                     <Col md={3}>{errorMessage}</Col>
                   ) : movies.length === 0 ? (
-                    <Col md={3}>Fetching movies...</Col>
+                    <Col md={3}>Fetching movie...</Col>
                   ) : (
                     <Col md={8}>
                       <MovieView movies={movies} />
