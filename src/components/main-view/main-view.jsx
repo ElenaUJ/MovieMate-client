@@ -172,6 +172,7 @@ function MainView() {
                           setToken(null);
                           localStorage.clear();
                         }}
+                        movies={movies}
                       />
                     </Col>
                   )}

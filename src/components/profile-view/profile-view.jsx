@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { MovieCard } from '../movie-card/movie-card.jsx';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function ProfileView({ user, token, setUser, onDeregistered }) {
+function ProfileView({ user, token, setUser, onDeregistered, movies }) {
   const printBirthday = user.Birthday.slice(0, 10);
 
   const [username, setUsername] = useState('');
@@ -107,6 +108,11 @@ function ProfileView({ user, token, setUser, onDeregistered }) {
       });
   };
 
+  let topMovies = movies.filter(function (movie) {
+    console.log(user.TopMovies);
+    return user.TopMovies.includes(movie._id);
+  });
+
   return (
     <>
       <h1>My Profile</h1>
@@ -121,11 +127,6 @@ function ProfileView({ user, token, setUser, onDeregistered }) {
                 Email: {user.Email}
                 <br />
                 Birthday: {printBirthday}
-                <br />
-                Favourite Movies:
-                {user.TopMovies.map(function (movie) {
-                  return movie + ' ';
-                })}
               </Card.Text>
             </Card.Body>
           </Card>
@@ -201,6 +202,16 @@ function ProfileView({ user, token, setUser, onDeregistered }) {
           </Card>
         </Col>
       </Row>
+      <Row>
+        <h1>My favourite movies</h1>
+        {topMovies.map(function (movie) {
+          return (
+            <Col className="mt-4" key={movie._id} md={3} sm={4} xs={6}>
+              <MovieCard movie={movie} />
+            </Col>
+          );
+        })}
+      </Row>
 
       <Link to={`/`}>
         <div className="align-right">
@@ -224,5 +235,24 @@ ProfileView.propTypes = {
   }).isRequired,
   token: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
-  onDeregistere: PropTypes.func.isRequired,
+  onDeregistered: PropTypes.func.isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+      Genre: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired,
+      }).isRequired,
+      Director: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Bio: PropTypes.string.isRequired,
+        Birth: PropTypes.string.isRequired,
+        Death: PropTypes.string,
+      }).isRequired,
+      ImagePath: PropTypes.string.isRequired,
+      Featured: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
 };
