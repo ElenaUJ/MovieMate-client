@@ -167,6 +167,11 @@ function MainView() {
                         user={user}
                         token={token}
                         setUser={setUser}
+                        onDeregistered={function () {
+                          setUser(null);
+                          setToken(null);
+                          localStorage.clear();
+                        }}
                       />
                     </Col>
                   )}

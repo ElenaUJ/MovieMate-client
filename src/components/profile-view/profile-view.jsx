@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function ProfileView({ user, token, setUser }) {
+function ProfileView({ user, token, setUser, onDeregistered }) {
   const printBirthday = user.Birthday.slice(0, 10);
 
   const [username, setUsername] = useState('');
@@ -67,6 +67,38 @@ function ProfileView({ user, token, setUser }) {
         } else {
           console.log('Update failed.');
           alert('Update failed.');
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+        alert('Error: Something went wrong.');
+      });
+  };
+
+  const deleteUser = function () {
+    fetch(
+      `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}`,
+      {
+        method: 'DELETE',
+        headers: {
+          // Question: Do I need this here? Is it just for the request?
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then(function (response) {
+        if (response.ok) {
+          console.log('User was successfully deleted.');
+          alert('Successfully deleted!');
+          onDeregistered();
+        } else if (response.status === 401) {
+          console.log('Unauthorized');
+          alert('Unauthorized.');
+          throw new Error('Unauthorized.');
+        } else {
+          console.log('Deregistration failed.');
+          alert('Deregistration failed.');
         }
       })
       .catch(function (error) {
@@ -162,6 +194,9 @@ function ProfileView({ user, token, setUser }) {
                   </Button>
                 </div>
               </Form>
+              <Button type="button" variant="danger" onClick={deleteUser}>
+                Delete account
+              </Button>
             </Card.Body>
           </Card>
         </Col>
@@ -189,4 +224,5 @@ ProfileView.propTypes = {
   }).isRequired,
   token: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
+  onDeregistere: PropTypes.func.isRequired,
 };
