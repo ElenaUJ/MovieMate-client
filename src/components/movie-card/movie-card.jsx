@@ -9,6 +9,7 @@ function MovieCard({ movie }) {
   return (
     <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
       <Card className="h-100">
+        {movie.Featured ? <Card.Header>Featured</Card.Header> : false}
         <Card.Img src={movie.ImagePath} />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>

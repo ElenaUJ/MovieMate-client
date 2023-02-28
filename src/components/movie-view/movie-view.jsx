@@ -178,5 +178,5 @@ MovieView.propTypes = {
     TopMovies: PropTypes.array,
   }).isRequired,
   token: PropTypes.string.isRequired,
-  setUser: PropTypes.func.inRequired,
+  setUser: PropTypes.func.isRequired,
 };
