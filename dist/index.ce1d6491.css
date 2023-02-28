@@ -19,6 +19,10 @@
   background-color: #f7be16;
 }
 
+.card-link-unstyled {
+  text-decoration: none;
+}
+
 a.btn-secondary {
   color: #2f4858;
 }

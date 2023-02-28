@@ -7,7 +7,10 @@ function MovieCard({ movie }) {
   // Bootstrap utility class h-100 sets moviecards to 100% -- same size
   // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
   return (
-    <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+    <Link
+      to={`/movies/${encodeURIComponent(movie._id)}`}
+      className="card-link-unstyled"
+    >
       <Card className="card h-100">
         {movie.Featured ? (
           <Card.Header className="card-header">Featured</Card.Header>

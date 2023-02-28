@@ -22,6 +22,9 @@ $accent: #f7be16;
     background-color: $accent;
   }
 }
+.card-link-unstyled {
+  text-decoration: none;
+}
 
 // Buttons
 a.btn-secondary {
