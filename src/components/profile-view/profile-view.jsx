@@ -40,6 +40,12 @@ function ProfileView({ user, token, setUser, onDeregistered, movies }) {
     if (birthday) {
       data.Birthday = birthday;
     }
+    // Don't fetch if update object is empty
+    if (Object.keys(data).length === 0) {
+      console.log('No updates.');
+      alert('No inputs found.');
+      return;
+    }
 
     fetch(
       `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}`,
