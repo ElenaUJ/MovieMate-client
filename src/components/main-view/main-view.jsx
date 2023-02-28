@@ -119,7 +119,14 @@ function MainView() {
                     <Col md={3}>Fetching movie...</Col>
                   ) : (
                     <Col md={8}>
-                      <MovieView movies={movies} />
+                      <MovieView
+                        movies={movies}
+                        user={user}
+                        token={token}
+                        setUser={function (user) {
+                          setUser(user);
+                        }}
+                      />
                     </Col>
                   )}
                 </>

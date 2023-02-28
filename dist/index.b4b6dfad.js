@@ -27322,7 +27322,12 @@ function MainView() {
                                     }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                         md: 8,
                                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
-                                            movies: movies
+                                            movies: movies,
+                                            user: user,
+                                            token: token,
+                                            setUser: function(user) {
+                                                setUser(user);
+                                            }
                                         }, void 0, false, void 0, void 0)
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false)
@@ -27359,7 +27364,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 128,
+                                lineNumber: 135,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27384,7 +27389,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 158,
+                                lineNumber: 165,
                                 columnNumber: 13
                             }, this)
                         ]
@@ -39735,25 +39740,81 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MovieView", ()=>MovieView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
 var _propTypes = require("prop-types");
 var _reactRouterDom = require("react-router-dom");
 var _reactRouter = require("react-router");
+var _toggleButton = require("react-bootstrap/ToggleButton");
+var _toggleButtonDefault = parcelHelpers.interopDefault(_toggleButton);
 var _s = $RefreshSig$();
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
-function MovieView({ movies  }) {
+function MovieView({ movies , user , token , setUser  }) {
     _s();
     // Accesses movieId URL param that has been defined in the movie-card component
     const { movieId  } = (0, _reactRouter.useParams)();
     const movie = movies.find(function(m) {
         return m._id === movieId;
     });
+    // Checking if movie is already in user's top movies and setting Liked state
+    const isLiked = user.TopMovies.includes(movieId);
+    const [liked, setLiked] = (0, _react.useState)(isLiked);
+    const handleFavourites = function() {
+        if (!liked) fetch(`https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`, {
+            method: "POST",
+            headers: {
+                // Question: Do I need this here? Is it just for the request?
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(function(response) {
+            if (response.status === 401) {
+                console.log("Unauthorized");
+                alert("Unauthorized.");
+                throw new Error("Unauthorized.");
+            } else if (response.ok) {
+                console.log("Movie was liked in database");
+                setLiked(true);
+                return response.json();
+            }
+        }).then(function(updatedUser) {
+            setUser(updatedUser);
+            console.log("Liked was handled.");
+        }).catch(function(error) {
+            console.error(error);
+            alert("Error: Something went wrong.");
+        });
+        else if (liked) fetch(`https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`, {
+            method: "DELETE",
+            headers: {
+                // Question: Do I need this here? Is it just for the request?
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(function(response) {
+            if (response.status === 401) {
+                console.log("Unauthorized");
+                alert("Unauthorized.");
+                throw new Error("Unauthorized.");
+            } else if (response.ok) {
+                console.log("Movie was unliked in database");
+                setLiked(false);
+                return response.json();
+            }
+        }).then(function(updatedUser) {
+            setUser(updatedUser);
+            console.log("Unliked was handled.");
+        }).catch(function(error) {
+            console.error(error);
+            alert("Error: Something went wrong.");
+        });
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
                 children: movie.Title
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 15,
+                lineNumber: 87,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -39762,7 +39823,7 @@ function MovieView({ movies  }) {
                     movie.Director.Name,
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 18,
+                        lineNumber: 90,
                         columnNumber: 9
                     }, this),
                     "Genre: ",
@@ -39770,14 +39831,14 @@ function MovieView({ movies  }) {
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 16,
+                lineNumber: 88,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                 children: movie.Description
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 21,
+                lineNumber: 93,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
@@ -39785,7 +39846,26 @@ function MovieView({ movies  }) {
                 src: movie.ImagePath
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 22,
+                lineNumber: 94,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _toggleButtonDefault.default), {
+                id: "toggle-favourite",
+                type: "checkbox",
+                variant: "outline-secondary",
+                checked: isLiked,
+                value: "1",
+                onChange: function(event) {
+                    event.preventDefault();
+                    // what does this do?
+                    setLiked(event.currentTarget.checked);
+                    console.log("Liked button was clicked and set to: [object Object]");
+                    handleFavourites();
+                },
+                children: "Like it"
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 95,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -39796,23 +39876,23 @@ function MovieView({ movies  }) {
                         children: "Back"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 25,
+                        lineNumber: 113,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 24,
+                    lineNumber: 112,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 23,
+                lineNumber: 111,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true);
 }
-_s(MovieView, "e2L2DPdRH1AShA7yIOCsYRlzvlI=", false, function() {
+_s(MovieView, "Ofnd5a/4MskjJcRGjj97h8VII0Y=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];
@@ -39836,7 +39916,17 @@ MovieView.propTypes = {
         }).isRequired,
         ImagePath: (0, _propTypes.PropTypes).string.isRequired,
         Featured: (0, _propTypes.PropTypes).bool.isRequired
-    })).isRequired
+    })).isRequired,
+    user: (0, _propTypes.PropTypes).shape({
+        _id: (0, _propTypes.PropTypes).string.isRequired,
+        Username: (0, _propTypes.PropTypes).string.isRequired,
+        Password: (0, _propTypes.PropTypes).string.isRequired,
+        Email: (0, _propTypes.PropTypes).string.isRequired,
+        Birthday: (0, _propTypes.PropTypes).string.isRequired,
+        TopMovies: (0, _propTypes.PropTypes).array
+    }).isRequired,
+    token: (0, _propTypes.PropTypes).string.isRequired,
+    setUser: (0, _propTypes.PropTypes).func.inRequired
 };
 var _c;
 $RefreshReg$(_c, "MovieView");
@@ -39846,7 +39936,49 @@ $RefreshReg$(_c, "MovieView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","prop-types":"7wKI2","react-router-dom":"9xmpe","react-router":"dbWyW","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"2vVqf":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","react-router":"dbWyW","react-bootstrap/ToggleButton":"dCmeV","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"dCmeV":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _button = require("./Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _jsxRuntime = require("react/jsx-runtime");
+const noop = ()=>undefined;
+const ToggleButton = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , name , className , checked , type , onChange , value , disabled , id , inputRef , ...props }, ref)=>{
+    bsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, "btn-check");
+    return /*#__PURE__*/ (0, _jsxRuntime.jsxs)((0, _jsxRuntime.Fragment), {
+        children: [
+            /*#__PURE__*/ (0, _jsxRuntime.jsx)("input", {
+                className: bsPrefix,
+                name: name,
+                type: type,
+                value: value,
+                ref: inputRef,
+                autoComplete: "off",
+                checked: !!checked,
+                disabled: !!disabled,
+                onChange: onChange || noop,
+                id: id
+            }),
+            /*#__PURE__*/ (0, _jsxRuntime.jsx)((0, _buttonDefault.default), {
+                ...props,
+                ref: ref,
+                className: (0, _classnamesDefault.default)(className, disabled && "disabled"),
+                type: undefined,
+                role: undefined,
+                as: "label",
+                htmlFor: id
+            })
+        ]
+    });
+});
+ToggleButton.displayName = "ToggleButton";
+exports.default = ToggleButton;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./Button":"aPzUt","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"l558H"}],"2vVqf":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$3c12 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -40297,7 +40429,7 @@ $RefreshReg$(_c, "ProfileView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6","react-bootstrap/Card":"lAynp","react-bootstrap/Form":"iBZ80","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw","../movie-card/movie-card.jsx":"bwuIu"}],"cMC39":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","../movie-card/movie-card.jsx":"bwuIu","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6","react-bootstrap/Card":"lAynp","react-bootstrap/Form":"iBZ80","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"cMC39":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
