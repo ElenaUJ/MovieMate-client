@@ -1,5 +1,32 @@
-$primary: SeaGreen;
-$body-bg: Honeydew;
+$primary: #2f4858;
+$secondary: #d6d6d6;
+$accent: #f7be16;
+
+.body {
+  background-color: $primary;
+  color: $secondary;
+}
+
+// Navbar
+.navbar {
+  background-color: $accent;
+}
+
+// Cards
+.card {
+  color: $primary;
+  .card-body {
+    background-color: white;
+  }
+  .card-header {
+    background-color: $accent;
+  }
+}
+
+// Buttons
+a.btn-secondary {
+  color: $primary;
+}
 
 h2 {
   text-align: center;

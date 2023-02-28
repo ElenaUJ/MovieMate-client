@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 function NavigationBar({ user, onLoggedOut }) {
   // className="me-auto" aligns navigation menu to right side of page
   return (
-    <Navbar collapseOnSelect bg="light" expand="md" sticky="top">
+    <Navbar className="navbar" collapseOnSelect expand="md" sticky="top">
       <Container mb={5}>
         <Navbar.Brand as={Link} to="/">
           myFlix

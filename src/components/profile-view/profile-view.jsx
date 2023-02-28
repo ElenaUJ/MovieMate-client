@@ -118,7 +118,7 @@ function ProfileView({ user, token, setUser, onDeregistered, movies }) {
       <h1>My Profile</h1>
       <Row>
         <Col md={6}>
-          <Card>
+          <Card className="card">
             <Card.Body>
               <Card.Title>My user information</Card.Title>
               <Card.Text>
@@ -132,7 +132,7 @@ function ProfileView({ user, token, setUser, onDeregistered, movies }) {
           </Card>
         </Col>
         <Col md={6}>
-          <Card>
+          <Card className="card">
             <Card.Body>
               <Card.Title>Update user information</Card.Title>
               <Form onSubmit={handleSubmit}>
@@ -212,12 +212,16 @@ function ProfileView({ user, token, setUser, onDeregistered, movies }) {
           );
         })}
       </Row>
-
-      <Link to={`/`}>
-        <div className="align-right">
-          <button>Back</button>
-        </div>
-      </Link>
+      <div className="align-right">
+        <Button
+          as={Link}
+          to={`/`}
+          variant="secondary"
+          className="btn-secondary"
+        >
+          Back
+        </Button>
+      </div>
     </>
   );
 }

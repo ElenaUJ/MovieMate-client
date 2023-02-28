@@ -49,7 +49,7 @@ function LoginView({ onLoggedIn }) {
   };
 
   return (
-    <Card className="mt-5 mb-4">
+    <Card className="card mt-5 mb-4">
       <Card.Body>
         <Card.Title>Login</Card.Title>
         <Form onSubmit={handleSubmit}>

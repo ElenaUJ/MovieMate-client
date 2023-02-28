@@ -6,6 +6,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
 function MovieView({ movies, user, token, setUser }) {
@@ -137,11 +138,16 @@ function MovieView({ movies, user, token, setUser }) {
         <h2>Similar movies:</h2>
         {printSimilarMovies}
       </Row>
-      <Link to={`/`}>
-        <div className="align-right">
-          <button>Back</button>
-        </div>
-      </Link>
+      <div className="align-right">
+        <Button
+          as={Link}
+          to={`/`}
+          variant="secondary"
+          className="btn-secondary"
+        >
+          Back
+        </Button>
+      </div>
     </>
   );
 }

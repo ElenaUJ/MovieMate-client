@@ -8,10 +8,14 @@ function MovieCard({ movie }) {
   // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
   return (
     <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
-      <Card className="h-100">
-        {movie.Featured ? <Card.Header>Featured</Card.Header> : false}
+      <Card className="card h-100">
+        {movie.Featured ? (
+          <Card.Header className="card-header">Featured</Card.Header>
+        ) : (
+          false
+        )}
         <Card.Img src={movie.ImagePath} />
-        <Card.Body>
+        <Card.Body className="card-body">
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>by {movie.Director.Name}</Card.Text>
         </Card.Body>

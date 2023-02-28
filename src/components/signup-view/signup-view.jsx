@@ -56,7 +56,7 @@ function SignupView() {
       {isRegistered ? (
         <Navigate to="/login" />
       ) : (
-        <Card className="mb-5">
+        <Card className="card mt-5 mb-4">
           <Card.Body>
             <Card.Title>Not registered yet? Sign up here.</Card.Title>
             <Form onSubmit={handleSubmit}>
