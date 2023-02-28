@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 
 function SignupView() {
   const [username, setUsername] = useState('');
@@ -58,8 +58,8 @@ function SignupView() {
       ) : (
         <Card className="card mt-5 mb-4">
           <Card.Body>
-            <Card.Title>Not registered yet? Sign up here.</Card.Title>
-            <Form onSubmit={handleSubmit}>
+            <Card.Title className="mb-4">Sign up here.</Card.Title>
+            <Form onSubmit={handleSubmit} className="mb-4">
               <Form.Group controlId="signupFormUsername">
                 <Form.Label>Username:</Form.Label>
                 <Form.Control
@@ -117,12 +117,16 @@ function SignupView() {
                   required
                 />
               </Form.Group>
+
               <div className="align-right mt-3">
                 <Button variant="primary" type="submit">
                   Register
                 </Button>
               </div>
             </Form>
+            <Link to="/login" className="mt-2">
+              Already registered? Log in here.
+            </Link>
           </Card.Body>
         </Card>
       )}

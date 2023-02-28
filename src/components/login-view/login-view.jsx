@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
 
 function LoginView({ onLoggedIn }) {
   const [username, setUsername] = useState('');
@@ -51,8 +52,8 @@ function LoginView({ onLoggedIn }) {
   return (
     <Card className="card mt-5 mb-4">
       <Card.Body>
-        <Card.Title>Login</Card.Title>
-        <Form onSubmit={handleSubmit}>
+        <Card.Title className="mb-4">Login</Card.Title>
+        <Form onSubmit={handleSubmit} className="mb-4">
           <Form.Group controlId="loginFormUsername">
             <Form.Label>Username:</Form.Label>
             <Form.Control
@@ -82,6 +83,7 @@ function LoginView({ onLoggedIn }) {
             </Button>
           </div>
         </Form>
+        <Link to="/signup">Not registered yet? Sign up here.</Link>
       </Card.Body>
     </Card>
   );
