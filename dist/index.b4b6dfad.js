@@ -27412,7 +27412,8 @@ function NavigationBar({ user , onLoggedOut  }) {
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default).Brand, {
                     as: (0, _reactRouterDom.Link),
                     to: "/",
-                    children: "myFlix"
+                    className: "logo",
+                    children: "MovieMate"
                 }, void 0, false, {
                     fileName: "src/components/navigation-bar/navigation-bar.jsx",
                     lineNumber: 12,

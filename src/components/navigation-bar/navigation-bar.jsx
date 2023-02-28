@@ -9,8 +9,8 @@ function NavigationBar({ user, onLoggedOut }) {
   return (
     <Navbar className="navbar" collapseOnSelect expand="md" sticky="top">
       <Container mb={5}>
-        <Navbar.Brand as={Link} to="/">
-          myFlix
+        <Navbar.Brand as={Link} to="/" className="logo">
+          MovieMate
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

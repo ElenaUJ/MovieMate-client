@@ -23,6 +23,11 @@ a.btn-secondary {
   color: #2f4858;
 }
 
+a.logo {
+  color: #2f4858;
+  font-weight: bold;
+}
+
 h2, .h2 {
   text-align: center;
 }
