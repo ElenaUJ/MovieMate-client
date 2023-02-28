@@ -3,6 +3,9 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import ToggleButton from 'react-bootstrap/ToggleButton';
+import { MovieCard } from '../movie-card/movie-card.jsx';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
 function MovieView({ movies, user, token, setUser }) {
@@ -82,6 +85,28 @@ function MovieView({ movies, user, token, setUser }) {
     }
   };
 
+  let similarMovies = movies.filter(function (similarMovie) {
+    return (
+      similarMovie.Genre.Name === movie.Genre.Name &&
+      similarMovie.Title !== movie.Title
+    );
+  });
+
+  let printSimilarMovies;
+  // Checking if there are similar movies at all
+  if (similarMovies.length === 0) {
+    printSimilarMovies = 'No similar movies in database.';
+  } else {
+    printSimilarMovies = similarMovies.map(function (movie) {
+      // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
+      return (
+        <Col key={movie._id} md={3} sm={4} xs={6}>
+          <MovieCard movie={movie}></MovieCard>
+        </Col>
+      );
+    });
+  }
+
   return (
     <>
       <h1>{movie.Title}</h1>
@@ -108,6 +133,10 @@ function MovieView({ movies, user, token, setUser }) {
       >
         Like it
       </ToggleButton>
+      <Row className="justify-content-md-center">
+        <h2>Similar movies:</h2>
+        {printSimilarMovies}
+      </Row>
       <Link to={`/`}>
         <div className="align-right">
           <button>Back</button>

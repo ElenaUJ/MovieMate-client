@@ -27151,52 +27151,7 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // Exposure of MainView component
-parcelHelpers.export(exports, "MainView", ()=>MainView) // Old code (selectedMovie)
- // if (selectedMovie) {
- //   let similarMovies = movies.filter(function (movie) {
- //     return (
- //       movie.Genre.Name === selectedMovie.Genre.Name &&
- //       movie.Title !== selectedMovie.Title
- //     );
- //   });
- //   let printSimilarMovies;
- //   // Checking if there are similar movies at all
- //   if (similarMovies.length === 0) {
- //     printSimilarMovies = 'No similar movies in database.';
- //   } else {
- //     printSimilarMovies = similarMovies.map(function (movie) {
- //       // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
- //       return (
- //         <Col key={movie._id} md={3} sm={4} xs={6}>
- //           <MovieCard
- //             movie={movie}
- //             onMovieClick={setSelectedMovie}
- //           ></MovieCard>
- //         </Col>
- //       );
- //     });
- //   }
- //   return (
- //     <>
- //       <Row className="justify-content-md-center">
- //         <Col md={8}>
- //           <MovieView
- //             movie={selectedMovie}
- //             onBackClick={function () {
- //               setSelectedMovie(null);
- //             }}
- //           ></MovieView>
- //           <hr />
- //         </Col>
- //       </Row>
- //       <Row className="justify-content-md-center">
- //         <h2>Similar movies:</h2>
- //         {printSimilarMovies}
- //       </Row>
- //     </>
- //   );
- // }
-;
+parcelHelpers.export(exports, "MainView", ()=>MainView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _navigationBarJsx = require("../navigation-bar/navigation-bar.jsx");
@@ -27218,7 +27173,7 @@ function MainView() {
     _s();
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
-    // if-else statement can not be used in useState hook (only expressions are allowerd, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
+    // if-else statement can not be used in useState hook (only expressions are allowed, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
     const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
     const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
@@ -39746,6 +39701,11 @@ var _reactRouterDom = require("react-router-dom");
 var _reactRouter = require("react-router");
 var _toggleButton = require("react-bootstrap/ToggleButton");
 var _toggleButtonDefault = parcelHelpers.interopDefault(_toggleButton);
+var _movieCardJsx = require("../movie-card/movie-card.jsx");
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
 var _s = $RefreshSig$();
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
 function MovieView({ movies , user , token , setUser  }) {
@@ -39808,13 +39768,38 @@ function MovieView({ movies , user , token , setUser  }) {
             alert("Error: Something went wrong.");
         });
     };
+    let similarMovies = movies.filter(function(similarMovie) {
+        return similarMovie.Genre.Name === movie.Genre.Name && similarMovie.Title !== movie.Title;
+    });
+    let printSimilarMovies;
+    // Checking if there are similar movies at all
+    if (similarMovies.length === 0) printSimilarMovies = "No similar movies in database.";
+    else printSimilarMovies = similarMovies.map(function(movie) {
+        // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+            md: 3,
+            sm: 4,
+            xs: 6,
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
+                movie: movie
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 104,
+                columnNumber: 11
+            }, this)
+        }, movie._id, false, {
+            fileName: "src/components/movie-view/movie-view.jsx",
+            lineNumber: 103,
+            columnNumber: 9
+        }, this);
+    });
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
                 children: movie.Title
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 87,
+                lineNumber: 112,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -39823,7 +39808,7 @@ function MovieView({ movies , user , token , setUser  }) {
                     movie.Director.Name,
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 90,
+                        lineNumber: 115,
                         columnNumber: 9
                     }, this),
                     "Genre: ",
@@ -39831,14 +39816,14 @@ function MovieView({ movies , user , token , setUser  }) {
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 88,
+                lineNumber: 113,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                 children: movie.Description
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 93,
+                lineNumber: 118,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
@@ -39846,7 +39831,7 @@ function MovieView({ movies , user , token , setUser  }) {
                 src: movie.ImagePath
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 94,
+                lineNumber: 119,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _toggleButtonDefault.default), {
@@ -39865,7 +39850,24 @@ function MovieView({ movies , user , token , setUser  }) {
                 children: "Like it"
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 95,
+                lineNumber: 120,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+                className: "justify-content-md-center",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                        children: "Similar movies:"
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 137,
+                        columnNumber: 9
+                    }, this),
+                    printSimilarMovies
+                ]
+            }, void 0, true, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 136,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -39876,17 +39878,17 @@ function MovieView({ movies , user , token , setUser  }) {
                         children: "Back"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 113,
+                        lineNumber: 142,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 112,
+                    lineNumber: 141,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 111,
+                lineNumber: 140,
                 columnNumber: 7
             }, this)
         ]
@@ -39936,7 +39938,7 @@ $RefreshReg$(_c, "MovieView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","react-router":"dbWyW","react-bootstrap/ToggleButton":"dCmeV","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"dCmeV":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","react-router":"dbWyW","react-bootstrap/ToggleButton":"dCmeV","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw","../movie-card/movie-card.jsx":"bwuIu","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6"}],"dCmeV":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -39978,7 +39980,40 @@ const ToggleButton = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , name , classN
 ToggleButton.displayName = "ToggleButton";
 exports.default = ToggleButton;
 
-},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./Button":"aPzUt","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"l558H"}],"2vVqf":[function(require,module,exports) {
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./Button":"aPzUt","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"l558H"}],"cMC39":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+const Row = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = "div" , ...props }, ref)=>{
+    const decoratedBsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, "row");
+    const breakpoints = (0, _themeProvider.useBootstrapBreakpoints)();
+    const minBreakpoint = (0, _themeProvider.useBootstrapMinBreakpoint)();
+    const sizePrefix = `${decoratedBsPrefix}-cols`;
+    const classes = [];
+    breakpoints.forEach((brkPoint)=>{
+        const propValue = props[brkPoint];
+        delete props[brkPoint];
+        let cols;
+        if (propValue != null && typeof propValue === "object") ({ cols  } = propValue);
+        else cols = propValue;
+        const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : "";
+        if (cols != null) classes.push(`${sizePrefix}${infix}-${cols}`);
+    });
+    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
+        ref: ref,
+        ...props,
+        className: (0, _classnamesDefault.default)(className, decoratedBsPrefix, ...classes)
+    });
+});
+Row.displayName = "Row";
+exports.default = Row;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"l558H"}],"2vVqf":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$3c12 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -40429,39 +40464,6 @@ $RefreshReg$(_c, "ProfileView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","../movie-card/movie-card.jsx":"bwuIu","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6","react-bootstrap/Card":"lAynp","react-bootstrap/Form":"iBZ80","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"cMC39":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _jsxRuntime = require("react/jsx-runtime");
-const Row = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-as: Component = "div" , ...props }, ref)=>{
-    const decoratedBsPrefix = (0, _themeProvider.useBootstrapPrefix)(bsPrefix, "row");
-    const breakpoints = (0, _themeProvider.useBootstrapBreakpoints)();
-    const minBreakpoint = (0, _themeProvider.useBootstrapMinBreakpoint)();
-    const sizePrefix = `${decoratedBsPrefix}-cols`;
-    const classes = [];
-    breakpoints.forEach((brkPoint)=>{
-        const propValue = props[brkPoint];
-        delete props[brkPoint];
-        let cols;
-        if (propValue != null && typeof propValue === "object") ({ cols  } = propValue);
-        else cols = propValue;
-        const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : "";
-        if (cols != null) classes.push(`${sizePrefix}${infix}-${cols}`);
-    });
-    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(Component, {
-        ref: ref,
-        ...props,
-        className: (0, _classnamesDefault.default)(className, decoratedBsPrefix, ...classes)
-    });
-});
-Row.displayName = "Row";
-exports.default = Row;
-
-},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"l558H"}],"lJZlQ":[function() {},{}]},["2ldyy","Q58tt","d8Dch"], "d8Dch", "parcelRequireaec4")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-router-dom":"9xmpe","../movie-card/movie-card.jsx":"bwuIu","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6","react-bootstrap/Card":"lAynp","react-bootstrap/Form":"iBZ80","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"l558H","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7okJw"}],"lJZlQ":[function() {},{}]},["2ldyy","Q58tt","d8Dch"], "d8Dch", "parcelRequireaec4")
 
 //# sourceMappingURL=index.b4b6dfad.js.map

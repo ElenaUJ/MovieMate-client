@@ -14,7 +14,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 function MainView() {
   const storedUser = JSON.parse(localStorage.getItem('user'));
   const storedToken = localStorage.getItem('token');
-  // if-else statement can not be used in useState hook (only expressions are allowerd, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
+  // if-else statement can not be used in useState hook (only expressions are allowed, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
 
@@ -195,52 +195,3 @@ function MainView() {
 
 // Exposure of MainView component
 export { MainView };
-
-// Old code (selectedMovie)
-
-// if (selectedMovie) {
-//   let similarMovies = movies.filter(function (movie) {
-//     return (
-//       movie.Genre.Name === selectedMovie.Genre.Name &&
-//       movie.Title !== selectedMovie.Title
-//     );
-//   });
-
-//   let printSimilarMovies;
-//   // Checking if there are similar movies at all
-//   if (similarMovies.length === 0) {
-//     printSimilarMovies = 'No similar movies in database.';
-//   } else {
-//     printSimilarMovies = similarMovies.map(function (movie) {
-//       // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
-//       return (
-//         <Col key={movie._id} md={3} sm={4} xs={6}>
-//           <MovieCard
-//             movie={movie}
-//             onMovieClick={setSelectedMovie}
-//           ></MovieCard>
-//         </Col>
-//       );
-//     });
-//   }
-
-//   return (
-//     <>
-//       <Row className="justify-content-md-center">
-//         <Col md={8}>
-//           <MovieView
-//             movie={selectedMovie}
-//             onBackClick={function () {
-//               setSelectedMovie(null);
-//             }}
-//           ></MovieView>
-//           <hr />
-//         </Col>
-//       </Row>
-//       <Row className="justify-content-md-center">
-//         <h2>Similar movies:</h2>
-//         {printSimilarMovies}
-//       </Row>
-//     </>
-//   );
-// }
