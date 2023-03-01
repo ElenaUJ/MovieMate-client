@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 
-function DeleteUser({ user, token, onDeregistered }) {
+function DeleteUser({ user, token, onLoggedOut }) {
   const deleteUser = function () {
     fetch(
       `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}`,
@@ -18,7 +18,7 @@ function DeleteUser({ user, token, onDeregistered }) {
         if (response.ok) {
           console.log('User was successfully deleted.');
           alert('Successfully deleted!');
-          onDeregistered();
+          onLoggedOut();
         } else if (response.status === 401) {
           console.log('Unauthorized');
           alert('Unauthorized.');
@@ -52,5 +52,5 @@ DeleteUser.propTypes = {
     TopMovies: PropTypes.array,
   }).isRequired,
   token: PropTypes.string.isRequired,
-  onDeregistered: PropTypes.func.isRequired,
+  onLoggedOut: PropTypes.func.isRequired,
 };

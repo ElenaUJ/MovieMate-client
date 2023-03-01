@@ -27179,6 +27179,11 @@ function MainView() {
     // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
     const [movies, setMovies] = (0, _react.useState)([]);
     const [errorMessage, setErrorMessage] = (0, _react.useState)(null);
+    const onLoggedOut = function() {
+        setUser(null);
+        setToken(null);
+        localStorage.clear();
+    };
     // Hook for async tasks, runs callback whenever dependencies change
     (0, _react.useEffect)(function() {
         if (!token) return;
@@ -27203,9 +27208,7 @@ function MainView() {
             console.error(error);
             if (error.message === "Unauthorized.") {
                 setErrorMessage("Error: Unauthorized. Please log in again.");
-                setUser(null);
-                setToken(null);
-                localStorage.clear();
+                onLoggedOut();
             } else setErrorMessage("Error: Movies could not be fetched.");
         });
     }, // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
@@ -27218,14 +27221,10 @@ function MainView() {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navigationBarJsx.NavigationBar), {
                 user: user,
-                onLoggedOut: function() {
-                    setUser(null);
-                    setToken(null);
-                    localStorage.clear();
-                }
+                onLoggedOut: onLoggedOut
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 78,
+                lineNumber: 82,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _containerDefault.default), {
@@ -27246,7 +27245,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 89,
+                                lineNumber: 86,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27266,7 +27265,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 103,
+                                lineNumber: 100,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27293,7 +27292,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 122,
+                                lineNumber: 119,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27324,7 +27323,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 145,
+                                lineNumber: 142,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27338,40 +27337,36 @@ function MainView() {
                                             user: user,
                                             token: token,
                                             setUser: setUser,
-                                            onDeregistered: function() {
-                                                setUser(null);
-                                                setToken(null);
-                                                localStorage.clear();
-                                            },
+                                            onLoggedOut: onLoggedOut,
                                             movies: movies
                                         }, void 0, false, void 0, void 0)
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 175,
+                                lineNumber: 172,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 88,
+                        lineNumber: 85,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 87,
+                    lineNumber: 84,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 86,
+                lineNumber: 83,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 77,
+        lineNumber: 81,
         columnNumber: 5
     }, this));
 }
@@ -40075,7 +40070,7 @@ var _card = require("react-bootstrap/Card");
 var _cardDefault = parcelHelpers.interopDefault(_card);
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
-function ProfileView({ user , token , setUser , onDeregistered , movies  }) {
+function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
@@ -40156,7 +40151,7 @@ function ProfileView({ user , token , setUser , onDeregistered , movies  }) {
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _deleteUserJsx.DeleteUser), {
                                         user: user,
                                         token: token,
-                                        onDeregistered: onDeregistered
+                                        onLoggedOut: onLoggedOut
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
                                         lineNumber: 36,
@@ -40190,12 +40185,12 @@ function ProfileView({ user , token , setUser , onDeregistered , movies  }) {
                     movies: movies
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 46,
+                    lineNumber: 42,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 45,
+                lineNumber: 41,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -40208,12 +40203,12 @@ function ProfileView({ user , token , setUser , onDeregistered , movies  }) {
                     children: "Back"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 49,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 48,
+                lineNumber: 44,
                 columnNumber: 7
             }, this)
         ]
@@ -40231,7 +40226,7 @@ ProfileView.propTypes = {
     }).isRequired,
     token: (0, _propTypes.PropTypes).string.isRequired,
     setUser: (0, _propTypes.PropTypes).func.isRequired,
-    onDeregistered: (0, _propTypes.PropTypes).func.isRequired,
+    onLoggedOut: (0, _propTypes.PropTypes).func.isRequired,
     movies: (0, _propTypes.PropTypes).arrayOf((0, _propTypes.PropTypes).shape({
         _id: (0, _propTypes.PropTypes).string.isRequired,
         Title: (0, _propTypes.PropTypes).string.isRequired,
@@ -40427,10 +40422,10 @@ var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _s = $RefreshSig$();
 function UpdateUser({ user , token , setUser  }) {
     _s();
-    const [username, setUsername] = (0, _react.useState)("");
-    const [password, setPassword] = (0, _react.useState)("");
-    const [email, setEmail] = (0, _react.useState)("");
-    const [birthday, setBirthday] = (0, _react.useState)("");
+    const [usernameUpdate, setUsernameUpdate] = (0, _react.useState)("");
+    const [passwordUpdate, setPasswordUpdate] = (0, _react.useState)("");
+    const [emailUpdate, setEmailUpdate] = (0, _react.useState)("");
+    const [birthdayUpdate, setBirthdayUpdate] = (0, _react.useState)("");
     const handleSubmit = function(event) {
         event.preventDefault();
         // // const secondPassword = document.querySelector('.secondPassword').value;
@@ -40440,10 +40435,10 @@ function UpdateUser({ user , token , setUser  }) {
         // }
         // Only will send keys in the update objects that were actually updated in the form fields
         const data = {};
-        if (username) data.Username = username;
-        if (password) data.Password = password;
-        if (email) data.Email = email;
-        if (birthday) data.Birthday = birthday;
+        if (usernameUpdate) data.Username = usernameUpdate;
+        if (passwordUpdate) data.Password = passwordUpdate;
+        if (emailUpdate) data.Email = emailUpdate;
+        if (birthdayUpdate) data.Birthday = birthdayUpdate;
         // Don't fetch if update object is empty
         if (Object.keys(data).length === 0) {
             console.log("No updates.");
@@ -40466,10 +40461,10 @@ function UpdateUser({ user , token , setUser  }) {
                     // Object.assign combines prevUser object (2nd argument) with new data (3rd argument) in new object (first argument)
                     return Object.assign({}, prevUser, data);
                 });
-                setUsername("");
-                setPassword("");
-                setEmail("");
-                setBirthday("");
+                setUsernameUpdate("");
+                setPasswordUpdate("");
+                setEmailUpdate("");
+                setBirthdayUpdate("");
             } else {
                 console.log("Update failed.");
                 alert("Update failed.");
@@ -40496,9 +40491,9 @@ function UpdateUser({ user , token , setUser  }) {
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "text",
-                            value: username,
+                            value: usernameUpdate,
                             onChange: function(event) {
-                                setUsername(event.target.value);
+                                setUsernameUpdate(event.target.value);
                             },
                             pattern: "[a-zA-Z0-9]+"
                         }, void 0, false, {
@@ -40531,9 +40526,9 @@ function UpdateUser({ user , token , setUser  }) {
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "password",
-                            value: password,
+                            value: passwordUpdate,
                             onChange: function(event) {
-                                setPassword(event.target.value);
+                                setPasswordUpdate(event.target.value);
                             }
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-user.jsx",
@@ -40558,9 +40553,9 @@ function UpdateUser({ user , token , setUser  }) {
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "email",
-                            value: email,
+                            value: emailUpdate,
                             onChange: function(event) {
-                                setEmail(event.target.value);
+                                setEmailUpdate(event.target.value);
                             }
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-user.jsx",
@@ -40585,9 +40580,9 @@ function UpdateUser({ user , token , setUser  }) {
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                             type: "date",
-                            value: birthday,
+                            value: birthdayUpdate,
                             onChange: function(event) {
-                                setBirthday(event.target.value);
+                                setBirthdayUpdate(event.target.value);
                             }
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-user.jsx",
@@ -40624,7 +40619,7 @@ function UpdateUser({ user , token , setUser  }) {
         }, this)
     }, void 0, false);
 }
-_s(UpdateUser, "tdA1KK8yaZidqYo0wscqshHt/KE=");
+_s(UpdateUser, "9NsNXRseivsMaUdp18wQqR7fI74=");
 _c = UpdateUser;
 UpdateUser.propTypes = {
     user: (0, _propTypes.PropTypes).shape({
@@ -40660,7 +40655,7 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
-function DeleteUser({ user , token , onDeregistered  }) {
+function DeleteUser({ user , token , onLoggedOut  }) {
     const deleteUser = function() {
         fetch(`https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}`, {
             method: "DELETE",
@@ -40673,7 +40668,7 @@ function DeleteUser({ user , token , onDeregistered  }) {
             if (response.ok) {
                 console.log("User was successfully deleted.");
                 alert("Successfully deleted!");
-                onDeregistered();
+                onLoggedOut();
             } else if (response.status === 401) {
                 console.log("Unauthorized");
                 alert("Unauthorized.");
@@ -40709,7 +40704,7 @@ DeleteUser.propTypes = {
         TopMovies: (0, _propTypes.PropTypes).array
     }).isRequired,
     token: (0, _propTypes.PropTypes).string.isRequired,
-    onDeregistered: (0, _propTypes.PropTypes).func.isRequired
+    onLoggedOut: (0, _propTypes.PropTypes).func.isRequired
 };
 var _c;
 $RefreshReg$(_c, "DeleteUser");

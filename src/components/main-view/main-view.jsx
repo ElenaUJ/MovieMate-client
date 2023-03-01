@@ -23,6 +23,12 @@ function MainView() {
 
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const onLoggedOut = function () {
+    setUser(null);
+    setToken(null);
+    localStorage.clear();
+  };
+
   // Hook for async tasks, runs callback whenever dependencies change
   useEffect(
     function () {
@@ -59,9 +65,7 @@ function MainView() {
           console.error(error);
           if (error.message === 'Unauthorized.') {
             setErrorMessage('Error: Unauthorized. Please log in again.');
-            setUser(null);
-            setToken(null);
-            localStorage.clear();
+            onLoggedOut();
           } else {
             setErrorMessage('Error: Movies could not be fetched.');
           }
@@ -75,14 +79,7 @@ function MainView() {
     // replace keyword when navigating to login page means the current URL is replaced in the history stack, so the user can't go back hitting the back button
     // Route to path="/movies/:movieId" contains URL param, allowing Routes to match dynamic URLs
     <BrowserRouter>
-      <NavigationBar
-        user={user}
-        onLoggedOut={function () {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      />
+      <NavigationBar user={user} onLoggedOut={onLoggedOut} />
       <Container>
         <Row className="justify-content-md-center" mt={5}>
           <Routes>
@@ -184,11 +181,7 @@ function MainView() {
                         user={user}
                         token={token}
                         setUser={setUser}
-                        onDeregistered={function () {
-                          setUser(null);
-                          setToken(null);
-                          localStorage.clear();
-                        }}
+                        onLoggedOut={onLoggedOut}
                         movies={movies}
                       />
                     </Col>

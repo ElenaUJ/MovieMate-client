@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-function ProfileView({ user, token, setUser, onDeregistered, movies }) {
+function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
   return (
     <>
       <h1>My Profile</h1>
@@ -33,11 +33,7 @@ function ProfileView({ user, token, setUser, onDeregistered, movies }) {
             <Card.Body>
               <Card.Title>Update user information</Card.Title>
               <UpdateUser user={user} token={token} setUser={setUser} />
-              <DeleteUser
-                user={user}
-                token={token}
-                onDeregistered={onDeregistered}
-              />
+              <DeleteUser user={user} token={token} onLoggedOut={onLoggedOut} />
             </Card.Body>
           </Card>
         </Col>
@@ -72,7 +68,7 @@ ProfileView.propTypes = {
   }).isRequired,
   token: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
-  onDeregistered: PropTypes.func.isRequired,
+  onLoggedOut: PropTypes.func.isRequired,
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,

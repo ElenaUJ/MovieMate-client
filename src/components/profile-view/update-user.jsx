@@ -4,10 +4,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function UpdateUser({ user, token, setUser }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [usernameUpdate, setUsernameUpdate] = useState('');
+  const [passwordUpdate, setPasswordUpdate] = useState('');
+  const [emailUpdate, setEmailUpdate] = useState('');
+  const [birthdayUpdate, setBirthdayUpdate] = useState('');
 
   const handleSubmit = function (event) {
     event.preventDefault();
@@ -21,17 +21,17 @@ function UpdateUser({ user, token, setUser }) {
 
     // Only will send keys in the update objects that were actually updated in the form fields
     const data = {};
-    if (username) {
-      data.Username = username;
+    if (usernameUpdate) {
+      data.Username = usernameUpdate;
     }
-    if (password) {
-      data.Password = password;
+    if (passwordUpdate) {
+      data.Password = passwordUpdate;
     }
-    if (email) {
-      data.Email = email;
+    if (emailUpdate) {
+      data.Email = emailUpdate;
     }
-    if (birthday) {
-      data.Birthday = birthday;
+    if (birthdayUpdate) {
+      data.Birthday = birthdayUpdate;
     }
     // Don't fetch if update object is empty
     if (Object.keys(data).length === 0) {
@@ -60,10 +60,10 @@ function UpdateUser({ user, token, setUser }) {
             // Object.assign combines prevUser object (2nd argument) with new data (3rd argument) in new object (first argument)
             return Object.assign({}, prevUser, data);
           });
-          setUsername('');
-          setPassword('');
-          setEmail('');
-          setBirthday('');
+          setUsernameUpdate('');
+          setPasswordUpdate('');
+          setEmailUpdate('');
+          setBirthdayUpdate('');
         } else {
           console.log('Update failed.');
           alert('Update failed.');
@@ -83,9 +83,9 @@ function UpdateUser({ user, token, setUser }) {
           <Form.Label>Username:</Form.Label>
           <Form.Control
             type="text"
-            value={username}
+            value={usernameUpdate}
             onChange={function (event) {
-              setUsername(event.target.value);
+              setUsernameUpdate(event.target.value);
             }}
             pattern="[a-zA-Z0-9]+"
           />
@@ -98,9 +98,9 @@ function UpdateUser({ user, token, setUser }) {
           <Form.Label>Password:</Form.Label>
           <Form.Control
             type="password"
-            value={password}
+            value={passwordUpdate}
             onChange={function (event) {
-              setPassword(event.target.value);
+              setPasswordUpdate(event.target.value);
             }}
           />
         </Form.Group>
@@ -116,9 +116,9 @@ function UpdateUser({ user, token, setUser }) {
           <Form.Label>Email:</Form.Label>
           <Form.Control
             type="email"
-            value={email}
+            value={emailUpdate}
             onChange={function (event) {
-              setEmail(event.target.value);
+              setEmailUpdate(event.target.value);
             }}
           />
         </Form.Group>
@@ -126,9 +126,9 @@ function UpdateUser({ user, token, setUser }) {
           <Form.Label>Birthday:</Form.Label>
           <Form.Control
             type="date"
-            value={birthday}
+            value={birthdayUpdate}
             onChange={function (event) {
-              setBirthday(event.target.value);
+              setBirthdayUpdate(event.target.value);
             }}
           />
         </Form.Group>
