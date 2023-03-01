@@ -135,9 +135,7 @@ function MainView() {
                         movies={movies}
                         user={user}
                         token={token}
-                        setUser={function (user) {
-                          setUser(user);
-                        }}
+                        setUser={setUser}
                       />
                     </Col>
                   )}
