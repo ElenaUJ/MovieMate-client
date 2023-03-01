@@ -41,7 +41,19 @@ function MainView() {
           return response.json();
         })
         .then(function (movies) {
-          setMovies(movies);
+          // sort methods compares every object with each other - if they have the same value for featured, they will be compared by title.
+          let sortedMovies = movies.sort(function (a, b) {
+            if (a.Featured === b.Featured) {
+              return a.Title.localeCompare(b.Title);
+            }
+            // If they do not have the same Featured value, the featured movie gets a smaller values than the unfeatured one and comes first
+            if (a.Featured) {
+              return -1;
+            } else {
+              return 1;
+            }
+          });
+          setMovies(sortedMovies);
         })
         .catch(function (error) {
           console.error(error);
