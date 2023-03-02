@@ -38,12 +38,22 @@ function MovieView({ movies, user, addMovie, removeMovie }) {
   let printSimilarMovies;
   // Checking if there are similar movies at all
   if (similarMovies.length === 0) {
-    printSimilarMovies = 'No similar movies in database.';
+    printSimilarMovies = (
+      <Col className="mt-4">No similar movies in database.</Col>
+    );
   } else {
     printSimilarMovies = similarMovies.map(function (movie) {
       // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
       return (
-        <Col key={movie._id} xl={2} lg={3} md={4} sm={6} xs={6}>
+        <Col
+          className="mt-4"
+          key={movie._id}
+          xl={2}
+          lg={3}
+          md={4}
+          sm={6}
+          xs={6}
+        >
           <MovieCard movie={movie}></MovieCard>
         </Col>
       );
@@ -52,32 +62,48 @@ function MovieView({ movies, user, addMovie, removeMovie }) {
 
   return (
     <>
-      <h1>{movie.Title}</h1>
-      <p>
-        Director: {movie.Director.Name}
-        <br />
-        Genre: {movie.Genre.Name}
-      </p>
-      <p>{movie.Description}</p>
-      <img className="w-100 mb-4" src={movie.ImagePath} />
-      <ToggleButton
-        id="toggle-favourite"
-        type="checkbox"
-        variant="outline-secondary"
-        checked={isLiked}
-        value="1"
-        onChange={function (event) {
-          event.preventDefault();
-          handleToggle();
-        }}
-      >
-        Like it
-      </ToggleButton>
       <Row>
-        <h2>Similar movies:</h2>
-        {printSimilarMovies}
+        <Col xs={12} lg={8} className="flex-column">
+          <Row>
+            <h1>{movie.Title}</h1>
+          </Row>
+          <Row className="mt-4">
+            <Col md={2}>Director:</Col>
+            <Col>{movie.Director.Name}</Col>
+          </Row>
+          <Row className="mt-2">
+            <Col md={2}>Genre:</Col>
+            <Col>{movie.Genre.Name}</Col>
+          </Row>
+          <Row className="mb-4 mt-4">
+            <Col>{movie.Description}</Col>
+          </Row>
+          <ToggleButton
+            id="toggle-favourite"
+            type="checkbox"
+            variant="outline-secondary"
+            checked={isLiked}
+            value="1"
+            className="mt-auto mb-4"
+            onChange={function (event) {
+              event.preventDefault();
+              handleToggle();
+            }}
+          >
+            Placeholder for heart shaped button
+          </ToggleButton>
+        </Col>
+        <Col xs={12} lg={4}>
+          <img className="w-100 mb-4" src={movie.ImagePath} />
+        </Col>
       </Row>
-      <Row className="mb-4">
+      <Row>
+        <Col className="mt-5">
+          <h2>Similar movies</h2>
+        </Col>
+      </Row>
+      <Row>{printSimilarMovies}</Row>
+      <Row className="mb-4 mt-3">
         <div className="align-right">
           <Button
             as={Link}

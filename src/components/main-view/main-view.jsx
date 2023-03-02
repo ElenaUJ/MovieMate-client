@@ -146,7 +146,7 @@ function MainView() {
     <BrowserRouter>
       <NavigationBar user={user} onLoggedOut={onLoggedOut} />
       <Container>
-        <Row className="justify-content-md-center" mt={5}>
+        <Row className="justify-content-md-center mt-5">
           <Routes>
             <Route
               path="/signup"
@@ -192,14 +192,12 @@ function MainView() {
                   ) : movies.length === 0 ? (
                     <Col md={3}>Fetching movie...</Col>
                   ) : (
-                    <Col md={8}>
-                      <MovieView
-                        movies={movies}
-                        user={user}
-                        addMovie={addMovie}
-                        removeMovie={removeMovie}
-                      />
-                    </Col>
+                    <MovieView
+                      movies={movies}
+                      user={user}
+                      addMovie={addMovie}
+                      removeMovie={removeMovie}
+                    />
                   )}
                 </>
               }
@@ -219,7 +217,7 @@ function MainView() {
                       {movies.map(function (movie) {
                         return (
                           <Col
-                            className="mt-4"
+                            className="mb-4"
                             key={movie._id}
                             xl={2}
                             lg={3}

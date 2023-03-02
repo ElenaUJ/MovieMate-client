@@ -50,7 +50,7 @@ function LoginView({ onLoggedIn }) {
   };
 
   return (
-    <Card className="card mt-5 mb-4">
+    <Card className="card mb-4">
       <Card.Body>
         <Card.Title className="mb-4">Login</Card.Title>
         <Form onSubmit={handleSubmit} className="mb-4">

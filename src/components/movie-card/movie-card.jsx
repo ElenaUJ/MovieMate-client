@@ -6,11 +6,6 @@ import './movie-card.scss';
 
 // props argument is destructured/ movie is the name of the prop
 function MovieCard({ movie, isFavMovieCard, removeMovie }) {
-  const handleRemove = function (event) {
-    event.preventDefault();
-    removeMovie(movie._id);
-  };
-
   // Bootstrap utility class h-100 sets moviecards to 100% -- same size
   // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
   return (
@@ -34,7 +29,10 @@ function MovieCard({ movie, isFavMovieCard, removeMovie }) {
                 variant="secondary"
                 size="sm"
                 className="btn-secondary"
-                onClick={handleRemove}
+                onClick={function (event) {
+                  event.preventDefault();
+                  removeMovie(movie._id);
+                }}
               >
                 Remove
               </Button>

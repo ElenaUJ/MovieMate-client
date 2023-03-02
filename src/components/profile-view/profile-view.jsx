@@ -8,7 +8,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import './profile-view.scss';
 
 function ProfileView({
   user,
@@ -28,7 +27,7 @@ function ProfileView({
       <Row>
         <Col xs={12} sm={6} md={4}>
           <Card className="card h-100">
-            <Card.Body className="user-info">
+            <Card.Body className="flex-column">
               <Card.Title className="mb-3">Your Information</Card.Title>
               <UserInfo
                 username={user.Username}
@@ -55,14 +54,14 @@ function ProfileView({
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="mt-5">
           <h2>Top Movies</h2>
         </Col>
       </Row>
       <Row>
         <TopMovies user={user} movies={movies} removeMovie={removeMovie} />
       </Row>
-      <Row className="mb-4">
+      <Row className="mb-4 mt-3">
         <div className="align-right">
           <Button
             as={Link}

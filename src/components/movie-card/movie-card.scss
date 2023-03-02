@@ -1,10 +1,6 @@
-$primary: #2f4858;
-$secondary: #d6d6d6;
-$accent: #f7be16;
-
 .movie-card {
   .card-header {
-    background-color: $accent;
+    background-color: rgba(247, 190, 22, 0.7);
     position: absolute;
     width: 100%;
   }

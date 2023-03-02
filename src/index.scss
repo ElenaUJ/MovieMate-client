@@ -21,12 +21,13 @@ button.btn-secondary {
   color: $primary;
 }
 
-h2 {
-  text-align: center;
-}
-
 .align-right {
   text-align: right;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 // Imports React Bootstrap utility classes

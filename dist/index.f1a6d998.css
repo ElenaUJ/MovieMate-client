@@ -9,7 +9,7 @@ a.logo {
 
 .movie-card .card-header {
   width: 100%;
-  background-color: #f7be16;
+  background-color: #f7be16b3;
   position: absolute;
 }
 
@@ -30,11 +30,6 @@ a.logo {
   text-decoration: none;
 }
 
-.user-info {
-  flex-direction: column;
-  display: flex;
-}
-
 .body {
   color: #d6d6d6;
   background-color: #2f4858;
@@ -52,12 +47,13 @@ a.btn-secondary, button.btn-secondary {
   color: #2f4858;
 }
 
-h2, .h2 {
-  text-align: center;
-}
-
 .align-right {
   text-align: right;
+}
+
+.flex-column {
+  flex-direction: column;
+  display: flex;
 }
 
 :root {
