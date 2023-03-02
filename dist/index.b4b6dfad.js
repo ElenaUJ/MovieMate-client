@@ -27179,12 +27179,63 @@ function MainView() {
     // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
     const [movies, setMovies] = (0, _react.useState)([]);
     const [errorMessage, setErrorMessage] = (0, _react.useState)(null);
+    // Logic to manage TopMovies list
+    const addMovie = function(movieId) {
+        fetch(`https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`, {
+            method: "POST",
+            headers: {
+                // Question: Do I need this here? Is it just for the request?
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(function(response) {
+            if (response.status === 401) {
+                console.log("Unauthorized");
+                alert("Unauthorized.");
+                throw new Error("Unauthorized.");
+            } else if (response.ok) {
+                console.log("Movie was liked in database");
+                return response.json();
+            }
+        }).then(function(updatedUser) {
+            setUser(updatedUser);
+            console.log("Liked was handled.");
+        }).catch(function(error) {
+            console.error(error);
+            alert("Error: Something went wrong.");
+        });
+    };
+    const removeMovie = function(movieId) {
+        fetch(`https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`, {
+            method: "DELETE",
+            headers: {
+                // Question: Do I need this here? Is it just for the request?
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(function(response) {
+            if (response.status === 401) {
+                console.log("Unauthorized");
+                alert("Unauthorized.");
+                throw new Error("Unauthorized.");
+            } else if (response.ok) {
+                console.log("Movie was unliked in database");
+                return response.json();
+            }
+        }).then(function(updatedUser) {
+            setUser(updatedUser);
+            console.log("Unliked was handled.");
+        }).catch(function(error) {
+            console.error(error);
+            alert("Error: Something went wrong.");
+        });
+    };
     const onLoggedOut = function() {
         setUser(null);
         setToken(null);
         localStorage.clear();
     };
-    // Hook for async tasks, runs callback whenever dependencies change
+    // Return the list of all movies. Hook for async tasks, runs callback whenever dependencies change
     (0, _react.useEffect)(function() {
         if (!token) return;
         fetch("https://myflix-movie-app-elenauj.onrender.com/movies", {
@@ -27224,7 +27275,7 @@ function MainView() {
                 onLoggedOut: onLoggedOut
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 82,
+                lineNumber: 147,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _containerDefault.default), {
@@ -27245,7 +27296,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 86,
+                                lineNumber: 151,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27265,7 +27316,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 100,
+                                lineNumber: 165,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27285,14 +27336,14 @@ function MainView() {
                                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
                                             movies: movies,
                                             user: user,
-                                            token: token,
-                                            setUser: setUser
+                                            addMovie: addMovie,
+                                            removeMovie: removeMovie
                                         }, void 0, false, void 0, void 0)
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 119,
+                                lineNumber: 184,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27325,7 +27376,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 142,
+                                lineNumber: 207,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27340,35 +27391,36 @@ function MainView() {
                                             token: token,
                                             setUser: setUser,
                                             onLoggedOut: onLoggedOut,
-                                            movies: movies
+                                            movies: movies,
+                                            removeMovie: removeMovie
                                         }, void 0, false, void 0, void 0)
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 174,
+                                lineNumber: 239,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 85,
+                        lineNumber: 150,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 84,
+                    lineNumber: 149,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 83,
+                lineNumber: 148,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 81,
+        lineNumber: 146,
         columnNumber: 5
     }, this));
 }
@@ -39631,7 +39683,11 @@ var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _reactRouterDom = require("react-router-dom");
 var _movieCardScss = require("./movie-card.scss");
 // props argument is destructured/ movie is the name of the prop
-function MovieCard({ movie , isFavMovieCard , handleRemove  }) {
+function MovieCard({ movie , isFavMovieCard , removeMovie  }) {
+    const handleRemove = function(event) {
+        event.preventDefault();
+        removeMovie(movie._id);
+    };
     // Bootstrap utility class h-100 sets moviecards to 100% -- same size
     // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -39645,7 +39701,7 @@ function MovieCard({ movie , isFavMovieCard , handleRemove  }) {
                     children: "Featured"
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 18,
+                    lineNumber: 23,
                     columnNumber: 11
                 }, this) : false,
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Img, {
@@ -39653,7 +39709,7 @@ function MovieCard({ movie , isFavMovieCard , handleRemove  }) {
                     alt: movie.Title
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 22,
+                    lineNumber: 27,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
@@ -39663,7 +39719,7 @@ function MovieCard({ movie , isFavMovieCard , handleRemove  }) {
                             children: movie.Title
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 24,
+                            lineNumber: 29,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Text, {
@@ -39673,41 +39729,42 @@ function MovieCard({ movie , isFavMovieCard , handleRemove  }) {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 25,
+                            lineNumber: 30,
                             columnNumber: 11
                         }, this),
                         isFavMovieCard ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                             className: "align-right",
                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
                                 variant: "secondary",
+                                size: "sm",
                                 className: "btn-secondary",
                                 onClick: handleRemove,
                                 children: "Remove"
                             }, void 0, false, {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 28,
+                                lineNumber: 33,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 27,
+                            lineNumber: 32,
                             columnNumber: 13
                         }, this) : false
                     ]
                 }, void 0, true, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 23,
+                    lineNumber: 28,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/components/movie-card/movie-card.jsx",
-            lineNumber: 16,
+            lineNumber: 21,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 12,
+        lineNumber: 17,
         columnNumber: 5
     }, this);
 }
@@ -39733,7 +39790,7 @@ MovieCard.propTypes = {
         Featured: (0, _propTypes.PropTypes).bool.isRequired
     }).isRequired,
     isFavMovieCard: (0, _propTypes.PropTypes).bool,
-    handleRemove: (0, _propTypes.PropTypes).func
+    removeMovie: (0, _propTypes.PropTypes).func
 };
 var _c;
 $RefreshReg$(_c, "MovieCard");
@@ -39769,7 +39826,7 @@ var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _s = $RefreshSig$();
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
-function MovieView({ movies , user , token , setUser  }) {
+function MovieView({ movies , user , addMovie , removeMovie  }) {
     _s();
     // Accesses movieId URL param that has been defined in the movie-card component
     const { movieId  } = (0, _reactRouter.useParams)();
@@ -39778,56 +39835,14 @@ function MovieView({ movies , user , token , setUser  }) {
     });
     // Checking if movie is already in user's top movies and setting Liked state
     const isLiked = user.TopMovies.includes(movieId);
-    const [liked, setLiked] = (0, _react.useState)(isLiked);
-    const handleFavourites = function() {
-        if (!liked) fetch(`https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`, {
-            method: "POST",
-            headers: {
-                // Question: Do I need this here? Is it just for the request?
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }).then(function(response) {
-            if (response.status === 401) {
-                console.log("Unauthorized");
-                alert("Unauthorized.");
-                throw new Error("Unauthorized.");
-            } else if (response.ok) {
-                console.log("Movie was liked in database");
-                setLiked(true);
-                return response.json();
-            }
-        }).then(function(updatedUser) {
-            setUser(updatedUser);
-            console.log("Liked was handled.");
-        }).catch(function(error) {
-            console.error(error);
-            alert("Error: Something went wrong.");
-        });
-        else if (liked) fetch(`https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`, {
-            method: "DELETE",
-            headers: {
-                // Question: Do I need this here? Is it just for the request?
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }).then(function(response) {
-            if (response.status === 401) {
-                console.log("Unauthorized");
-                alert("Unauthorized.");
-                throw new Error("Unauthorized.");
-            } else if (response.ok) {
-                console.log("Movie was unliked in database");
-                setLiked(false);
-                return response.json();
-            }
-        }).then(function(updatedUser) {
-            setUser(updatedUser);
-            console.log("Unliked was handled.");
-        }).catch(function(error) {
-            console.error(error);
-            alert("Error: Something went wrong.");
-        });
+    const handleToggle = function() {
+        if (!isLiked) {
+            addMovie(movieId);
+            console.log("Liked button was clicked movie liked.");
+        } else if (isLiked) {
+            removeMovie(movieId);
+            console.log("Liked button was clicked movie unliked.");
+        }
     };
     let similarMovies = movies.filter(function(similarMovie) {
         return similarMovie.Genre.Name === movie.Genre.Name && similarMovie.Title !== movie.Title;
@@ -39847,12 +39862,12 @@ function MovieView({ movies , user , token , setUser  }) {
                 movie: movie
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 105,
+                lineNumber: 47,
                 columnNumber: 11
             }, this)
         }, movie._id, false, {
             fileName: "src/components/movie-view/movie-view.jsx",
-            lineNumber: 104,
+            lineNumber: 46,
             columnNumber: 9
         }, this);
     });
@@ -39862,7 +39877,7 @@ function MovieView({ movies , user , token , setUser  }) {
                 children: movie.Title
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 113,
+                lineNumber: 55,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -39871,7 +39886,7 @@ function MovieView({ movies , user , token , setUser  }) {
                     movie.Director.Name,
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 116,
+                        lineNumber: 58,
                         columnNumber: 9
                     }, this),
                     "Genre: ",
@@ -39879,14 +39894,14 @@ function MovieView({ movies , user , token , setUser  }) {
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 114,
+                lineNumber: 56,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                 children: movie.Description
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 119,
+                lineNumber: 61,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
@@ -39894,7 +39909,7 @@ function MovieView({ movies , user , token , setUser  }) {
                 src: movie.ImagePath
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 120,
+                lineNumber: 62,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _toggleButtonDefault.default), {
@@ -39905,15 +39920,12 @@ function MovieView({ movies , user , token , setUser  }) {
                 value: "1",
                 onChange: function(event) {
                     event.preventDefault();
-                    // what does this do?
-                    setLiked(event.currentTarget.checked);
-                    console.log("Liked button was clicked and set to: [object Object]");
-                    handleFavourites();
+                    handleToggle();
                 },
                 children: "Like it"
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 121,
+                lineNumber: 63,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -39922,14 +39934,14 @@ function MovieView({ movies , user , token , setUser  }) {
                         children: "Similar movies:"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 138,
+                        lineNumber: 77,
                         columnNumber: 9
                     }, this),
                     printSimilarMovies
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 137,
+                lineNumber: 76,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -39944,23 +39956,23 @@ function MovieView({ movies , user , token , setUser  }) {
                         children: "Back"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 143,
+                        lineNumber: 82,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 142,
+                    lineNumber: 81,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 141,
+                lineNumber: 80,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true);
 }
-_s(MovieView, "Ofnd5a/4MskjJcRGjj97h8VII0Y=", false, function() {
+_s(MovieView, "e2L2DPdRH1AShA7yIOCsYRlzvlI=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];
@@ -39993,8 +40005,8 @@ MovieView.propTypes = {
         Birthday: (0, _propTypes.PropTypes).string.isRequired,
         TopMovies: (0, _propTypes.PropTypes).array
     }).isRequired,
-    token: (0, _propTypes.PropTypes).string.isRequired,
-    setUser: (0, _propTypes.PropTypes).func.isRequired
+    addMovie: (0, _propTypes.PropTypes).func.isRequired,
+    removeMovie: (0, _propTypes.PropTypes).func.isRequired
 };
 var _c;
 $RefreshReg$(_c, "MovieView");
@@ -40105,7 +40117,7 @@ var _cardDefault = parcelHelpers.interopDefault(_card);
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _profileViewScss = require("./profile-view.scss");
-function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
+function ProfileView({ user , token , setUser , onLoggedOut , movies , removeMovie  }) {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -40114,17 +40126,17 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                         children: "My Profile"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 18,
+                        lineNumber: 25,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 17,
+                    lineNumber: 24,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 16,
+                lineNumber: 23,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -40143,7 +40155,7 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                                         children: "Your Information"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 25,
+                                        lineNumber: 32,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _userInfoJsx.UserInfo), {
@@ -40152,7 +40164,7 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                                         birthday: user.Birthday.slice(0, 10)
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 26,
+                                        lineNumber: 33,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -40163,28 +40175,28 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                                             onLoggedOut: onLoggedOut
                                         }, void 0, false, {
                                             fileName: "src/components/profile-view/profile-view.jsx",
-                                            lineNumber: 32,
+                                            lineNumber: 39,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 31,
+                                        lineNumber: 38,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 24,
+                                lineNumber: 31,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 23,
+                            lineNumber: 30,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 22,
+                        lineNumber: 29,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
@@ -40200,7 +40212,7 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                                         children: "Update Your Information"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 44,
+                                        lineNumber: 51,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _updateUserJsx.UpdateUser), {
@@ -40209,29 +40221,29 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                                         setUser: setUser
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 45,
+                                        lineNumber: 52,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 43,
+                                lineNumber: 50,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 42,
+                            lineNumber: 49,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 41,
+                        lineNumber: 48,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 21,
+                lineNumber: 28,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -40240,37 +40252,32 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                         children: "Top Movies"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 52,
+                        lineNumber: 59,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 51,
+                    lineNumber: 58,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 50,
+                lineNumber: 57,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _topMoviesJsx.TopMovies), {
-                        user: user,
-                        movies: movies
-                    }, void 0, false, {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 57,
-                        columnNumber: 11
-                    }, this)
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _topMoviesJsx.TopMovies), {
+                    user: user,
+                    movies: movies,
+                    removeMovie: removeMovie
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 56,
+                    lineNumber: 63,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 55,
+                lineNumber: 62,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -40285,17 +40292,17 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                         children: "Back"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 62,
+                        lineNumber: 67,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 61,
+                    lineNumber: 66,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 60,
+                lineNumber: 65,
                 columnNumber: 7
             }, this)
         ]
@@ -40330,7 +40337,8 @@ ProfileView.propTypes = {
         }).isRequired,
         ImagePath: (0, _propTypes.PropTypes).string.isRequired,
         Featured: (0, _propTypes.PropTypes).bool.isRequired
-    })).isRequired
+    })).isRequired,
+    removeMovie: (0, _propTypes.PropTypes).func.isRequired
 };
 var _c;
 $RefreshReg$(_c, "ProfileView");
@@ -40482,14 +40490,11 @@ var _propTypes = require("prop-types");
 var _movieCardJsx = require("../movie-card/movie-card.jsx");
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
-function TopMovies({ user , movies  }) {
+function TopMovies({ user , movies , removeMovie  }) {
     let topMovies = movies.filter(function(movie) {
         console.log(user.TopMovies);
         return user.TopMovies.includes(movie._id);
     });
-    const handleRemove = function(event) {
-        event.preventDefault();
-    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: topMovies.map(function(movie) {
             return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
@@ -40502,15 +40507,15 @@ function TopMovies({ user , movies  }) {
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                     movie: movie,
                     isFavMovieCard: true,
-                    handleRemove: handleRemove
+                    removeMovie: removeMovie
                 }, void 0, false, {
                     fileName: "src/components/profile-view/top-movies.jsx",
-                    lineNumber: 28,
+                    lineNumber: 24,
                     columnNumber: 13
                 }, this)
             }, movie._id, false, {
                 fileName: "src/components/profile-view/top-movies.jsx",
-                lineNumber: 19,
+                lineNumber: 15,
                 columnNumber: 11
             }, this);
         })
@@ -40542,7 +40547,8 @@ TopMovies.propTypes = {
         }).isRequired,
         ImagePath: (0, _propTypes.PropTypes).string.isRequired,
         Featured: (0, _propTypes.PropTypes).bool.isRequired
-    })).isRequired
+    })).isRequired,
+    removeMovie: (0, _propTypes.PropTypes).func.isRequired
 };
 var _c;
 $RefreshReg$(_c, "TopMovies");

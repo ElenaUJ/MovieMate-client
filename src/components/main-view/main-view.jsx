@@ -23,13 +23,78 @@ function MainView() {
 
   const [errorMessage, setErrorMessage] = useState(null);
 
+  // Logic to manage TopMovies list
+  const addMovie = function (movieId) {
+    fetch(
+      `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`,
+      {
+        method: 'POST',
+        headers: {
+          // Question: Do I need this here? Is it just for the request?
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then(function (response) {
+        if (response.status === 401) {
+          console.log('Unauthorized');
+          alert('Unauthorized.');
+          throw new Error('Unauthorized.');
+        } else if (response.ok) {
+          console.log('Movie was liked in database');
+          return response.json();
+        }
+      })
+      .then(function (updatedUser) {
+        setUser(updatedUser);
+        console.log('Liked was handled.');
+      })
+      .catch(function (error) {
+        console.error(error);
+        alert('Error: Something went wrong.');
+      });
+  };
+
+  const removeMovie = function (movieId) {
+    fetch(
+      `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          // Question: Do I need this here? Is it just for the request?
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then(function (response) {
+        if (response.status === 401) {
+          console.log('Unauthorized');
+          alert('Unauthorized.');
+          throw new Error('Unauthorized.');
+        } else if (response.ok) {
+          console.log('Movie was unliked in database');
+          return response.json();
+        }
+      })
+      .then(function (updatedUser) {
+        setUser(updatedUser);
+        console.log('Unliked was handled.');
+      })
+      .catch(function (error) {
+        console.error(error);
+        alert('Error: Something went wrong.');
+      });
+  };
+
   const onLoggedOut = function () {
     setUser(null);
     setToken(null);
     localStorage.clear();
   };
 
-  // Hook for async tasks, runs callback whenever dependencies change
+  // Return the list of all movies. Hook for async tasks, runs callback whenever dependencies change
   useEffect(
     function () {
       if (!token) {
@@ -131,8 +196,8 @@ function MainView() {
                       <MovieView
                         movies={movies}
                         user={user}
-                        token={token}
-                        setUser={setUser}
+                        addMovie={addMovie}
+                        removeMovie={removeMovie}
                       />
                     </Col>
                   )}
@@ -185,6 +250,7 @@ function MainView() {
                         setUser={setUser}
                         onLoggedOut={onLoggedOut}
                         movies={movies}
+                        removeMovie={removeMovie}
                       />
                     </Col>
                   )}

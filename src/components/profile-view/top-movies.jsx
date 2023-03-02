@@ -2,15 +2,11 @@ import { PropTypes } from 'prop-types';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import Col from 'react-bootstrap/Col';
 
-function TopMovies({ user, movies }) {
+function TopMovies({ user, movies, removeMovie }) {
   let topMovies = movies.filter(function (movie) {
     console.log(user.TopMovies);
     return user.TopMovies.includes(movie._id);
   });
-
-  const handleRemove = function (event) {
-    event.preventDefault();
-  };
 
   return (
     <>
@@ -28,7 +24,7 @@ function TopMovies({ user, movies }) {
             <MovieCard
               movie={movie}
               isFavMovieCard={true}
-              handleRemove={handleRemove}
+              removeMovie={removeMovie}
             />
           </Col>
         );
@@ -67,4 +63,5 @@ TopMovies.propTypes = {
       Featured: PropTypes.bool.isRequired,
     })
   ).isRequired,
+  removeMovie: PropTypes.func.isRequired,
 };

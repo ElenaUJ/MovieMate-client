@@ -10,7 +10,14 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import './profile-view.scss';
 
-function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
+function ProfileView({
+  user,
+  token,
+  setUser,
+  onLoggedOut,
+  movies,
+  removeMovie,
+}) {
   return (
     <>
       <Row>
@@ -53,9 +60,7 @@ function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <TopMovies user={user} movies={movies} />
-        </Col>
+        <TopMovies user={user} movies={movies} removeMovie={removeMovie} />
       </Row>
       <Row className="mb-4">
         <div className="align-right">
@@ -106,4 +111,5 @@ ProfileView.propTypes = {
       Featured: PropTypes.bool.isRequired,
     })
   ).isRequired,
+  removeMovie: PropTypes.func.isRequired,
 };

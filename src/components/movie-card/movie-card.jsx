@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 import './movie-card.scss';
 
 // props argument is destructured/ movie is the name of the prop
-function MovieCard({ movie, isFavMovieCard, handleRemove }) {
+function MovieCard({ movie, isFavMovieCard, removeMovie }) {
+  const handleRemove = function (event) {
+    event.preventDefault();
+    removeMovie(movie._id);
+  };
+
   // Bootstrap utility class h-100 sets moviecards to 100% -- same size
   // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
   return (
@@ -27,6 +32,7 @@ function MovieCard({ movie, isFavMovieCard, handleRemove }) {
             <div className="align-right">
               <Button
                 variant="secondary"
+                size="sm"
                 className="btn-secondary"
                 onClick={handleRemove}
               >
@@ -65,5 +71,5 @@ MovieCard.propTypes = {
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
   isFavMovieCard: PropTypes.bool,
-  handleRemove: PropTypes.func,
+  removeMovie: PropTypes.func,
 };
