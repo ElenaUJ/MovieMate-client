@@ -1,9 +1,11 @@
 import { PropTypes } from 'prop-types';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import './movie-card.scss';
 
 // props argument is destructured/ movie is the name of the prop
-function MovieCard({ movie }) {
+function MovieCard({ movie, isFavMovieCard, handleRemove }) {
   // Bootstrap utility class h-100 sets moviecards to 100% -- same size
   // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
   return (
@@ -21,6 +23,19 @@ function MovieCard({ movie }) {
         <Card.Body className="card-body">
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>by {movie.Director.Name}</Card.Text>
+          {isFavMovieCard ? (
+            <div className="align-right">
+              <Button
+                variant="secondary"
+                className="btn-secondary"
+                onClick={handleRemove}
+              >
+                Remove
+              </Button>
+            </div>
+          ) : (
+            false
+          )}
         </Card.Body>
       </Card>
     </Link>
@@ -49,4 +64,6 @@ MovieCard.propTypes = {
     ImagePath: PropTypes.string.isRequired,
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
+  isFavMovieCard: PropTypes.bool,
+  handleRemove: PropTypes.func,
 };

@@ -156,8 +156,10 @@ function MainView() {
                           <Col
                             className="mt-4"
                             key={movie._id}
-                            md={3}
-                            sm={4}
+                            xl={2}
+                            lg={3}
+                            md={4}
+                            sm={6}
                             xs={6}
                           >
                             <MovieCard movie={movie} />

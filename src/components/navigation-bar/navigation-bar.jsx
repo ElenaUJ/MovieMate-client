@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
+import './navigation-bar.scss';
 
 function NavigationBar({ user, onLoggedOut }) {
   // className="me-auto" aligns navigation menu to right side of page

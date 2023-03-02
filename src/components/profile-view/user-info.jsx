@@ -1,24 +1,35 @@
 import { PropTypes } from 'prop-types';
-import Table from 'react-bootstrap/Table';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function UserInfo({ username, email, birthday }) {
   return (
-    <Table responsive borderless>
-      <tbody>
-        <tr>
-          <td>Name:</td>
-          <td>{username}</td>
-        </tr>
-        <tr>
-          <td>E-mail:</td>
-          <td>{email}</td>
-        </tr>
-        <tr>
-          <td>Birthday:</td>
-          <td>{birthday}</td>
-        </tr>
-      </tbody>
-    </Table>
+    <Col>
+      <Row className="mb-2">
+        <Col xs={4} sm={12} lg={4}>
+          Name:
+        </Col>
+        <Col xs={8} sm={12} lg={8}>
+          {username}
+        </Col>
+      </Row>
+      <Row className="mb-2">
+        <Col xs={4} sm={12} lg={4}>
+          E-mail:
+        </Col>
+        <Col xs={8} sm={12} lg={8}>
+          {email}
+        </Col>
+      </Row>
+      <Row className="mb-2">
+        <Col xs={4} sm={12} lg={4}>
+          Birthday:
+        </Col>
+        <Col xs={8} sm={12} lg={8}>
+          {birthday}
+        </Col>
+      </Row>
+    </Col>
   );
 }
 

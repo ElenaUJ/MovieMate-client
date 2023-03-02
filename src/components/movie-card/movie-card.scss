@@ -1,0 +1,31 @@
+$primary: #2f4858;
+$secondary: #d6d6d6;
+$accent: #f7be16;
+
+.movie-card {
+  .card-header {
+    background-color: $accent;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.card-img {
+  height: 100%;
+  width: auto;
+  // Image will be centered and edges will be cropped as necessary
+  object-fit: cover;
+}
+
+.card-title,
+.card-text {
+  position: relative;
+  overflow: hidden;
+  // So a long text doesn't make the movie card longer
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-link-unstyled {
+  text-decoration: none;
+}

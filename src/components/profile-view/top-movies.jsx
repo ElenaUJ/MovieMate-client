@@ -8,12 +8,28 @@ function TopMovies({ user, movies }) {
     return user.TopMovies.includes(movie._id);
   });
 
+  const handleRemove = function (event) {
+    event.preventDefault();
+  };
+
   return (
     <>
       {topMovies.map(function (movie) {
         return (
-          <Col className="mt-4" key={movie._id} md={3} sm={4} xs={6}>
-            <MovieCard movie={movie} />
+          <Col
+            className="mt-4"
+            key={movie._id}
+            xl={2}
+            lg={3}
+            md={4}
+            sm={6}
+            xs={6}
+          >
+            <MovieCard
+              movie={movie}
+              isFavMovieCard={true}
+              handleRemove={handleRemove}
+            />
           </Col>
         );
       })}

@@ -15,29 +15,6 @@
   background-color: #fff;
 }
 
-.movie-card div.card-title.h5, .movie-card p.card-text {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  position: relative;
-  overflow: hidden;
-}
-
-.movie-card .card-img {
-  height: 100%;
-  width: auto;
-  object-fit: cover;
-}
-
-.movie-card .card-header {
-  width: 100%;
-  background-color: #f7be16;
-  position: absolute;
-}
-
-.card-link-unstyled {
-  text-decoration: none;
-}
-
 a.btn-secondary {
   color: #2f4858;
 }

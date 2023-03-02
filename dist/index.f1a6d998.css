@@ -1,14 +1,10 @@
-.movie-card div.card-title.h5, .movie-card p.card-text {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  position: relative;
-  overflow: hidden;
+.navbar {
+  background-color: #f7be16;
 }
 
-.movie-card .card-img {
-  height: 100%;
-  width: auto;
-  object-fit: cover;
+a.logo {
+  color: #2f4858;
+  font-weight: bold;
 }
 
 .movie-card .card-header {
@@ -17,17 +13,31 @@
   position: absolute;
 }
 
+.card-img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+
+.card-title, .card-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
 .card-link-unstyled {
   text-decoration: none;
+}
+
+.user-info {
+  flex-direction: column;
+  display: flex;
 }
 
 .body {
   color: #d6d6d6;
   background-color: #2f4858;
-}
-
-.navbar {
-  background-color: #f7be16;
 }
 
 .card {
@@ -38,13 +48,8 @@
   background-color: #fff;
 }
 
-a.btn-secondary {
+a.btn-secondary, button.btn-secondary {
   color: #2f4858;
-}
-
-a.logo {
-  color: #2f4858;
-  font-weight: bold;
 }
 
 h2, .h2 {
@@ -12062,4 +12067,4 @@ textarea.form-control-lg {
   }
 }
 
-/*# sourceMappingURL=index.e3f97e84.css.map */
+/*# sourceMappingURL=index.f1a6d998.css.map */

@@ -1,0 +1,12 @@
+$primary: #2f4858;
+$secondary: #d6d6d6;
+$accent: #f7be16;
+
+.navbar {
+  background-color: $accent;
+}
+
+a.logo {
+  color: $primary;
+  font-weight: bold;
+}

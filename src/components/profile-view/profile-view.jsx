@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import './profile-view.scss';
 
 function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
   return (
@@ -18,18 +19,16 @@ function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={4}>
+        <Col xs={12} sm={6} md={4}>
           <Card className="card h-100">
-            <Card.Body>
-              <Card.Title>Your Information</Card.Title>
-              <Card.Text>
-                <UserInfo
-                  username={user.Username}
-                  email={user.Email}
-                  birthday={user.Birthday.slice(0, 10)}
-                />
-              </Card.Text>
-              <div className="align-right mt-3">
+            <Card.Body className="user-info">
+              <Card.Title className="mb-3">Your Information</Card.Title>
+              <UserInfo
+                username={user.Username}
+                email={user.Email}
+                birthday={user.Birthday.slice(0, 10)}
+              />
+              <div className="align-right mt-auto">
                 <DeleteUser
                   user={user}
                   token={token}
@@ -39,10 +38,10 @@ function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
             </Card.Body>
           </Card>
         </Col>
-        <Col xs={12} sm={8}>
+        <Col xs={12} sm={6} md={8}>
           <Card className="card">
             <Card.Body>
-              <Card.Title>Update Your Information</Card.Title>
+              <Card.Title className="mb-3">Update Your Information</Card.Title>
               <UpdateUser user={user} token={token} setUser={setUser} />
             </Card.Body>
           </Card>
