@@ -18,8 +18,28 @@ $accent: #f7be16;
   .card-body {
     background-color: white;
   }
+}
+.movie-card {
+  div.card-title.h5,
+  p.card-text {
+    position: relative;
+    overflow: hidden;
+    // So a long text doesn't make the movie card longer
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-img {
+    height: 100%;
+    width: auto;
+    // Image will be centered and edges will be cropped as necessary
+    object-fit: cover;
+  }
+
   .card-header {
     background-color: $accent;
+    position: absolute;
+    width: 100%;
   }
 }
 .card-link-unstyled {

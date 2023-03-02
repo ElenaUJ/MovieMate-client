@@ -12,12 +12,16 @@ import Button from 'react-bootstrap/Button';
 function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
   return (
     <>
-      <h1>My Profile</h1>
       <Row>
-        <Col md={6}>
-          <Card className="card">
+        <Col>
+          <h1>My Profile</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12} sm={4}>
+          <Card className="card h-100">
             <Card.Body>
-              <Card.Title>My user information</Card.Title>
+              <Card.Title>Your Information</Card.Title>
               <Card.Text>
                 <UserInfo
                   username={user.Username}
@@ -25,32 +29,47 @@ function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
                   birthday={user.Birthday.slice(0, 10)}
                 />
               </Card.Text>
+              <div className="align-right mt-3">
+                <DeleteUser
+                  user={user}
+                  token={token}
+                  onLoggedOut={onLoggedOut}
+                />
+              </div>
             </Card.Body>
           </Card>
         </Col>
-        <Col md={6}>
+        <Col xs={12} sm={8}>
           <Card className="card">
             <Card.Body>
-              <Card.Title>Update user information</Card.Title>
+              <Card.Title>Update Your Information</Card.Title>
               <UpdateUser user={user} token={token} setUser={setUser} />
-              <DeleteUser user={user} token={token} onLoggedOut={onLoggedOut} />
             </Card.Body>
           </Card>
         </Col>
       </Row>
       <Row>
-        <TopMovies user={user} movies={movies} />
+        <Col>
+          <h2>Top Movies</h2>
+        </Col>
       </Row>
-      <div className="align-right">
-        <Button
-          as={Link}
-          to={`/`}
-          variant="secondary"
-          className="btn-secondary"
-        >
-          Back
-        </Button>
-      </div>
+      <Row>
+        <Col>
+          <TopMovies user={user} movies={movies} />
+        </Col>
+      </Row>
+      <Row>
+        <div className="align-right">
+          <Button
+            as={Link}
+            to={`/`}
+            variant="secondary"
+            className="btn-secondary"
+          >
+            Back
+          </Button>
+        </div>
+      </Row>
     </>
   );
 }

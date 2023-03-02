@@ -11,13 +11,13 @@ function MovieCard({ movie }) {
       to={`/movies/${encodeURIComponent(movie._id)}`}
       className="card-link-unstyled"
     >
-      <Card className="card h-100">
+      <Card className="card movie-card h-100">
         {movie.Featured ? (
           <Card.Header className="card-header">Featured</Card.Header>
         ) : (
           false
         )}
-        <Card.Img src={movie.ImagePath} />
+        <Card.Img src={movie.ImagePath} alt={movie.Title} />
         <Card.Body className="card-body">
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>by {movie.Director.Name}</Card.Text>

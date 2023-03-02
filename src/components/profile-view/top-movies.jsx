@@ -10,7 +10,6 @@ function TopMovies({ user, movies }) {
 
   return (
     <>
-      <h1>Top Movies</h1>
       {topMovies.map(function (movie) {
         return (
           <Col className="mt-4" key={movie._id} md={3} sm={4} xs={6}>
