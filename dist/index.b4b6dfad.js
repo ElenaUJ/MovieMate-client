@@ -39838,8 +39838,10 @@ function MovieView({ movies , user , token , setUser  }) {
     else printSimilarMovies = similarMovies.map(function(movie) {
         // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-            md: 3,
-            sm: 4,
+            xl: 2,
+            lg: 3,
+            md: 4,
+            sm: 6,
             xs: 6,
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                 movie: movie
@@ -39915,7 +39917,6 @@ function MovieView({ movies , user , token , setUser  }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
-                className: "justify-content-md-center",
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                         children: "Similar movies:"
@@ -39931,14 +39932,21 @@ function MovieView({ movies , user , token , setUser  }) {
                 lineNumber: 137,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "align-right",
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
-                    as: (0, _reactRouterDom.Link),
-                    to: `/`,
-                    variant: "secondary",
-                    className: "btn-secondary",
-                    children: "Back"
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+                className: "mb-4",
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                    className: "align-right",
+                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                        as: (0, _reactRouterDom.Link),
+                        to: `/`,
+                        variant: "secondary",
+                        className: "btn-secondary",
+                        children: "Back"
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 143,
+                        columnNumber: 11
+                    }, this)
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
                     lineNumber: 142,
@@ -40266,6 +40274,7 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies  }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+                className: "mb-4",
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                     className: "align-right",
                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {

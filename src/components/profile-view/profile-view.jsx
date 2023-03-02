@@ -57,7 +57,7 @@ function ProfileView({ user, token, setUser, onLoggedOut, movies }) {
           <TopMovies user={user} movies={movies} />
         </Col>
       </Row>
-      <Row>
+      <Row className="mb-4">
         <div className="align-right">
           <Button
             as={Link}

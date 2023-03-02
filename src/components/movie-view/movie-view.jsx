@@ -101,7 +101,7 @@ function MovieView({ movies, user, token, setUser }) {
     printSimilarMovies = similarMovies.map(function (movie) {
       // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
       return (
-        <Col key={movie._id} md={3} sm={4} xs={6}>
+        <Col key={movie._id} xl={2} lg={3} md={4} sm={6} xs={6}>
           <MovieCard movie={movie}></MovieCard>
         </Col>
       );
@@ -134,20 +134,22 @@ function MovieView({ movies, user, token, setUser }) {
       >
         Like it
       </ToggleButton>
-      <Row className="justify-content-md-center">
+      <Row>
         <h2>Similar movies:</h2>
         {printSimilarMovies}
       </Row>
-      <div className="align-right">
-        <Button
-          as={Link}
-          to={`/`}
-          variant="secondary"
-          className="btn-secondary"
-        >
-          Back
-        </Button>
-      </div>
+      <Row className="mb-4">
+        <div className="align-right">
+          <Button
+            as={Link}
+            to={`/`}
+            variant="secondary"
+            className="btn-secondary"
+          >
+            Back
+          </Button>
+        </div>
+      </Row>
     </>
   );
 }
