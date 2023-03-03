@@ -2,9 +2,13 @@
   background-color: #f7be16;
 }
 
-a.logo {
+a.logo, a.logo:visited {
   color: #2f4858;
   font-weight: bold;
+}
+
+a.logo:hover, a.logo:active {
+  color: #1d2d37;
 }
 
 a.logout-link {

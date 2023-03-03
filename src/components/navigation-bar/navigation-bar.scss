@@ -1,13 +1,20 @@
 $primary: #2f4858;
 $accent: #f7be16;
+$primary-darker: #1d2d37;
 
 .navbar {
   background-color: $accent;
 }
 
-a.logo {
+a.logo,
+a.logo:visited {
   color: $primary;
   font-weight: bold;
+}
+
+a.logo:hover,
+a.logo:active {
+  color: $primary-darker;
 }
 
 a.logout-link {
