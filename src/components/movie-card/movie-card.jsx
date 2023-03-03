@@ -20,8 +20,8 @@ function MovieCard({ movie, isFavMovieCard, removeMovie }) {
           false
         )}
         <Card.Img src={movie.ImagePath} alt={movie.Title} />
-        <Card.Body className="card-body">
-          <Card.Title>{movie.Title}</Card.Title>
+        <Card.Body>
+          <Card.Title className="fs-6 fw-bolder">{movie.Title}</Card.Title>
           <Card.Text>by {movie.Director.Name}</Card.Text>
           {isFavMovieCard ? (
             <div className="align-right">
