@@ -1,32 +1,21 @@
-import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
-import ToggleButton from 'react-bootstrap/ToggleButton';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import { HeartSwitch } from '@anatoliygatt/heart-switch';
 
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
-function MovieView({ movies, user, addMovie, removeMovie }) {
+function MovieView({ movies, topmovies, handleToggle }) {
   // Accesses movieId URL param that has been defined in the movie-card component
   const { movieId } = useParams();
   const movie = movies.find(function (m) {
     return m._id === movieId;
   });
 
-  // Checking if movie is already in user's top movies and setting Liked state
-  const isLiked = user.TopMovies.includes(movieId);
-  const handleToggle = function () {
-    if (!isLiked) {
-      addMovie(movieId);
-      console.log('Liked button was clicked movie liked.');
-    } else if (isLiked) {
-      removeMovie(movieId);
-      console.log('Liked button was clicked movie unliked.');
-    }
-  };
+  let isLiked = topmovies.includes(movieId);
 
   let similarMovies = movies.filter(function (similarMovie) {
     return (
@@ -78,20 +67,20 @@ function MovieView({ movies, user, addMovie, removeMovie }) {
           <Row className="mb-4 mt-4">
             <Col>{movie.Description}</Col>
           </Row>
-          <ToggleButton
-            id="toggle-favourite"
-            type="checkbox"
-            variant="outline-secondary"
+          <HeartSwitch
+            size="md"
+            inactiveTrackFillColor="#FFEECA"
+            inactiveTrackStrokeColor="#A78D5C"
+            activeTrackFillColor="#f7be16"
+            activeTrackStrokeColor="#A78D5C"
+            inactiveThumbColor="#ecfeff"
+            activeThumbColor="#ecfeff"
             checked={isLiked}
-            value="1"
-            className="mt-auto mb-4"
             onChange={function (event) {
               event.preventDefault();
-              handleToggle();
+              handleToggle(isLiked, movieId);
             }}
-          >
-            Placeholder for heart shaped button
-          </ToggleButton>
+          />
         </Col>
         <Col xs={12} lg={4}>
           <img className="w-100 mb-4" src={movie.ImagePath} />

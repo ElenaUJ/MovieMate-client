@@ -24,6 +24,7 @@ function MainView() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   // Logic to manage TopMovies list
+
   const addMovie = function (movieId) {
     fetch(
       `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`,
@@ -86,6 +87,16 @@ function MainView() {
         console.error(error);
         alert('Error: Something went wrong.');
       });
+  };
+  // Checking if movie is already in user's top movies and setting Liked state
+  const handleToggle = function (isLiked, movieId) {
+    if (!isLiked) {
+      addMovie(movieId);
+      console.log('Liked button was clicked movie liked.');
+    } else if (isLiked) {
+      removeMovie(movieId);
+      console.log('Liked button was clicked movie unliked.');
+    }
   };
 
   const onLoggedOut = function () {
@@ -194,9 +205,8 @@ function MainView() {
                   ) : (
                     <MovieView
                       movies={movies}
-                      user={user}
-                      addMovie={addMovie}
-                      removeMovie={removeMovie}
+                      topmovies={user.TopMovies}
+                      handleToggle={handleToggle}
                     />
                   )}
                 </>
