@@ -54,36 +54,42 @@ function MovieView({ movies, topmovies, handleToggle }) {
       <Row>
         <Col xs={12} lg={8} className="flex-column">
           <Row>
-            <h1>{movie.Title}</h1>
+            <Col>
+              <h1>{movie.Title}</h1>
+            </Col>
           </Row>
           <Row className="mt-4">
-            <Col md={2}>Director:</Col>
+            <Col xs={2}>Director:</Col>
             <Col>{movie.Director.Name}</Col>
           </Row>
           <Row className="mt-2">
-            <Col md={2}>Genre:</Col>
+            <Col xs={2}>Genre:</Col>
             <Col>{movie.Genre.Name}</Col>
           </Row>
           <Row className="mb-4 mt-4">
             <Col>{movie.Description}</Col>
           </Row>
-          <HeartSwitch
-            size="md"
-            inactiveTrackFillColor="#FFEECA"
-            inactiveTrackStrokeColor="#A78D5C"
-            activeTrackFillColor="#f7be16"
-            activeTrackStrokeColor="#A78D5C"
-            inactiveThumbColor="#ecfeff"
-            activeThumbColor="#ecfeff"
-            checked={isLiked}
-            onChange={function (event) {
-              event.preventDefault();
-              handleToggle(isLiked, movieId);
-            }}
-          />
+          <Row className="mb-4">
+            <Col>
+              <HeartSwitch
+                size="md"
+                inactiveTrackFillColor="#FFEECA"
+                inactiveTrackStrokeColor="#A78D5C"
+                activeTrackFillColor="#f7be16"
+                activeTrackStrokeColor="#A78D5C"
+                inactiveThumbColor="#ecfeff"
+                activeThumbColor="#ecfeff"
+                checked={isLiked}
+                onChange={function (event) {
+                  event.preventDefault();
+                  handleToggle(isLiked, movieId);
+                }}
+              />
+            </Col>
+          </Row>
         </Col>
         <Col xs={12} lg={4}>
-          <img className="w-100 mb-4" src={movie.ImagePath} />
+          <img className="w-100" src={movie.ImagePath} />
         </Col>
       </Row>
       <Row>
