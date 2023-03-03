@@ -7,9 +7,13 @@ a.logo {
   font-weight: bold;
 }
 
+a.logout-link {
+  color: #2f4858;
+}
+
 .movie-card .card-header {
   width: 100%;
-  background-color: #f7be16b3;
+  background-color: #f7be16d9;
   position: absolute;
 }
 

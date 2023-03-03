@@ -15,7 +15,7 @@ function NavigationBar({ user, onLoggedOut }) {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="w-100">
             {!user ? (
               <>
                 <Nav.Link as={Link} to="/login">
@@ -33,7 +33,9 @@ function NavigationBar({ user, onLoggedOut }) {
                 <Nav.Link as={Link} to="/profile">
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                <Nav.Link onClick={onLoggedOut} className="ms-auto logout-link">
+                  Logout
+                </Nav.Link>
               </>
             )}
           </Nav>
