@@ -19,9 +19,9 @@ function ProfileView({
 }) {
   return (
     <>
-      <Row>
+      <Row className="mb-4">
         <Col>
-          <h1>My Profile</h1>
+          <h1>Your Profile</h1>
         </Col>
       </Row>
       <Row>
