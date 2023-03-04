@@ -1,5 +1,5 @@
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import Row from 'react-bootstrap/Row';
@@ -9,6 +9,11 @@ import { HeartSwitch } from '@anatoliygatt/heart-switch';
 
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
 function MovieView({ movies, topmovies, handleToggle }) {
+  const navigate = useNavigate();
+  const goBack = function () {
+    return navigate(-1);
+  };
+
   // Accesses movieId URL param that has been defined in the movie-card component
   const { movieId } = useParams();
   const movie = movies.find(function (m) {
@@ -101,10 +106,9 @@ function MovieView({ movies, topmovies, handleToggle }) {
       <Row className="mb-4 mt-3">
         <div className="align-right">
           <Button
-            as={Link}
-            to={`/`}
             variant="secondary"
             className="btn-secondary"
+            onClick={goBack}
           >
             Back
           </Button>
