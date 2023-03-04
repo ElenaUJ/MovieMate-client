@@ -4,14 +4,18 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
+import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function LoginView({ onLoggedIn }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = function (event) {
     // Preventing default behaviour which would be to reload entire page
     event.preventDefault();
+    setLoading(true);
 
     const data = {
       Username: username,
@@ -28,6 +32,7 @@ function LoginView({ onLoggedIn }) {
     })
       // Extracts JWT from response content in JSON format
       .then(function (response) {
+        setLoading(false);
         return response.json();
       })
       .then(function (data) {
@@ -44,6 +49,7 @@ function LoginView({ onLoggedIn }) {
         }
       })
       .catch(function (error) {
+        setLoading(false);
         console.error(error);
         alert('Error: Something went wrong.');
       });
@@ -78,9 +84,23 @@ function LoginView({ onLoggedIn }) {
             />
           </Form.Group>
           <div className="align-right mt-3">
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            {loading ? (
+              <Button
+                variant="primary"
+                type="button"
+                className="spinner-button"
+              >
+                <ButtonSpinner />
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                type="submit"
+                className="spinner-button"
+              >
+                Submit
+              </Button>
+            )}
           </div>
         </Form>
         <Link to="/signup">Not registered yet? Sign up here.</Link>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function UpdateUser({ user, token, setUser }) {
   const [usernameUpdate, setUsernameUpdate] = useState('');
@@ -9,8 +10,11 @@ function UpdateUser({ user, token, setUser }) {
   const [emailUpdate, setEmailUpdate] = useState('');
   const [birthdayUpdate, setBirthdayUpdate] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = function (event) {
     event.preventDefault();
+    setLoading(true);
 
     // // const secondPassword = document.querySelector('.secondPassword').value;
 
@@ -35,6 +39,7 @@ function UpdateUser({ user, token, setUser }) {
     }
     // Don't fetch if update object is empty
     if (Object.keys(data).length === 0) {
+      setLoading(false);
       console.log('No updates.');
       alert('No inputs found.');
       return;
@@ -52,6 +57,7 @@ function UpdateUser({ user, token, setUser }) {
       }
     )
       .then(function (response) {
+        setLoading(false);
         console.log(data);
         if (response.ok) {
           console.log('Response from API: ' + response.json());
@@ -70,6 +76,7 @@ function UpdateUser({ user, token, setUser }) {
         }
       })
       .catch(function (error) {
+        setLoading(false);
         console.error(error);
         alert('Error: Something went wrong.');
       });
@@ -133,9 +140,15 @@ function UpdateUser({ user, token, setUser }) {
           />
         </Form.Group>
         <div className="align-right mt-3">
-          <Button variant="primary" type="submit">
-            Update
-          </Button>
+          {loading ? (
+            <Button variant="primary" type="button" className="spinner-button">
+              <ButtonSpinner />
+            </Button>
+          ) : (
+            <Button variant="primary" type="submit" className="spinner-button">
+              Update
+            </Button>
+          )}
         </div>
       </Form>
     </>

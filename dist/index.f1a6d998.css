@@ -64,6 +64,22 @@ a.btn-secondary, button.btn-secondary {
   display: flex;
 }
 
+.spinner-wrapper {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  inset: 0;
+}
+
+.spinner-button {
+  width: 86px;
+}
+
+.spinner-button-wide {
+  width: 140px;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;

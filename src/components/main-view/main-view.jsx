@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 // Function returns visual representation of component
 function MainView() {
@@ -22,6 +23,17 @@ function MainView() {
   const [movies, setMovies] = useState([]);
 
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+  const showSpinner = function () {
+    return (
+      <Col className="spinner-wrapper">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Col>
+    );
+  };
 
   // Logic to manage TopMovies list
 
@@ -111,12 +123,13 @@ function MainView() {
       if (!token) {
         return;
       }
-
+      setLoading(true);
       fetch('https://myflix-movie-app-elenauj.onrender.com/movies', {
         // ${} is template literal, will extract value of token and convert it to string, Bearer keyword specified type of authorization being sent
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(function (response) {
+          setLoading(false);
           if (response.status === 401) {
             throw new Error('Unauthorized.');
           }
@@ -138,6 +151,7 @@ function MainView() {
           setMovies(sortedMovies);
         })
         .catch(function (error) {
+          setLoading(false);
           console.error(error);
           if (error.message === 'Unauthorized.') {
             setErrorMessage('Error: Unauthorized. Please log in again.');
@@ -201,7 +215,7 @@ function MainView() {
                   ) : errorMessage ? (
                     <Col md={3}>{errorMessage}</Col>
                   ) : movies.length === 0 ? (
-                    <Col md={3}>Fetching movie...</Col>
+                    <>{showSpinner()}</>
                   ) : (
                     <MovieView
                       movies={movies}
@@ -220,8 +234,8 @@ function MainView() {
                     <Navigate to="/login" replace />
                   ) : errorMessage ? (
                     <Col md={3}>{errorMessage}</Col>
-                  ) : movies.length === 0 ? (
-                    <Col md={3}>Fetching movies...</Col>
+                  ) : loading ? (
+                    <>{showSpinner()}</>
                   ) : (
                     <>
                       {movies.map(function (movie) {

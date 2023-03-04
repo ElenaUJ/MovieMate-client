@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Navigate, Link } from 'react-router-dom';
+import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function SignupView() {
   const [username, setUsername] = useState('');
@@ -11,8 +12,11 @@ function SignupView() {
   const [birthday, setBirthday] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = function (event) {
     event.preventDefault();
+    setLoading(true);
 
     const secondPassword = document.querySelector('.secondPassword').value;
 
@@ -36,6 +40,7 @@ function SignupView() {
       body: JSON.stringify(data),
     })
       .then(function (response) {
+        setLoading(false);
         if (response.ok) {
           console.log(response.json());
           alert('Successfully registered!');
@@ -46,6 +51,7 @@ function SignupView() {
         }
       })
       .catch(function (error) {
+        setLoading(false);
         console.error(error);
         alert('Error: Something went wrong.');
       });
@@ -117,11 +123,24 @@ function SignupView() {
                   required
                 />
               </Form.Group>
-
               <div className="align-right mt-3">
-                <Button variant="primary" type="submit">
-                  Register
-                </Button>
+                {loading ? (
+                  <Button
+                    variant="primary"
+                    type="button"
+                    className="spinner-button"
+                  >
+                    <ButtonSpinner />
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="spinner-button"
+                  >
+                    Register
+                  </Button>
+                )}
               </div>
             </Form>
             <Link to="/login" className="mt-2">

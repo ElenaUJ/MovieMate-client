@@ -1,8 +1,13 @@
 import { PropTypes } from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function DeleteUser({ user, token, onLoggedOut }) {
+  const [loading, setLoading] = useState(false);
+
   const deleteUser = function () {
+    setLoading(true);
     fetch(
       `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}`,
       {
@@ -15,6 +20,7 @@ function DeleteUser({ user, token, onLoggedOut }) {
       }
     )
       .then(function (response) {
+        setLoading(false);
         if (response.ok) {
           console.log('User was successfully deleted.');
           alert('Successfully deleted!');
@@ -29,14 +35,28 @@ function DeleteUser({ user, token, onLoggedOut }) {
         }
       })
       .catch(function (error) {
+        setLoading(false);
         console.error(error);
         alert('Error: Something went wrong.');
       });
   };
   return (
-    <Button type="button" variant="danger" onClick={deleteUser}>
-      Delete account
-    </Button>
+    <>
+      {loading ? (
+        <Button variant="danger" type="button" className="spinner-button-wide">
+          <ButtonSpinner />
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          variant="danger"
+          onClick={deleteUser}
+          className="spinner-button-wide"
+        >
+          Delete account
+        </Button>
+      )}
+    </>
   );
 }
 
