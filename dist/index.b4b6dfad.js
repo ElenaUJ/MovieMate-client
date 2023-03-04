@@ -40212,8 +40212,7 @@ _s(MovieView, "e2L2DPdRH1AShA7yIOCsYRlzvlI=", false, function() {
 });
 _c = MovieView;
 MovieView.propTypes = {
-    movies: (0, _propTypes.PropTypes).arrayOf(// shape({}) means it's an object
-    (0, _propTypes.PropTypes).shape({
+    movies: (0, _propTypes.PropTypes).arrayOf((0, _propTypes.PropTypes).shape({
         _id: (0, _propTypes.PropTypes).string.isRequired,
         Title: (0, _propTypes.PropTypes).string.isRequired,
         Description: (0, _propTypes.PropTypes).string.isRequired,
@@ -40230,16 +40229,8 @@ MovieView.propTypes = {
         ImagePath: (0, _propTypes.PropTypes).string.isRequired,
         Featured: (0, _propTypes.PropTypes).bool.isRequired
     })).isRequired,
-    user: (0, _propTypes.PropTypes).shape({
-        _id: (0, _propTypes.PropTypes).string.isRequired,
-        Username: (0, _propTypes.PropTypes).string.isRequired,
-        Password: (0, _propTypes.PropTypes).string.isRequired,
-        Email: (0, _propTypes.PropTypes).string.isRequired,
-        Birthday: (0, _propTypes.PropTypes).string.isRequired,
-        TopMovies: (0, _propTypes.PropTypes).array
-    }).isRequired,
-    addMovie: (0, _propTypes.PropTypes).func.isRequired,
-    removeMovie: (0, _propTypes.PropTypes).func.isRequired
+    topmovies: (0, _propTypes.PropTypes).arrayOf((0, _propTypes.PropTypes).string).isRequired,
+    handleToggle: (0, _propTypes.PropTypes).func.isRequired
 };
 var _c;
 $RefreshReg$(_c, "MovieView");

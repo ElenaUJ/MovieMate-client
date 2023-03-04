@@ -118,7 +118,6 @@ export { MovieView };
 
 MovieView.propTypes = {
   movies: PropTypes.arrayOf(
-    // shape({}) means it's an object
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       Title: PropTypes.string.isRequired,
@@ -137,14 +136,6 @@ MovieView.propTypes = {
       Featured: PropTypes.bool.isRequired,
     })
   ).isRequired,
-  user: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    Username: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string.isRequired,
-    TopMovies: PropTypes.array,
-  }).isRequired,
-  addMovie: PropTypes.func.isRequired,
-  removeMovie: PropTypes.func.isRequired,
+  topmovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleToggle: PropTypes.func.isRequired,
 };
