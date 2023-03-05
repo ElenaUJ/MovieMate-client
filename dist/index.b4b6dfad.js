@@ -27154,21 +27154,21 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MainView", ()=>MainView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
-var _navigationBarJsx = require("../navigation-bar/navigation-bar.jsx");
-var _loginViewJsx = require("../login-view/login-view.jsx");
-var _signupViewJsx = require("../signup-view/signup-view.jsx");
-var _movieCardJsx = require("../movie-card/movie-card.jsx");
-var _movieViewJsx = require("../movie-view/movie-view.jsx");
-var _profileViewJsx = require("../profile-view/profile-view.jsx");
+var _reactRouterDom = require("react-router-dom");
 var _container = require("react-bootstrap/Container");
 var _containerDefault = parcelHelpers.interopDefault(_container);
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
-var _reactRouterDom = require("react-router-dom");
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
 var _spinner = require("react-bootstrap/Spinner");
 var _spinnerDefault = parcelHelpers.interopDefault(_spinner);
+var _loginViewJsx = require("../login-view/login-view.jsx");
+var _movieCardJsx = require("../movie-card/movie-card.jsx");
+var _movieViewJsx = require("../movie-view/movie-view.jsx");
+var _navigationBarJsx = require("../navigation-bar/navigation-bar.jsx");
+var _profileViewJsx = require("../profile-view/profile-view.jsx");
+var _signupViewJsx = require("../signup-view/signup-view.jsx");
 var _s = $RefreshSig$();
 // Function returns visual representation of component
 function MainView() {
@@ -27480,13 +27480,13 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "NavigationBar", ()=>NavigationBar);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
+var _reactRouterDom = require("react-router-dom");
+var _container = require("react-bootstrap/Container");
+var _containerDefault = parcelHelpers.interopDefault(_container);
 var _nav = require("react-bootstrap/Nav");
 var _navDefault = parcelHelpers.interopDefault(_nav);
 var _navbar = require("react-bootstrap/Navbar");
 var _navbarDefault = parcelHelpers.interopDefault(_navbar);
-var _container = require("react-bootstrap/Container");
-var _containerDefault = parcelHelpers.interopDefault(_container);
-var _reactRouterDom = require("react-router-dom");
 var _navigationBarScss = require("./navigation-bar.scss");
 function NavigationBar({ user , onLoggedOut  }) {
     // className="me-auto" aligns navigation menu to right side of page
@@ -38521,13 +38521,13 @@ parcelHelpers.export(exports, "LoginView", ()=>LoginView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _propTypes = require("prop-types");
-var _card = require("react-bootstrap/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
+var _reactRouterDom = require("react-router-dom");
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
 var _form = require("react-bootstrap/Form");
 var _formDefault = parcelHelpers.interopDefault(_form);
-var _reactRouterDom = require("react-router-dom");
 var _buttonSpinnerJsx = require("../button-spinner/button-spinner.jsx");
 var _s = $RefreshSig$();
 function LoginView({ onLoggedIn  }) {
@@ -39510,13 +39510,13 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "SignupView", ()=>SignupView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
+var _reactRouterDom = require("react-router-dom");
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _card = require("react-bootstrap/Card");
 var _cardDefault = parcelHelpers.interopDefault(_card);
 var _form = require("react-bootstrap/Form");
 var _formDefault = parcelHelpers.interopDefault(_form);
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _reactRouterDom = require("react-router-dom");
 var _buttonSpinnerJsx = require("../button-spinner/button-spinner.jsx");
 var _s = $RefreshSig$();
 function SignupView() {
@@ -39811,11 +39811,11 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
-var _card = require("react-bootstrap/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
+var _reactRouterDom = require("react-router-dom");
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _reactRouterDom = require("react-router-dom");
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
 var _movieCardScss = require("./movie-card.scss");
 // props argument is destructured/ movie is the name of the prop
 function MovieCard({ movie , isFavMovieCard , removeMovie  }) {
@@ -39946,16 +39946,16 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MovieView", ()=>MovieView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
-var _reactRouterDom = require("react-router-dom");
 var _reactRouter = require("react-router");
-var _movieCardJsx = require("../movie-card/movie-card.jsx");
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
+var _reactRouterDom = require("react-router-dom");
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
 var _heartSwitch = require("@anatoliygatt/heart-switch");
+var _movieCardJsx = require("../movie-card/movie-card.jsx");
 var _s = $RefreshSig$();
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
 function MovieView({ movies , topmovies , handleToggle  }) {
@@ -43015,18 +43015,18 @@ parcelHelpers.export(exports, "ProfileView", ()=>ProfileView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
 var _reactRouterDom = require("react-router-dom");
-var _userInfoJsx = require("./user-info.jsx");
-var _topMoviesJsx = require("./top-movies.jsx");
-var _updateUserJsx = require("./update-user.jsx");
-var _deleteUserJsx = require("./delete-user.jsx");
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
-var _card = require("react-bootstrap/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _deleteUserJsx = require("./delete-user.jsx");
+var _topMoviesJsx = require("./top-movies.jsx");
+var _updateUserJsx = require("./update-user.jsx");
+var _userInfoJsx = require("./user-info.jsx");
 function ProfileView({ user , token , setUser , onLoggedOut , movies , removeMovie  }) {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
@@ -43272,10 +43272,10 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "UserInfo", ()=>UserInfo);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
 function UserInfo({ username , email , birthday  }) {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
         children: [
@@ -43399,9 +43399,9 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "TopMovies", ()=>TopMovies);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _propTypes = require("prop-types");
-var _movieCardJsx = require("../movie-card/movie-card.jsx");
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
+var _movieCardJsx = require("../movie-card/movie-card.jsx");
 function TopMovies({ user , movies , removeMovie  }) {
     let topMovies = movies.filter(function(movie) {
         console.log(user.TopMovies);
@@ -43494,10 +43494,10 @@ parcelHelpers.export(exports, "UpdateUser", ()=>UpdateUser);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _propTypes = require("prop-types");
-var _form = require("react-bootstrap/Form");
-var _formDefault = parcelHelpers.interopDefault(_form);
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _form = require("react-bootstrap/Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
 var _buttonSpinnerJsx = require("../button-spinner/button-spinner.jsx");
 var _s = $RefreshSig$();
 function UpdateUser({ user , token , setUser  }) {
@@ -43751,10 +43751,10 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "DeleteUser", ()=>DeleteUser);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
 var _propTypes = require("prop-types");
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _react = require("react");
 var _buttonSpinnerJsx = require("../button-spinner/button-spinner.jsx");
 var _s = $RefreshSig$();
 function DeleteUser({ user , token , onLoggedOut  }) {

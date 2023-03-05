@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { Navigate, Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { Navigate, Link } from 'react-router-dom';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function SignupView() {

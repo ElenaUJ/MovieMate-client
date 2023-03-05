@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { NavigationBar } from '../navigation-bar/navigation-bar.jsx';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Spinner from 'react-bootstrap/Spinner';
 import { LoginView } from '../login-view/login-view.jsx';
-import { SignupView } from '../signup-view/signup-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
+import { NavigationBar } from '../navigation-bar/navigation-bar.jsx';
 import { ProfileView } from '../profile-view/profile-view.jsx';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Spinner from 'react-bootstrap/Spinner';
+import { SignupView } from '../signup-view/signup-view.jsx';
 
 // Function returns visual representation of component
 function MainView() {

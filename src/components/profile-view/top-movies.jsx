@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types';
-import { MovieCard } from '../movie-card/movie-card.jsx';
 import Col from 'react-bootstrap/Col';
+import { MovieCard } from '../movie-card/movie-card.jsx';
 
 function TopMovies({ user, movies, removeMovie }) {
   let topMovies = movies.filter(function (movie) {

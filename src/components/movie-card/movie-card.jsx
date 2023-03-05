@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import './movie-card.scss';
 
 // props argument is destructured/ movie is the name of the prop

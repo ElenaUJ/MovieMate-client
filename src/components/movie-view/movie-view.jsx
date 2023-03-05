@@ -1,11 +1,11 @@
 import { PropTypes } from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { MovieCard } from '../movie-card/movie-card.jsx';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import { HeartSwitch } from '@anatoliygatt/heart-switch';
+import { MovieCard } from '../movie-card/movie-card.jsx';
 
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
 function MovieView({ movies, topmovies, handleToggle }) {

@@ -1,13 +1,13 @@
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { UserInfo } from './user-info.jsx';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { DeleteUser } from './delete-user.jsx';
 import { TopMovies } from './top-movies.jsx';
 import { UpdateUser } from './update-user.jsx';
-import { DeleteUser } from './delete-user.jsx';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import { UserInfo } from './user-info.jsx';
 
 function ProfileView({
   user,

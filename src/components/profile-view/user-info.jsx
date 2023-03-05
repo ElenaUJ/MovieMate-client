@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 function UserInfo({ username, email, birthday }) {
   return (

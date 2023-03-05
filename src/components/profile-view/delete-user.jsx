@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function DeleteUser({ user, token, onLoggedOut }) {
