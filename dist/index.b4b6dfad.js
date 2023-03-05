@@ -43056,6 +43056,7 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies , removeMov
                         xs: 12,
                         sm: 6,
                         md: 4,
+                        className: "mb-4",
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
                             className: "card h-100",
                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
@@ -43114,6 +43115,7 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies , removeMov
                         xs: 12,
                         sm: 6,
                         md: 8,
+                        className: "mb-4",
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
                             className: "card",
                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
@@ -43159,7 +43161,7 @@ function ProfileView({ user , token , setUser , onLoggedOut , movies , removeMov
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                    className: "mt-5",
+                    className: "mt-2",
                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                         children: "Top Movies"
                     }, void 0, false, {
