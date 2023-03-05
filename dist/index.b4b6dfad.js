@@ -43407,30 +43407,41 @@ function TopMovies({ user , movies , removeMovie  }) {
         console.log(user.TopMovies);
         return user.TopMovies.includes(movie._id);
     });
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: topMovies.map(function(movie) {
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                className: "mt-4",
-                xl: 2,
-                lg: 3,
-                md: 4,
-                sm: 6,
-                xs: 6,
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
-                    movie: movie,
-                    isFavMovieCard: true,
-                    removeMovie: removeMovie
-                }, void 0, false, {
-                    fileName: "src/components/profile-view/top-movies.jsx",
-                    lineNumber: 24,
-                    columnNumber: 13
-                }, this)
-            }, movie._id, false, {
+    let printTopMovies;
+    // Checking if there are similar movies at all
+    if (topMovies.length === 0) printTopMovies = /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+        className: "mt-4",
+        children: "You have not added any movies yet."
+    }, void 0, false, {
+        fileName: "src/components/profile-view/top-movies.jsx",
+        lineNumber: 15,
+        columnNumber: 7
+    }, this);
+    else printTopMovies = topMovies.map(function(movie) {
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+            className: "mt-4",
+            xl: 2,
+            lg: 3,
+            md: 4,
+            sm: 6,
+            xs: 6,
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
+                movie: movie,
+                isFavMovieCard: true,
+                removeMovie: removeMovie
+            }, void 0, false, {
                 fileName: "src/components/profile-view/top-movies.jsx",
-                lineNumber: 15,
+                lineNumber: 29,
                 columnNumber: 11
-            }, this);
-        })
+            }, this)
+        }, movie._id, false, {
+            fileName: "src/components/profile-view/top-movies.jsx",
+            lineNumber: 20,
+            columnNumber: 9
+        }, this);
+    });
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: printTopMovies
     }, void 0, false);
 }
 _c = TopMovies;

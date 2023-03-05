@@ -8,29 +8,35 @@ function TopMovies({ user, movies, removeMovie }) {
     return user.TopMovies.includes(movie._id);
   });
 
-  return (
-    <>
-      {topMovies.map(function (movie) {
-        return (
-          <Col
-            className="mt-4"
-            key={movie._id}
-            xl={2}
-            lg={3}
-            md={4}
-            sm={6}
-            xs={6}
-          >
-            <MovieCard
-              movie={movie}
-              isFavMovieCard={true}
-              removeMovie={removeMovie}
-            />
-          </Col>
-        );
-      })}
-    </>
-  );
+  let printTopMovies;
+  // Checking if there are similar movies at all
+  if (topMovies.length === 0) {
+    printTopMovies = (
+      <Col className="mt-4">You have not added any movies yet.</Col>
+    );
+  } else {
+    printTopMovies = topMovies.map(function (movie) {
+      return (
+        <Col
+          className="mt-4"
+          key={movie._id}
+          xl={2}
+          lg={3}
+          md={4}
+          sm={6}
+          xs={6}
+        >
+          <MovieCard
+            movie={movie}
+            isFavMovieCard={true}
+            removeMovie={removeMovie}
+          />
+        </Col>
+      );
+    });
+  }
+
+  return <>{printTopMovies}</>;
 }
 
 export { TopMovies };
