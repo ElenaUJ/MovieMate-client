@@ -13,7 +13,7 @@ function MovieCard({ movie, isFavMovieCard, removeMovie }) {
       to={`/movies/${encodeURIComponent(movie._id)}`}
       className="card-link-unstyled"
     >
-      <Card className="card movie-card h-100">
+      <Card className="card h-100 movie-card">
         {movie.Featured ? (
           <Card.Header className="card-header">Featured</Card.Header>
         ) : (
@@ -26,13 +26,13 @@ function MovieCard({ movie, isFavMovieCard, removeMovie }) {
           {isFavMovieCard ? (
             <div className="align-right">
               <Button
-                variant="secondary"
-                size="sm"
                 className="btn-secondary"
                 onClick={function (event) {
                   event.preventDefault();
                   removeMovie(movie._id);
                 }}
+                size="sm"
+                variant="secondary"
               >
                 Remove
               </Button>

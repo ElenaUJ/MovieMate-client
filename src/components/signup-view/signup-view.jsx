@@ -65,7 +65,7 @@ function SignupView() {
         <Card className="card mb-4">
           <Card.Body>
             <Card.Title className="mb-4">Sign up here.</Card.Title>
-            <Form onSubmit={handleSubmit} className="mb-4">
+            <Form className="mb-4" onSubmit={handleSubmit}>
               <Form.Group controlId="signupFormUsername">
                 <Form.Label>Username:</Form.Label>
                 <Form.Control
@@ -74,8 +74,8 @@ function SignupView() {
                   onChange={function (event) {
                     setUsername(event.target.value);
                   }}
-                  required
                   pattern="[a-zA-Z0-9]+"
+                  required
                 />
                 <Form.Text>
                   Please choose a username using only alphanumeric characters
@@ -126,17 +126,17 @@ function SignupView() {
               <div className="align-right mt-3">
                 {loading ? (
                   <Button
-                    variant="primary"
-                    type="button"
                     className="spinner-button"
+                    type="button"
+                    variant="primary"
                   >
                     <ButtonSpinner />
                   </Button>
                 ) : (
                   <Button
-                    variant="primary"
-                    type="submit"
                     className="spinner-button"
+                    type="submit"
+                    variant="primary"
                   >
                     Register
                   </Button>

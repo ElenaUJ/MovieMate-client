@@ -2,7 +2,7 @@ import { PropTypes } from 'prop-types';
 import Col from 'react-bootstrap/Col';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 
-function TopMovies({ user, movies, removeMovie }) {
+function TopMovies({ movies, removeMovie, user }) {
   let topMovies = movies.filter(function (movie) {
     console.log(user.TopMovies);
     return user.TopMovies.includes(movie._id);
@@ -17,18 +17,10 @@ function TopMovies({ user, movies, removeMovie }) {
   } else {
     printTopMovies = topMovies.map(function (movie) {
       return (
-        <Col
-          className="mt-4"
-          key={movie._id}
-          xl={2}
-          lg={3}
-          md={4}
-          sm={6}
-          xs={6}
-        >
+        <Col className="mt-4" key={movie._id} xs={6} md={4} lg={3} xl={2}>
           <MovieCard
-            movie={movie}
             isFavMovieCard={true}
+            movie={movie}
             removeMovie={removeMovie}
           />
         </Col>
@@ -42,14 +34,6 @@ function TopMovies({ user, movies, removeMovie }) {
 export { TopMovies };
 
 TopMovies.propTypes = {
-  user: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    Username: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string.isRequired,
-    TopMovies: PropTypes.array,
-  }).isRequired,
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -70,4 +54,12 @@ TopMovies.propTypes = {
     })
   ).isRequired,
   removeMovie: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+    TopMovies: PropTypes.array,
+  }).isRequired,
 };

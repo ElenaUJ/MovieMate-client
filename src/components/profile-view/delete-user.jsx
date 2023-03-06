@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
-function DeleteUser({ user, token, onLoggedOut }) {
+function DeleteUser({ onLoggedOut, token, user }) {
   const [loading, setLoading] = useState(false);
 
   const deleteUser = function () {
@@ -43,15 +43,15 @@ function DeleteUser({ user, token, onLoggedOut }) {
   return (
     <>
       {loading ? (
-        <Button variant="danger" type="button" className="spinner-button-wide">
+        <Button className="spinner-button-wide" type="button" variant="danger">
           <ButtonSpinner />
         </Button>
       ) : (
         <Button
+          className="spinner-button-wide"
+          onClick={deleteUser}
           type="button"
           variant="danger"
-          onClick={deleteUser}
-          className="spinner-button-wide"
         >
           Delete account
         </Button>
@@ -63,6 +63,8 @@ function DeleteUser({ user, token, onLoggedOut }) {
 export { DeleteUser };
 
 DeleteUser.propTypes = {
+  onLoggedOut: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
   user: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Username: PropTypes.string.isRequired,
@@ -71,6 +73,4 @@ DeleteUser.propTypes = {
     Birthday: PropTypes.string.isRequired,
     TopMovies: PropTypes.array,
   }).isRequired,
-  token: PropTypes.string.isRequired,
-  onLoggedOut: PropTypes.func.isRequired,
 };

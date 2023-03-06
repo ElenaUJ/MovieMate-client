@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
-function UpdateUser({ user, token, setUser }) {
+function UpdateUser({ setUser, token, user }) {
   const [usernameUpdate, setUsernameUpdate] = useState('');
   const [passwordUpdate, setPasswordUpdate] = useState('');
   const [emailUpdate, setEmailUpdate] = useState('');
@@ -141,11 +141,11 @@ function UpdateUser({ user, token, setUser }) {
         </Form.Group>
         <div className="align-right mt-3">
           {loading ? (
-            <Button variant="primary" type="button" className="spinner-button">
+            <Button className="spinner-button" type="button" variant="primary">
               <ButtonSpinner />
             </Button>
           ) : (
-            <Button variant="primary" type="submit" className="spinner-button">
+            <Button className="spinner-button" type="submit" variant="primary">
               Update
             </Button>
           )}
@@ -158,6 +158,8 @@ function UpdateUser({ user, token, setUser }) {
 export { UpdateUser };
 
 UpdateUser.propTypes = {
+  setUser: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
   user: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Username: PropTypes.string.isRequired,
@@ -166,6 +168,4 @@ UpdateUser.propTypes = {
     Birthday: PropTypes.string.isRequired,
     TopMovies: PropTypes.array,
   }).isRequired,
-  token: PropTypes.string.isRequired,
-  setUser: PropTypes.func.isRequired,
 };

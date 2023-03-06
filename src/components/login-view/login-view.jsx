@@ -9,11 +9,9 @@ import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 function LoginView({ onLoggedIn }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = function (event) {
-    // Preventing default behaviour which would be to reload entire page
     event.preventDefault();
     setLoading(true);
 
@@ -39,10 +37,10 @@ function LoginView({ onLoggedIn }) {
         console.log('Login response: ', data);
 
         if (data.user) {
-          // After successful login, user object and token will be stored using localStorage
+          // Storing user object and token upon successful login
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('token', data.token);
-          // User and token are defined in the API's auth.js file!
+          // User and token are defined in the API's auth.js file
           onLoggedIn(data.user, data.token);
         } else {
           alert('No such user');
@@ -59,7 +57,7 @@ function LoginView({ onLoggedIn }) {
     <Card className="card mb-4">
       <Card.Body>
         <Card.Title className="mb-4">Login</Card.Title>
-        <Form onSubmit={handleSubmit} className="mb-4">
+        <Form className="mb-4" onSubmit={handleSubmit}>
           <Form.Group controlId="loginFormUsername">
             <Form.Label>Username:</Form.Label>
             <Form.Control
@@ -68,8 +66,8 @@ function LoginView({ onLoggedIn }) {
               onChange={function (event) {
                 setUsername(event.target.value);
               }}
-              required
               pattern="[a-zA-Z0-9]+"
+              required
             />
           </Form.Group>
           <Form.Group controlId="loginFormPassword">
@@ -86,17 +84,17 @@ function LoginView({ onLoggedIn }) {
           <div className="align-right mt-3">
             {loading ? (
               <Button
-                variant="primary"
-                type="button"
                 className="spinner-button"
+                type="button"
+                variant="primary"
               >
                 <ButtonSpinner />
               </Button>
             ) : (
               <Button
-                variant="primary"
-                type="submit"
                 className="spinner-button"
+                type="submit"
+                variant="primary"
               >
                 Submit
               </Button>

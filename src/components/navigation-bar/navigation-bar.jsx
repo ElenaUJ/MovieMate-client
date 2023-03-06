@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './navigation-bar.scss';
 
-function NavigationBar({ user, onLoggedOut }) {
+function NavigationBar({ onLoggedOut, user }) {
   // className="me-auto" aligns navigation menu to right side of page
   return (
     <Navbar className="navbar" collapseOnSelect expand="md" sticky="top">
@@ -33,7 +33,7 @@ function NavigationBar({ user, onLoggedOut }) {
                 <Nav.Link as={Link} to="/profile">
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut} className="ms-auto logout-link">
+                <Nav.Link className="logout-link ms-auto" onClick={onLoggedOut}>
                   Logout
                 </Nav.Link>
               </>
@@ -48,6 +48,7 @@ function NavigationBar({ user, onLoggedOut }) {
 export { NavigationBar };
 
 NavigationBar.propTypes = {
+  onLoggedOut: PropTypes.func.isRequired,
   user: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Username: PropTypes.string.isRequired,
@@ -56,5 +57,4 @@ NavigationBar.propTypes = {
     Birthday: PropTypes.string.isRequired,
     TopMovies: PropTypes.array,
   }),
-  onLoggedOut: PropTypes.func.isRequired,
 };

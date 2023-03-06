@@ -2,7 +2,7 @@ import { PropTypes } from 'prop-types';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-function UserInfo({ username, email, birthday }) {
+function UserInfo({ birthday, email, username }) {
   return (
     <Col>
       <Row className="mb-2">
@@ -36,7 +36,7 @@ function UserInfo({ username, email, birthday }) {
 export { UserInfo };
 
 UserInfo.propTypes = {
-  username: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
   birthday: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
 };

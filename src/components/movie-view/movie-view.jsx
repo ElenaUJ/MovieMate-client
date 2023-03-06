@@ -8,7 +8,7 @@ import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 
 // The entire movies array has to be passed into the MovieView prop because React Router only allows access to
-function MovieView({ movies, topmovies, handleToggle }) {
+function MovieView({ handleToggle, movies, topmovies }) {
   const navigate = useNavigate();
   const goBack = function () {
     return navigate(-1);
@@ -39,15 +39,7 @@ function MovieView({ movies, topmovies, handleToggle }) {
     printSimilarMovies = similarMovies.map(function (movie) {
       // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
       return (
-        <Col
-          className="mt-4"
-          key={movie._id}
-          xl={2}
-          lg={3}
-          md={4}
-          sm={6}
-          xs={6}
-        >
+        <Col className="mt-4" key={movie._id} xs={6} md={4} lg={3} xl={2}>
           <MovieCard movie={movie}></MovieCard>
         </Col>
       );
@@ -57,7 +49,7 @@ function MovieView({ movies, topmovies, handleToggle }) {
   return (
     <>
       <Row>
-        <Col xs={12} lg={8} className="flex-column">
+        <Col className="flex-column" xs={12} lg={8}>
           <Row>
             <Col>
               <h1>{movie.Title}</h1>
@@ -77,24 +69,24 @@ function MovieView({ movies, topmovies, handleToggle }) {
           <Row className="mb-4">
             <Col>
               <HeartSwitch
-                size="md"
-                inactiveTrackFillColor="#FFEECA"
-                inactiveTrackStrokeColor="#A78D5C"
+                activeThumbColor="#ecfeff"
                 activeTrackFillColor="#f7be16"
                 activeTrackStrokeColor="#A78D5C"
                 inactiveThumbColor="#ecfeff"
-                activeThumbColor="#ecfeff"
+                inactiveTrackFillColor="#FFEECA"
+                inactiveTrackStrokeColor="#A78D5C"
                 checked={isLiked}
                 onChange={function (event) {
                   event.preventDefault();
                   handleToggle(isLiked, movieId);
                 }}
+                size="md"
               />
             </Col>
           </Row>
         </Col>
         <Col xs={12} lg={4}>
-          <img className="w-100" src={movie.ImagePath} />
+          <img src={movie.ImagePath} className="w-100" />
         </Col>
       </Row>
       <Row>
@@ -106,9 +98,9 @@ function MovieView({ movies, topmovies, handleToggle }) {
       <Row className="mb-4 mt-3">
         <div className="align-right">
           <Button
-            variant="secondary"
             className="btn-secondary"
             onClick={goBack}
+            variant="secondary"
           >
             Back
           </Button>
@@ -121,6 +113,8 @@ function MovieView({ movies, topmovies, handleToggle }) {
 export { MovieView };
 
 MovieView.propTypes = {
+  handleToggle: PropTypes.func.isRequired,
+  topmovies: PropTypes.arrayOf(PropTypes.string).isRequired,
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -140,6 +134,4 @@ MovieView.propTypes = {
       Featured: PropTypes.bool.isRequired,
     })
   ).isRequired,
-  topmovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  handleToggle: PropTypes.func.isRequired,
 };
