@@ -31,7 +31,7 @@ The server-side comprises a well-designed REST API and a MongoDB Database, where
 ## Links
 
 - [Live site URL]()
-- [Code URL](https://github.com/ElenaUJ/myFlix-client)
+- [Code URL](https://github.com/ElenaUJ/MovieMate-client)
 
 ## Process
 
