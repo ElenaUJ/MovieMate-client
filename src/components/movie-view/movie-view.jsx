@@ -7,37 +7,38 @@ import Row from 'react-bootstrap/Row';
 import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 
-// The entire movies array has to be passed into the MovieView prop because React Router only allows access to
-function MovieView({ handleToggle, movies, topmovies }) {
-  const navigate = useNavigate();
-  const goBack = function () {
-    return navigate(-1);
-  };
-
-  // Accesses movieId URL param that has been defined in the movie-card component
+function MovieView({ addMovie, movies, removeMovie, topmovies }) {
+  // Accessing movieId URL param that has been defined in the movie-card component
   const { movieId } = useParams();
-  const movie = movies.find(function (m) {
-    return m._id === movieId;
+  const movie = movies.find(function (movie) {
+    return movie._id === movieId;
   });
 
+  // Checking if movie is already in user's top movies and setting Liked state
   let isLiked = topmovies.includes(movieId);
+  const handleToggle = function (isLiked, movieId) {
+    if (!isLiked) {
+      addMovie(movieId);
+    } else if (isLiked) {
+      removeMovie(movieId);
+    }
+  };
 
+  // Printing similar movies array
   let similarMovies = movies.filter(function (similarMovie) {
     return (
       similarMovie.Genre.Name === movie.Genre.Name &&
       similarMovie.Title !== movie.Title
     );
   });
-
   let printSimilarMovies;
-  // Checking if there are similar movies at all
+
   if (similarMovies.length === 0) {
     printSimilarMovies = (
       <Col className="mt-4">No similar movies in database.</Col>
     );
   } else {
     printSimilarMovies = similarMovies.map(function (movie) {
-      // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
       return (
         <Col className="mt-4" key={movie._id} xs={6} md={4} lg={3} xl={2}>
           <MovieCard movie={movie}></MovieCard>
@@ -45,6 +46,12 @@ function MovieView({ handleToggle, movies, topmovies }) {
       );
     });
   }
+
+  // Makes back button navigate to previous page (either MainView or ProfileView)
+  const navigate = useNavigate();
+  const goBack = function () {
+    return navigate(-1);
+  };
 
   return (
     <>
@@ -113,8 +120,7 @@ function MovieView({ handleToggle, movies, topmovies }) {
 export { MovieView };
 
 MovieView.propTypes = {
-  handleToggle: PropTypes.func.isRequired,
-  topmovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addMovie: PropTypes.func.isRequired,
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -134,4 +140,6 @@ MovieView.propTypes = {
       Featured: PropTypes.bool.isRequired,
     })
   ).isRequired,
+  removeMovie: PropTypes.func.isRequired,
+  topmovies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

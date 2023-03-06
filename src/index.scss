@@ -25,12 +25,12 @@ button.btn-secondary {
 .align-right {
   text-align: right;
 }
-
 .flex-column {
   display: flex;
   flex-direction: column;
 }
 
+//Other
 .spinner-wrapper {
   display: flex;
   justify-content: center;
@@ -47,5 +47,6 @@ button.btn-secondary {
 .spinner-button-wide {
   width: 140px;
 }
+
 // Imports React Bootstrap utility classes
 @import '~bootstrap/scss/bootstrap.scss';

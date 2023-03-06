@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './movie-card.scss';
 
-// props argument is destructured/ movie is the name of the prop
 function MovieCard({ movie, isFavMovieCard, removeMovie }) {
   // Bootstrap utility class h-100 sets moviecards to 100% -- same size
   // Typically, tepmplate literal ${movie._id} would be enough, but encodeURIComponent makes non-alphanumeric characters URL-compatible
@@ -48,9 +47,7 @@ function MovieCard({ movie, isFavMovieCard, removeMovie }) {
 
 export { MovieCard };
 
-// Prop types contraints
 MovieCard.propTypes = {
-  // shape({}) means it's an object
   movie: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,

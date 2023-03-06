@@ -11,7 +11,6 @@ function SignupView() {
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
-
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = function (event) {
@@ -42,11 +41,9 @@ function SignupView() {
       .then(function (response) {
         setLoading(false);
         if (response.ok) {
-          console.log(response.json());
           alert('Successfully registered!');
           setIsRegistered(true);
         } else {
-          console.log('Registration failed.');
           alert('Registration failed.');
         }
       })

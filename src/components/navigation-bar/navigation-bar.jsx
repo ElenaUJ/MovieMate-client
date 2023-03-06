@@ -6,7 +6,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import './navigation-bar.scss';
 
 function NavigationBar({ onLoggedOut, user }) {
-  // className="me-auto" aligns navigation menu to right side of page
   return (
     <Navbar className="navbar" collapseOnSelect expand="md" sticky="top">
       <Container mb={5}>

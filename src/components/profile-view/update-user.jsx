@@ -9,21 +9,13 @@ function UpdateUser({ setUser, token, user }) {
   const [passwordUpdate, setPasswordUpdate] = useState('');
   const [emailUpdate, setEmailUpdate] = useState('');
   const [birthdayUpdate, setBirthdayUpdate] = useState('');
-
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = function (event) {
     event.preventDefault();
     setLoading(true);
 
-    // // const secondPassword = document.querySelector('.secondPassword').value;
-
-    // if (secondPassword !== password) {
-    //   alert('Passwords do not match');
-    //   return;
-    // }
-
-    // Only will send keys in the update objects that were actually updated in the form fields
+    // Only send keys in the update objects that were actually updated in the form fields
     const data = {};
     if (usernameUpdate) {
       data.Username = usernameUpdate;
@@ -37,10 +29,9 @@ function UpdateUser({ setUser, token, user }) {
     if (birthdayUpdate) {
       data.Birthday = birthdayUpdate;
     }
-    // Don't fetch if update object is empty
+    // If data object is empty, don't perform fetch
     if (Object.keys(data).length === 0) {
       setLoading(false);
-      console.log('No updates.');
       alert('No inputs found.');
       return;
     }
@@ -60,7 +51,6 @@ function UpdateUser({ setUser, token, user }) {
         setLoading(false);
         console.log(data);
         if (response.ok) {
-          console.log('Response from API: ' + response.json());
           alert('Successfully updated!');
           setUser(function (prevUser) {
             // Object.assign combines prevUser object (2nd argument) with new data (3rd argument) in new object (first argument)
@@ -82,7 +72,6 @@ function UpdateUser({ setUser, token, user }) {
       });
   };
 
-  // Question: Why don't I have to send username etc as props?
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -111,14 +100,6 @@ function UpdateUser({ setUser, token, user }) {
             }}
           />
         </Form.Group>
-        {/* <Form.Group controlId="signupFormSecondPassword">
-                  <Form.Label>Retype password:</Form.Label>
-                  <Form.Control
-                    className="secondPassword"
-                    type="password"
-                    required
-                  />
-                </Form.Group> */}
         <Form.Group controlId="updateFormEmail">
           <Form.Label>Email:</Form.Label>
           <Form.Control

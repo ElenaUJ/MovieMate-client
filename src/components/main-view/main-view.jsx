@@ -31,7 +31,7 @@ function MainView() {
     );
   };
 
-  // Logic to manage TopMovies list (needed in ProfileView and MovieCard)
+  // Logic to manage TopMovies list (needed in both ProfileView and MovieCard)
   const addMovie = function (movieId) {
     fetch(
       `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`,
@@ -46,7 +46,6 @@ function MainView() {
     )
       .then(function (response) {
         if (response.status === 401) {
-          console.log('Unauthorized');
           alert('Unauthorized.');
           throw new Error('Unauthorized.');
         } else if (response.ok) {
@@ -75,7 +74,6 @@ function MainView() {
     )
       .then(function (response) {
         if (response.status === 401) {
-          console.log('Unauthorized');
           alert('Unauthorized.');
           throw new Error('Unauthorized.');
         } else if (response.ok) {
@@ -91,32 +89,22 @@ function MainView() {
       });
   };
 
-  // Checking if movie is already in user's top movies and setting Liked state
-  const handleToggle = function (isLiked, movieId) {
-    if (!isLiked) {
-      addMovie(movieId);
-      console.log('Liked button was clicked movie liked.');
-    } else if (isLiked) {
-      removeMovie(movieId);
-      console.log('Liked button was clicked movie unliked.');
-    }
-  };
-
+  // To be run whenever user logs out (or is logged out)
   const onLoggedOut = function () {
     setUser(null);
     setToken(null);
     localStorage.clear();
   };
 
-  // Return the list of all movies. Hook for async tasks, runs callback whenever dependencies change
+  // Return the list of all movies on the main page. Hook for async tasks, runs callback whenever dependencies (token in this case) change
   useEffect(
     function () {
       if (!token) {
         return;
       }
       setLoading(true);
+
       fetch('https://myflix-movie-app-elenauj.onrender.com/movies', {
-        // ${} is template literal, will extract value of token and convert it to string, Bearer keyword specified type of authorization being sent
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(function (response) {
@@ -127,12 +115,13 @@ function MainView() {
           return response.json();
         })
         .then(function (movies) {
-          // sort methods compares every object with each other - if they have the same value for featured, they will be compared by title.
+          // Sort movies in alphabetical order, and featured movies first
+          // Sort method compares every object with each other - if they have the same value for featured, they will be compared by title.
           let sortedMovies = movies.sort(function (a, b) {
             if (a.Featured === b.Featured) {
               return a.Title.localeCompare(b.Title);
             }
-            // If they do not have the same Featured value, the featured movie gets a smaller values than the unfeatured one and comes first
+            // If they do not have the same Featured value, the featured movie gets a smaller value than the unfeatured one and comes first
             if (a.Featured) {
               return -1;
             } else {
@@ -152,7 +141,6 @@ function MainView() {
           }
         });
     },
-    // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
     [token]
   );
 
@@ -164,20 +152,6 @@ function MainView() {
       <Container>
         <Row className="justify-content-md-center mt-5">
           <Routes>
-            <Route
-              path="/signup"
-              element={
-                <>
-                  {user ? (
-                    <Navigate to="/" />
-                  ) : (
-                    <Col md={6}>
-                      <SignupView />
-                    </Col>
-                  )}
-                </>
-              }
-            />
             <Route
               path="/login"
               element={
@@ -197,26 +171,22 @@ function MainView() {
                 </>
               }
             />
+
             <Route
-              path="/movies/:movieId"
+              path="/signup"
               element={
                 <>
-                  {!user ? (
-                    <Navigate to="/login" replace />
-                  ) : errorMessage ? (
-                    <Col md={3}>{errorMessage}</Col>
-                  ) : movies.length === 0 ? (
-                    <>{showSpinner()}</>
+                  {user ? (
+                    <Navigate to="/" />
                   ) : (
-                    <MovieView
-                      handleToggle={handleToggle}
-                      movies={movies}
-                      topmovies={user.TopMovies}
-                    />
+                    <Col md={6}>
+                      <SignupView />
+                    </Col>
                   )}
                 </>
               }
             />
+
             <Route
               path="/"
               element={
@@ -248,6 +218,29 @@ function MainView() {
                 </>
               }
             />
+
+            <Route
+              path="/movies/:movieId"
+              element={
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : errorMessage ? (
+                    <Col md={3}>{errorMessage}</Col>
+                  ) : movies.length === 0 ? (
+                    <>{showSpinner()}</>
+                  ) : (
+                    <MovieView
+                      addMovie={addMovie}
+                      movies={movies}
+                      removeMovie={removeMovie}
+                      topmovies={user.TopMovies}
+                    />
+                  )}
+                </>
+              }
+            />
+
             <Route
               path="/profile"
               element={
@@ -276,5 +269,4 @@ function MainView() {
   );
 }
 
-// Exposure of MainView component
 export { MainView };

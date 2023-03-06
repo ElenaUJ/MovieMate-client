@@ -4,12 +4,10 @@ import { MovieCard } from '../movie-card/movie-card.jsx';
 
 function TopMovies({ movies, removeMovie, user }) {
   let topMovies = movies.filter(function (movie) {
-    console.log(user.TopMovies);
     return user.TopMovies.includes(movie._id);
   });
-
   let printTopMovies;
-  // Checking if there are similar movies at all
+
   if (topMovies.length === 0) {
     printTopMovies = (
       <Col className="mt-4">You have not added any movies yet.</Col>
