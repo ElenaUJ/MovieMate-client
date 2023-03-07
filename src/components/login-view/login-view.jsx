@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function LoginView({ onLoggedIn }) {
@@ -34,22 +36,32 @@ function LoginView({ onLoggedIn }) {
         return response.json();
       })
       .then(function (data) {
-        console.log('Login response: ', data);
-
+        if (data.message === 'Incorrect username.') {
+          throw new Error(
+            'No account with that username. Please try again or sign up with a new account.'
+          );
+        }
+        if (data.message === 'Incorrect password.') {
+          throw new Error('Wrong password. Please try again.');
+        }
         if (data.user) {
           // Storing user object and token upon successful login
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('token', data.token);
           // User and token are defined in the API's auth.js file
           onLoggedIn(data.user, data.token);
-        } else {
-          alert('No such user');
         }
       })
       .catch(function (error) {
         setLoading(false);
-        console.error(error);
-        alert('Error: Something went wrong.');
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while submitting the form. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
       });
   };
 

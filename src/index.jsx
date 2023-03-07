@@ -1,12 +1,18 @@
 // This is the place where React code is bootstrapped (activated)
 import { createRoot } from 'react-dom/client';
+import { ToastContainer } from 'react-toastify';
 import { MainView } from './components/main-view/main-view.jsx';
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
 
 const MovieMateApplication = function () {
-  return <MainView />;
+  return (
+    <>
+      <ToastContainer />
+      <MainView />
+    </>
+  );
 };
 
 // Finds the root of your app

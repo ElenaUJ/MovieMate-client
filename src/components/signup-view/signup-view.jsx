@@ -3,6 +3,8 @@ import { Navigate, Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function SignupView() {
@@ -20,7 +22,8 @@ function SignupView() {
     const secondPassword = document.querySelector('.secondPassword').value;
 
     if (secondPassword !== password) {
-      alert('Passwords do not match');
+      toast.error('Passwords do not match. Please try again.');
+      console.error("Passwords don't match.");
       return;
     }
 
@@ -40,17 +43,29 @@ function SignupView() {
     })
       .then(function (response) {
         setLoading(false);
-        if (response.ok) {
-          alert('Successfully registered!');
+        if (response.status === 401) {
+          throw new Error(
+            "Sorry, you're not authorized to access this resource. "
+          );
+        } else if (response.status === 409) {
+          throw new Error(
+            'Sorry! This username is already taken. Please choose another one.'
+          );
+        } else if (response.ok) {
+          toast.success('Welcome! You have been registered.');
           setIsRegistered(true);
-        } else {
-          alert('Registration failed.');
         }
       })
       .catch(function (error) {
         setLoading(false);
-        console.error(error);
-        alert('Error: Something went wrong.');
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while trying to register you. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
       });
   };
 

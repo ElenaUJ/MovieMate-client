@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function DeleteUser({ onLoggedOut, token, user }) {
@@ -21,23 +23,29 @@ function DeleteUser({ onLoggedOut, token, user }) {
     )
       .then(function (response) {
         setLoading(false);
-        if (response.ok) {
-          console.log('User was successfully deleted.');
-          alert('Successfully deleted!');
+        if (response.status === 401) {
+          throw new Error(
+            "Sorry, you're not authorized to access this resource. "
+          );
+        } else if (response.status === 400) {
+          throw new Error('User was not found.');
+        } else if (response.ok) {
+          toast.success(
+            `You successfully deleted the account with the username of "${user.Username}".`
+          );
           onLoggedOut();
-        } else if (response.status === 401) {
-          console.log('Unauthorized');
-          alert('Unauthorized.');
-          throw new Error('Unauthorized.');
-        } else {
-          console.log('Deregistration failed.');
-          alert('Deregistration failed.');
         }
       })
       .catch(function (error) {
         setLoading(false);
-        console.error(error);
-        alert('Error: Something went wrong.');
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while trying to delete. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
       });
   };
   return (

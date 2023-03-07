@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
 function UpdateUser({ setUser, token, user }) {
@@ -32,7 +34,8 @@ function UpdateUser({ setUser, token, user }) {
     // If data object is empty, don't perform fetch
     if (Object.keys(data).length === 0) {
       setLoading(false);
-      alert('No inputs found.');
+      toast.error('Please fill in at least one field to update.');
+      console.error('Error: No fields filled.');
       return;
     }
 
@@ -49,9 +52,16 @@ function UpdateUser({ setUser, token, user }) {
     )
       .then(function (response) {
         setLoading(false);
-        console.log(data);
-        if (response.ok) {
-          alert('Successfully updated!');
+        if (response.status === 401) {
+          throw new Error(
+            "Sorry, you're not authorized to access this resource. "
+          );
+        } else if (response.status === 409) {
+          throw new Error(
+            'Sorry! This username is already taken. Please choose another one.'
+          );
+        } else if (response.ok) {
+          toast.success('Your information has been updated successfully!');
           setUser(function (prevUser) {
             // Object.assign combines prevUser object (2nd argument) with new data (3rd argument) in new object (first argument)
             return Object.assign({}, prevUser, data);
@@ -60,15 +70,18 @@ function UpdateUser({ setUser, token, user }) {
           setPasswordUpdate('');
           setEmailUpdate('');
           setBirthdayUpdate('');
-        } else {
-          console.log('Update failed.');
-          alert('Update failed.');
         }
       })
       .catch(function (error) {
         setLoading(false);
-        console.error(error);
-        alert('Error: Something went wrong.');
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while trying to update. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
       });
   };
 

@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { LoginView } from '../login-view/login-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
@@ -19,7 +21,6 @@ function MainView() {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const showSpinner = function () {
     return (
@@ -46,18 +47,28 @@ function MainView() {
     )
       .then(function (response) {
         if (response.status === 401) {
-          alert('Unauthorized.');
-          throw new Error('Unauthorized.');
+          throw new Error(
+            "Sorry, you're not authorized to access this resource. "
+          );
+        } else if (response.status === 409) {
+          throw new Error('You already added this movie to the list.');
         } else if (response.ok) {
           return response.json();
         }
       })
       .then(function (updatedUser) {
+        toast.success('Movie has been added to your Top Movies.');
         setUser(updatedUser);
       })
       .catch(function (error) {
-        console.error(error);
-        alert('Error: Something went wrong.');
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while trying to add movie. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
       });
   };
 
@@ -74,18 +85,26 @@ function MainView() {
     )
       .then(function (response) {
         if (response.status === 401) {
-          alert('Unauthorized.');
-          throw new Error('Unauthorized.');
+          throw new Error(
+            "Sorry, you're not authorized to access this resource. "
+          );
         } else if (response.ok) {
           return response.json();
         }
       })
       .then(function (updatedUser) {
+        toast.success('Movie has been removed from your Top Movies.');
         setUser(updatedUser);
       })
       .catch(function (error) {
-        console.error(error);
-        alert('Error: Something went wrong.');
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while trying to delete. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
       });
   };
 
@@ -110,9 +129,12 @@ function MainView() {
         .then(function (response) {
           setLoading(false);
           if (response.status === 401) {
-            throw new Error('Unauthorized.');
+            throw new Error(
+              "Sorry, you're not authorized to access this resource. "
+            );
+          } else if (response.ok) {
+            return response.json();
           }
-          return response.json();
         })
         .then(function (movies) {
           // Sort movies in alphabetical order, and featured movies first
@@ -132,13 +154,14 @@ function MainView() {
         })
         .catch(function (error) {
           setLoading(false);
-          console.error(error);
-          if (error.message === 'Unauthorized.') {
-            setErrorMessage('Error: Unauthorized. Please log in again.');
-            onLoggedOut();
+          if (error.message) {
+            toast.error(error.message);
           } else {
-            setErrorMessage('Error: Movies could not be fetched.');
+            toast.error(
+              'An error occurred while trying to delete. Please try again later.'
+            );
           }
+          console.error('An error occurred:' + error);
         });
     },
     [token]
@@ -193,8 +216,6 @@ function MainView() {
                 <>
                   {!user ? (
                     <Navigate to="/login" replace />
-                  ) : errorMessage ? (
-                    <Col md={3}>{errorMessage}</Col>
                   ) : loading ? (
                     <>{showSpinner()}</>
                   ) : (
@@ -225,8 +246,6 @@ function MainView() {
                 <>
                   {!user ? (
                     <Navigate to="/login" replace />
-                  ) : errorMessage ? (
-                    <Col md={3}>{errorMessage}</Col>
                   ) : movies.length === 0 ? (
                     <>{showSpinner()}</>
                   ) : (

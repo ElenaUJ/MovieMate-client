@@ -14,7 +14,7 @@ function MovieView({ addMovie, movies, removeMovie, topmovies }) {
     return movie._id === movieId;
   });
 
-  // Checking if movie is already in user's top movies and setting Liked state
+  // Checking if movie is already in user's top movies and setting Liked state, then handling heart switch toggle
   let isLiked = topmovies.includes(movieId);
   const handleToggle = function (isLiked, movieId) {
     if (!isLiked) {
