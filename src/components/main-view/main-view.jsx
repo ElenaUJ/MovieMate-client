@@ -39,8 +39,6 @@ function MainView() {
       {
         method: 'POST',
         headers: {
-          // Question: Do I need Content-Type here at all? (See below for the DELETE request, too)
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       }
@@ -78,7 +76,6 @@ function MainView() {
       {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       }

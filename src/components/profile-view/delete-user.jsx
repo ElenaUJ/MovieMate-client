@@ -15,8 +15,6 @@ function DeleteUser({ onLoggedOut, token, user }) {
       {
         method: 'DELETE',
         headers: {
-          // Question: Do I need this here? Is it just for the request?
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       }
