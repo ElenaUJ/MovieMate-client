@@ -1,17 +1,17 @@
 // This is the place where React code is bootstrapped (activated)
 import { createRoot } from 'react-dom/client';
+import { ToastContainer } from 'react-toastify';
 import { MainView } from './components/main-view/main-view.jsx';
-import Container from 'react-bootstrap/Container';
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
 
-// Main component (will eventually use all the others)
-const MyFlixApplication = function () {
+const MovieMateApplication = function () {
   return (
-    <Container>
-      <MainView></MainView>
-    </Container>
+    <>
+      <ToastContainer />
+      <MainView />
+    </>
   );
 };
 
@@ -20,4 +20,4 @@ const container = document.querySelector('#root');
 const root = createRoot(container);
 
 // Tells React to render your app in the root DOM element
-root.render(<MyFlixApplication />);
+root.render(<MovieMateApplication />);

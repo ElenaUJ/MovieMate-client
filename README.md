@@ -1,4 +1,4 @@
-# myFlix App - client-side (under construction)
+# MovieMate App - client-side (under construction)
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@
 
 ## Overview
 
-The MyFlix movie app will provide users with access to information about different movies, directors, and genres. Users will be able to register, update their personal information, and manage a list of their favourite movies.
+The MovieMate movie app will provide users with access to information about different movies, directors, and genres. Users will be able to register, update their personal information, and manage a list of their favourite movies.
 
 The server-side comprises a well-designed REST API and a MongoDB Database, whereas the client-side user interface is built using the React framework, completing the MERN-stack. It is still unter construction.
 
@@ -31,7 +31,7 @@ The server-side comprises a well-designed REST API and a MongoDB Database, where
 ## Links
 
 - [Live site URL]()
-- [Code URL](https://github.com/ElenaUJ/myFlix-client)
+- [Code URL](https://github.com/ElenaUJ/MovieMate-client)
 
 ## Process
 

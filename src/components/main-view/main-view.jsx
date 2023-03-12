@@ -1,168 +1,288 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Spinner from 'react-bootstrap/Spinner';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { LoginView } from '../login-view/login-view.jsx';
-import { SignupView } from '../signup-view/signup-view.jsx';
 import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import { NavigationBar } from '../navigation-bar/navigation-bar.jsx';
+import { ProfileView } from '../profile-view/profile-view.jsx';
+import { SignupView } from '../signup-view/signup-view.jsx';
 
-// Function returns visual representation of component
 function MainView() {
+  // Checks for stored user and token first
   const storedUser = JSON.parse(localStorage.getItem('user'));
   const storedToken = localStorage.getItem('token');
-  // if-else statement can not be used in useState hook (only expressions are allowerd, not statements) However, a ternary operator `condition ? expressioIfTrue : expressionIfFalse` is allowed!
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
-
-  // Empty array is initial value of movies (state variable); setMovies is a method to update movies variable, useState() returns array of paired values that are destructured
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // Default: no movie is selected
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const showSpinner = function () {
+    return (
+      <Col className="spinner-wrapper">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Col>
+    );
+  };
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  // Logic to manage TopMovies list (needed in both ProfileView and MovieCard)
+  const addMovie = function (movieId) {
+    fetch(
+      `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then(function (response) {
+        if (response.status === 401) {
+          throw new Error(
+            "Sorry, you're not authorized to access this resource. "
+          );
+        } else if (response.status === 409) {
+          throw new Error('You already added this movie to the list.');
+        } else if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(function (updatedUser) {
+        toast.success('Movie has been added to your Top Movies.');
+        setUser(updatedUser);
+      })
+      .catch(function (error) {
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while trying to add movie. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
+      });
+  };
 
-  // Hook for async tasks, runs callback whenever dependencies change
+  const removeMovie = function (movieId) {
+    fetch(
+      `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}/topMovies/${movieId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then(function (response) {
+        if (response.status === 401) {
+          throw new Error(
+            "Sorry, you're not authorized to access this resource. "
+          );
+        } else if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(function (updatedUser) {
+        toast.success('Movie has been removed from your Top Movies.');
+        setUser(updatedUser);
+      })
+      .catch(function (error) {
+        if (error.message) {
+          toast.error(error.message);
+        } else {
+          toast.error(
+            'An error occurred while trying to delete. Please try again later.'
+          );
+        }
+        console.error('An error occurred:' + error);
+      });
+  };
+
+  // To be run whenever user logs out (or is logged out)
+  const onLoggedOut = function () {
+    setUser(null);
+    setToken(null);
+    localStorage.clear();
+  };
+
+  // Return the list of all movies on the main page. Hook for async tasks, runs callback whenever dependencies (token in this case) change
   useEffect(
     function () {
       if (!token) {
         return;
       }
+      setLoading(true);
 
       fetch('https://myflix-movie-app-elenauj.onrender.com/movies', {
-        // ${} is template literal, will extract value of token and convert it to string, Bearer keyword specified type of authorization being sent
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(function (response) {
+          setLoading(false);
           if (response.status === 401) {
-            throw new Error('Unauthorized.');
+            throw new Error(
+              "Sorry, you're not authorized to access this resource. "
+            );
+          } else if (response.ok) {
+            return response.json();
           }
-          return response.json();
         })
         .then(function (movies) {
-          setMovies(movies);
+          // Sort movies in alphabetical order, and featured movies first
+          // Sort method compares every object with each other - if they have the same value for featured, they will be compared by title.
+          let sortedMovies = movies.sort(function (a, b) {
+            if (a.Featured === b.Featured) {
+              return a.Title.localeCompare(b.Title);
+            }
+            // If they do not have the same Featured value, the featured movie gets a smaller value than the unfeatured one and comes first
+            if (a.Featured) {
+              return -1;
+            } else {
+              return 1;
+            }
+          });
+          setMovies(sortedMovies);
         })
         .catch(function (error) {
-          console.error(error);
-          if (error.message === 'Unauthorized.') {
-            setErrorMessage('Error: Unauthorized. Please log in again.');
-            setUser(null);
-            setToken(null);
-            localStorage.clear();
+          setLoading(false);
+          if (error.message) {
+            toast.error(error.message);
           } else {
-            setErrorMessage('Error: Movies could not be fetched.');
+            toast.error(
+              'An error occurred while trying to delete. Please try again later.'
+            );
           }
+          console.error('An error occurred:' + error);
         });
     },
-    // Dependency array [] contains token which tells React that it needs to call fetch every time token is changed
     [token]
   );
 
-  // Question: I did not manage to transfer this code block into the return block. I couldn't figure out how to declare my variables and use the `similarMovies.length === 0` conditional inside the JSX expression. That's why I left it out... is that ok? Or too confusing/not good practice? Is there a way to do it?
-  if (selectedMovie) {
-    let similarMovies = movies.filter(function (movie) {
-      return (
-        movie.Genre.Name === selectedMovie.Genre.Name &&
-        movie.Title !== selectedMovie.Title
-      );
-    });
-
-    let printSimilarMovies;
-    // Checking if there are similar movies at all
-    if (similarMovies.length === 0) {
-      printSimilarMovies = 'No similar movies in database.';
-    } else {
-      printSimilarMovies = similarMovies.map(function (movie) {
-        // Bootstrap utility class mb stands for margin bottom and the number for the sixe (0-5)
-        return (
-          <Col key={movie._id} md={3} sm={4} xs={6}>
-            <MovieCard
-              movie={movie}
-              onMovieClick={setSelectedMovie}
-            ></MovieCard>
-          </Col>
-        );
-      });
-    }
-
-    // Use of md breakpoint makes it so all devices with a screen smaller than md will use entire width of the screen
-    return (
-      <>
-        <Row className="justify-content-md-center">
-          <Col md={8}>
-            <MovieView
-              movie={selectedMovie}
-              onBackClick={function () {
-                setSelectedMovie(null);
-              }}
-            ></MovieView>
-            <hr />
-          </Col>
-        </Row>
-        <Row className="justify-content-md-center">
-          <h2>Similar movies:</h2>
-          {printSimilarMovies}
-        </Row>
-      </>
-    );
-  }
-
   return (
-    // Root element (only one per component)
-    // map() method maps each element in movies array to piece of UI
-    // Key attribute (unique id) to avoid errors when list of elements of same type
-    // movie object from each iteration of map() function is passed to <MovieCard> as a prop
-    // onMovieClick is a function executing setSelectedMovie, which be passed to MovieCard component within callback of onClick event listener
-    // onClick cannot be added dirctly to the component because it will be understood as prop
-    <Row className="justify-content-md-center">
-      {!user ? (
-        <Col md={6}>
-          <LoginView
-            onLoggedIn={function (user, token) {
-              setUser(user);
-              setToken(token);
-            }}
-          ></LoginView>
-          <SignupView></SignupView>
-        </Col>
-      ) : movies.length === 0 ? (
-        <Col md={3}>
-          <p>Fetching movies...</p>
-        </Col>
-      ) : errorMessage ? (
-        <Col md={3}>
-          <p>{errorMessage}</p>
-        </Col>
-      ) : (
-        <>
-          {movies.map(function (movie) {
-            return (
-              <Col className="mb-4" key={movie._id} md={3} sm={4} xs={6}>
-                <MovieCard
-                  movie={movie}
-                  onMovieClick={setSelectedMovie}
-                ></MovieCard>
-              </Col>
-            );
-          })}
-          <div className="align-right">
-            <Button
-              variant="primary"
-              onClick={function () {
-                setUser(null);
-                setToken(null);
-                localStorage.clear();
-              }}
-            >
-              Logout
-            </Button>
-          </div>
-        </>
-      )}
-    </Row>
+    // replace keyword when navigating to login page means the current URL is replaced in the history stack, so the user can't go back hitting the back button
+    // Route to path="/movies/:movieId" contains URL param, allowing Routes to match dynamic URLs
+    <BrowserRouter>
+      <NavigationBar onLoggedOut={onLoggedOut} user={user} />
+      <Container>
+        <Row className="justify-content-md-center mt-5">
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <>
+                  {user ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Col md={6}>
+                      <LoginView
+                        onLoggedIn={function (user, token) {
+                          setUser(user);
+                          setToken(token);
+                        }}
+                      />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+
+            <Route
+              path="/signup"
+              element={
+                <>
+                  {user ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Col md={6}>
+                      <SignupView />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+
+            <Route
+              path="/"
+              element={
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : loading ? (
+                    <>{showSpinner()}</>
+                  ) : (
+                    <>
+                      {movies.map(function (movie) {
+                        return (
+                          <Col
+                            className="mb-4"
+                            key={movie._id}
+                            xs={6}
+                            md={4}
+                            lg={3}
+                            xl={2}
+                          >
+                            <MovieCard movie={movie} />
+                          </Col>
+                        );
+                      })}
+                    </>
+                  )}
+                </>
+              }
+            />
+
+            <Route
+              path="/movies/:movieId"
+              element={
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : movies.length === 0 ? (
+                    <>{showSpinner()}</>
+                  ) : (
+                    <MovieView
+                      addMovie={addMovie}
+                      movies={movies}
+                      removeMovie={removeMovie}
+                      topmovies={user.TopMovies}
+                    />
+                  )}
+                </>
+              }
+            />
+
+            <Route
+              path="/profile"
+              element={
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : (
+                    <Col>
+                      <ProfileView
+                        movies={movies}
+                        onLoggedOut={onLoggedOut}
+                        removeMovie={removeMovie}
+                        setUser={setUser}
+                        token={token}
+                        user={user}
+                      />
+                    </Col>
+                  )}
+                </>
+              }
+            />
+          </Routes>
+        </Row>
+      </Container>
+    </BrowserRouter>
   );
 }
 
-// Exposure of MainView component
 export { MainView };

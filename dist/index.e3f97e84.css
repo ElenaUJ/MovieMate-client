@@ -1,3 +1,26 @@
+.movie-card div.card-title.h5, .movie-card p.card-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.movie-card .card-img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+
+.movie-card .card-header {
+  width: 100%;
+  background-color: #f7be16;
+  position: absolute;
+}
+
+.card-link-unstyled {
+  text-decoration: none;
+}
+
 .body {
   color: #d6d6d6;
   background-color: #2f4858;
@@ -12039,4 +12062,4 @@ textarea.form-control-lg {
   }
 }
 
-/*# sourceMappingURL=index.ce1d6491.css.map */
+/*# sourceMappingURL=index.e3f97e84.css.map */
