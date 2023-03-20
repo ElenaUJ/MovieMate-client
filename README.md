@@ -34,7 +34,7 @@ The client side user interface complements the REST API and MongoDB database whi
 
 - [Live site URL](https://my-moviemate.netlify.app)
 - [Code URL](https://github.com/ElenaUJ/MovieMate-client)
-- [API Link](https://myflix-movie-app-elenauj.onrender.com/)
+- [API URL](https://myflix-movie-app-elenauj.onrender.com/)
 
 ## Process
 
@@ -62,13 +62,13 @@ This project has the following dependencies:
 - "react-router-dom": "^6.8.1"
 - "react-toastify": "^9.1.1"
 
-These are the dev dependencies:
+And dev dependencies:
 
 - "@parcel/transformer-sass": "^2.8.3"
 - "parcel": "^2.8.3"
 - "process": "^0.11.10"
 
-Furthermore, it uses following linting configuration:
+Furthermore, it uses the following linting configuration:
 
 - [ESLint rules](https://github.com/mydea/simple-pokedex-app/blob/master/.eslintrc)
 - [Prettier configuration](https://stackoverflow.com/questions/55430906/prettier-single-quote-for-javascript-and-json-double-quote-for-html-sass-and-c)
