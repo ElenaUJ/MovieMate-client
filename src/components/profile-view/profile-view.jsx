@@ -25,7 +25,7 @@ function ProfileView({
         </Col>
       </Row>
       <Row>
-        <Col className="mb-4" xs={12} sm={6} md={4}>
+        <Col className="mb-4" xs={12} lg={6} xl={4}>
           <Card className="card h-100">
             <Card.Body className="flex-column">
               <Card.Title className="mb-3">Your Information</Card.Title>
@@ -44,7 +44,7 @@ function ProfileView({
             </Card.Body>
           </Card>
         </Col>
-        <Col className="mb-4" xs={12} sm={6} md={8}>
+        <Col className="mb-4" xs={12} lg={6} xl={8}>
           <Card className="card">
             <Card.Body>
               <Card.Title className="mb-3">Update Your Information</Card.Title>

@@ -211,7 +211,7 @@ function MainView() {
                   {user ? (
                     <Navigate to="/" />
                   ) : (
-                    <Col md={6}>
+                    <Col lg={6}>
                       <LoginView
                         onLoggedIn={function (user, token) {
                           setUser(user);
@@ -231,7 +231,7 @@ function MainView() {
                   {user ? (
                     <Navigate to="/" />
                   ) : (
-                    <Col md={6}>
+                    <Col lg={6}>
                       <SignupView />
                     </Col>
                   )}
@@ -261,8 +261,7 @@ function MainView() {
                             className="mb-4"
                             key={movie._id}
                             xs={6}
-                            md={4}
-                            lg={3}
+                            lg={4}
                             xl={2}
                           >
                             <MovieCard movie={movie} />
@@ -278,8 +277,7 @@ function MainView() {
                             className="mb-4"
                             key={movie._id}
                             xs={6}
-                            md={4}
-                            lg={3}
+                            lg={4}
                             xl={2}
                           >
                             <MovieCard movie={movie} />

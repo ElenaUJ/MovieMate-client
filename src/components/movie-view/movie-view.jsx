@@ -40,7 +40,7 @@ function MovieView({ addMovie, movies, removeMovie, topmovies }) {
   } else {
     printSimilarMovies = similarMovies.map(function (movie) {
       return (
-        <Col className="mt-4" key={movie._id} xs={6} md={4} lg={3} xl={2}>
+        <Col className="mt-4" key={movie._id} xs={6} lg={4} xl={2}>
           <MovieCard movie={movie}></MovieCard>
         </Col>
       );
