@@ -62,7 +62,7 @@ This project has the following dependencies:
 - "react-router-dom": "^6.8.1"
 - "react-toastify": "^9.1.1"
 
-Andgi dev dependencies:
+These are the dev dependencies:
 
 - "@parcel/transformer-sass": "^2.8.3"
 - "parcel": "^2.8.3"
