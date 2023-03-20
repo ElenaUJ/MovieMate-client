@@ -11,6 +11,7 @@ import { MovieCard } from '../movie-card/movie-card.jsx';
 import { MovieView } from '../movie-view/movie-view.jsx';
 import { NavigationBar } from '../navigation-bar/navigation-bar.jsx';
 import { ProfileView } from '../profile-view/profile-view.jsx';
+import { SearchBar } from './search-bar.jsx';
 import { SignupView } from '../signup-view/signup-view.jsx';
 
 function MainView() {
@@ -21,6 +22,8 @@ function MainView() {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [userQuery, setUserQuery] = useState('');
 
   const showSpinner = function () {
     return (
@@ -31,6 +34,35 @@ function MainView() {
       </Col>
     );
   };
+
+  // Logic to render filteredMovies list
+
+  const onSearch = function (searchInput) {
+    setUserQuery(searchInput);
+  };
+
+  useEffect(
+    function () {
+      if (!userQuery) {
+        setFilteredMovies([]);
+      } else {
+        let searchResult = movies.filter(function (movie) {
+          const movieLowerCase = movie.Title.toLowerCase();
+          const directorLowerCase = movie.Director.Name.toLowerCase();
+          const genreLowerCase = movie.Genre.Name.toLowerCase();
+          const userQueryLowerCase = userQuery.toLowerCase();
+
+          return (
+            movieLowerCase.includes(userQueryLowerCase) ||
+            directorLowerCase.includes(userQueryLowerCase) ||
+            genreLowerCase.includes(userQueryLowerCase)
+          );
+        });
+        setFilteredMovies(searchResult);
+      }
+    },
+    [movies, userQuery]
+  );
 
   // Logic to manage TopMovies list (needed in both ProfileView and MovieCard)
   const addMovie = function (movieId) {
@@ -211,10 +243,33 @@ function MainView() {
               path="/"
               element={
                 <>
+                  <SearchBar onSearch={onSearch} />
                   {!user ? (
                     <Navigate to="/login" replace />
                   ) : loading ? (
                     <>{showSpinner()}</>
+                  ) : userQuery && filteredMovies.length === 0 ? (
+                    <Col className="mt-5">
+                      Sorry, we couldn't find any movies that match your search.
+                      Please try again with a different search term.
+                    </Col>
+                  ) : userQuery ? (
+                    <>
+                      {filteredMovies.map(function (movie) {
+                        return (
+                          <Col
+                            className="mb-4"
+                            key={movie._id}
+                            xs={6}
+                            md={4}
+                            lg={3}
+                            xl={2}
+                          >
+                            <MovieCard movie={movie} />
+                          </Col>
+                        );
+                      })}
+                    </>
                   ) : (
                     <>
                       {movies.map(function (movie) {
