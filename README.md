@@ -75,7 +75,7 @@ Furthermore, it uses the following linting configuration:
 
 ### API Documentation
 
-Information about the [API used in this project](https://github.com/ElenaUJ/MyFlix-movie-app) can be found [here](https://myflix-movie-app-elenauj.onrender.com/documentation.html).
+Information about the [API used in this project](https://github.com/ElenaUJ/MyFlix-movie-app) (e.g. endpoints, dependencies, error responses, data scurity information) can be found [here](https://myflix-movie-app-elenauj.onrender.com/documentation.html).
 
 ## Features
 
