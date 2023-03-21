@@ -39392,7 +39392,7 @@ function NavigationBar({ onLoggedOut , user  }) {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {
         className: "navbar",
         collapseOnSelect: true,
-        expand: "md",
+        expand: "lg",
         sticky: "top",
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _containerDefault.default), {
             mb: 5,
