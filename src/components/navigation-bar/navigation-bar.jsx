@@ -7,7 +7,7 @@ import './navigation-bar.scss';
 
 function NavigationBar({ onLoggedOut, user }) {
   return (
-    <Navbar className="navbar" collapseOnSelect expand="lg" sticky="top">
+    <Navbar className="navbar" collapseOnSelect expand="md" sticky="top">
       <Container mb={5}>
         <Navbar.Brand as={Link} to="/" className="logo">
           MovieMate
