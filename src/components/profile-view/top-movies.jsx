@@ -15,7 +15,7 @@ function TopMovies({ movies, removeMovie, user }) {
   } else {
     printTopMovies = topMovies.map(function (movie) {
       return (
-        <Col className="mt-4" key={movie._id} xs={6} lg={4} xl={2}>
+        <Col className="mt-4" key={movie._id} xs={6} md={4} lg={3} xl={2}>
           <MovieCard
             isFavMovieCard={true}
             movie={movie}

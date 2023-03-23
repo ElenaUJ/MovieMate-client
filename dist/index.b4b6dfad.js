@@ -27994,7 +27994,7 @@ function MainView() {
                                     children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
                                         to: "/"
                                     }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                                        lg: 6,
+                                        md: 6,
                                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginViewJsx.LoginView), {
                                             onLoggedIn: function(user, token) {
                                                 setUser(user);
@@ -28014,7 +28014,7 @@ function MainView() {
                                     children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
                                         to: "/"
                                     }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                                        lg: 6,
+                                        md: 6,
                                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupViewJsx.SignupView), {}, void 0, false, void 0, void 0)
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false)
@@ -28043,7 +28043,8 @@ function MainView() {
                                                 return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                                     className: "mb-4",
                                                     xs: 6,
-                                                    lg: 4,
+                                                    md: 4,
+                                                    lg: 3,
                                                     xl: 2,
                                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                                                         movie: movie
@@ -28055,7 +28056,8 @@ function MainView() {
                                                 return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                                     className: "mb-4",
                                                     xs: 6,
-                                                    lg: 4,
+                                                    md: 4,
+                                                    lg: 3,
                                                     xl: 2,
                                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                                                         movie: movie
@@ -28087,7 +28089,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 293,
+                                lineNumber: 295,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -28109,7 +28111,7 @@ function MainView() {
                                 }, void 0, false)
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 313,
+                                lineNumber: 315,
                                 columnNumber: 13
                             }, this)
                         ]
@@ -36368,7 +36370,8 @@ function MovieView({ addMovie , movies , removeMovie , topmovies  }) {
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
             className: "mt-4",
             xs: 6,
-            lg: 4,
+            md: 4,
+            lg: 3,
             xl: 2,
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                 movie: movie
@@ -43403,8 +43406,8 @@ function ProfileView({ movies , onLoggedOut , removeMovie , setUser , token , us
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         className: "mb-4",
                         xs: 12,
-                        lg: 6,
-                        xl: 4,
+                        sm: 6,
+                        md: 4,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
                             className: "card h-100",
                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
@@ -43462,8 +43465,8 @@ function ProfileView({ movies , onLoggedOut , removeMovie , setUser , token , us
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         className: "mb-4",
                         xs: 12,
-                        lg: 6,
-                        xl: 8,
+                        sm: 6,
+                        md: 8,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
                             className: "card",
                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
@@ -43735,7 +43738,8 @@ function TopMovies({ movies , removeMovie , user  }) {
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
             className: "mt-4",
             xs: 6,
-            lg: 4,
+            md: 4,
+            lg: 3,
             xl: 2,
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
                 isFavMovieCard: true,
@@ -44070,6 +44074,8 @@ function UserInfo({ birthday , email , username  }) {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         xs: 4,
+                        sm: 12,
+                        lg: 4,
                         children: "Name:"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/user-info.jsx",
@@ -44078,10 +44084,12 @@ function UserInfo({ birthday , email , username  }) {
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         xs: 8,
+                        sm: 12,
+                        lg: 8,
                         children: username
                     }, void 0, false, {
                         fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 10,
+                        lineNumber: 12,
                         columnNumber: 9
                     }, this)
                 ]
@@ -44095,32 +44103,9 @@ function UserInfo({ birthday , email , username  }) {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         xs: 4,
+                        sm: 12,
+                        lg: 4,
                         children: "E-mail:"
-                    }, void 0, false, {
-                        fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 13,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                        xs: 8,
-                        children: email
-                    }, void 0, false, {
-                        fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 14,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/user-info.jsx",
-                lineNumber: 12,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
-                className: "mb-2",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                        xs: 4,
-                        children: "Birthday:"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/user-info.jsx",
                         lineNumber: 17,
@@ -44128,16 +44113,47 @@ function UserInfo({ birthday , email , username  }) {
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         xs: 8,
-                        children: birthday
+                        sm: 12,
+                        lg: 8,
+                        children: email
                     }, void 0, false, {
                         fileName: "src/components/profile-view/user-info.jsx",
-                        lineNumber: 18,
+                        lineNumber: 20,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/user-info.jsx",
                 lineNumber: 16,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+                className: "mb-2",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                        xs: 4,
+                        sm: 12,
+                        lg: 4,
+                        children: "Birthday:"
+                    }, void 0, false, {
+                        fileName: "src/components/profile-view/user-info.jsx",
+                        lineNumber: 25,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                        xs: 8,
+                        sm: 12,
+                        lg: 8,
+                        children: birthday
+                    }, void 0, false, {
+                        fileName: "src/components/profile-view/user-info.jsx",
+                        lineNumber: 28,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/profile-view/user-info.jsx",
+                lineNumber: 24,
                 columnNumber: 7
             }, this)
         ]

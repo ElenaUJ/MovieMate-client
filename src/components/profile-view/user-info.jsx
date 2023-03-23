@@ -6,16 +6,28 @@ function UserInfo({ birthday, email, username }) {
   return (
     <Col>
       <Row className="mb-2">
-        <Col xs={4}>Name:</Col>
-        <Col xs={8}>{username}</Col>
+        <Col xs={4} sm={12} lg={4}>
+          Name:
+        </Col>
+        <Col xs={8} sm={12} lg={8}>
+          {username}
+        </Col>
       </Row>
       <Row className="mb-2">
-        <Col xs={4}>E-mail:</Col>
-        <Col xs={8}>{email}</Col>
+        <Col xs={4} sm={12} lg={4}>
+          E-mail:
+        </Col>
+        <Col xs={8} sm={12} lg={8}>
+          {email}
+        </Col>
       </Row>
       <Row className="mb-2">
-        <Col xs={4}>Birthday:</Col>
-        <Col xs={8}>{birthday}</Col>
+        <Col xs={4} sm={12} lg={4}>
+          Birthday:
+        </Col>
+        <Col xs={8} sm={12} lg={8}>
+          {birthday}
+        </Col>
       </Row>
     </Col>
   );
