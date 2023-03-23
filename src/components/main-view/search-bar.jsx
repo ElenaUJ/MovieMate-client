@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import './search-bar.scss';
 
 function SearchBar({ onSearch }) {
   const [searchInput, setSearchInput] = useState('');
@@ -9,7 +10,7 @@ function SearchBar({ onSearch }) {
   return (
     <Form className="d-flex mb-4">
       <Form.Control
-        className="me-2"
+        className="ellipsis me-2"
         aria-label="Search"
         onChange={function (event) {
           setSearchInput(event.target.value);

@@ -44497,6 +44497,7 @@ var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _form = require("react-bootstrap/Form");
 var _formDefault = parcelHelpers.interopDefault(_form);
+var _searchBarScss = require("./search-bar.scss");
 var _s = $RefreshSig$();
 function SearchBar({ onSearch  }) {
     _s();
@@ -44505,7 +44506,7 @@ function SearchBar({ onSearch  }) {
         className: "d-flex mb-4",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
-                className: "me-2",
+                className: "ellipsis me-2",
                 "aria-label": "Search",
                 onChange: function(event) {
                     setSearchInput(event.target.value);
@@ -44515,7 +44516,7 @@ function SearchBar({ onSearch  }) {
                 value: searchInput
             }, void 0, false, {
                 fileName: "src/components/main-view/search-bar.jsx",
-                lineNumber: 11,
+                lineNumber: 12,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -44528,13 +44529,13 @@ function SearchBar({ onSearch  }) {
                 children: "Search"
             }, void 0, false, {
                 fileName: "src/components/main-view/search-bar.jsx",
-                lineNumber: 21,
+                lineNumber: 22,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/search-bar.jsx",
-        lineNumber: 10,
+        lineNumber: 11,
         columnNumber: 5
     }, this);
 }
@@ -44551,6 +44552,6 @@ $RefreshReg$(_c, "SearchBar");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lJZlQ":[function() {},{}]},["1xC6H","7a1Sg","d8Dch"], "d8Dch", "parcelRequireaec4")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","prop-types":"7wKI2","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./search-bar.scss":"cFjnK"}],"cFjnK":[function() {},{}],"lJZlQ":[function() {},{}]},["1xC6H","7a1Sg","d8Dch"], "d8Dch", "parcelRequireaec4")
 
 //# sourceMappingURL=index.b4b6dfad.js.map

@@ -747,6 +747,12 @@ a.logout-link {
   color: #2f4858;
 }
 
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .body {
   color: #d6d6d6;
   background-color: #2f4858;
