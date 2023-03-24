@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { HeartSwitch } from '@anatoliygatt/heart-switch';
 import { MovieCard } from '../movie-card/movie-card.jsx';
+import './movie-view.scss';
 
 function MovieView({ addMovie, movies, removeMovie, topmovies }) {
   // Accessing movieId URL param that has been defined in the movie-card component
@@ -56,7 +57,7 @@ function MovieView({ addMovie, movies, removeMovie, topmovies }) {
   return (
     <>
       <Row>
-        <Col className="flex-column" xs={12} lg={8}>
+        <Col className="flex-column mb-4" xs={12} lg={8}>
           <Row>
             <Col>
               <h1>{movie.Title}</h1>
@@ -70,10 +71,10 @@ function MovieView({ addMovie, movies, removeMovie, topmovies }) {
             <Col xs={2}>Genre:</Col>
             <Col>{movie.Genre.Name}</Col>
           </Row>
-          <Row className="mb-4 mt-4">
+          <Row className="display-block mb-4 mt-4">
             <Col>{movie.Description}</Col>
           </Row>
-          <Row className="mb-4">
+          <Row className="mt-auto">
             <Col>
               <HeartSwitch
                 activeThumbColor="#ecfeff"
@@ -90,29 +91,29 @@ function MovieView({ addMovie, movies, removeMovie, topmovies }) {
                 size="md"
               />
             </Col>
+            <Col>
+              <div className="align-right">
+                <Button
+                  className="btn-secondary"
+                  onClick={goBack}
+                  variant="secondary"
+                >
+                  Back
+                </Button>
+              </div>
+            </Col>
           </Row>
         </Col>
-        <Col xs={12} lg={4}>
+        <Col className="mb-4" xs={12} lg={4}>
           <img src={movie.ImagePath} className="w-100" />
         </Col>
       </Row>
       <Row>
-        <Col className="mt-5">
+        <Col className="mt-4">
           <h2>Similar movies</h2>
         </Col>
       </Row>
       <Row>{printSimilarMovies}</Row>
-      <Row className="mb-4 mt-3">
-        <div className="align-right">
-          <Button
-            className="btn-secondary"
-            onClick={goBack}
-            variant="secondary"
-          >
-            Back
-          </Button>
-        </div>
-      </Row>
     </>
   );
 }

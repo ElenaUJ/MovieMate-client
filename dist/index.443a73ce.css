@@ -730,6 +730,10 @@
   text-decoration: none;
 }
 
+.display-block {
+  text-align: justify;
+}
+
 .navbar {
   background-color: #f7be16;
 }
