@@ -55,7 +55,7 @@ function ProfileView({
       </Row>
       <Row>
         <Col className="mt-2">
-          <h2>Top Movies</h2>
+          <h2>Your Top Movies</h2>
         </Col>
       </Row>
       <Row>

@@ -43514,7 +43514,7 @@ function ProfileView({ movies , onLoggedOut , removeMovie , setUser , token , us
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                     className: "mt-2",
                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                        children: "Top Movies"
+                        children: "Your Top Movies"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
                         lineNumber: 58,
@@ -44510,6 +44510,7 @@ function SearchBar({ onSearch  }) {
                 "aria-label": "Search",
                 onChange: function(event) {
                     setSearchInput(event.target.value);
+                    if (!event.target.value) onSearch("");
                 },
                 placeholder: "Discover your next favourite movie! Search by title, director, or genre",
                 type: "search",
@@ -44529,7 +44530,7 @@ function SearchBar({ onSearch  }) {
                 children: "Search"
             }, void 0, false, {
                 fileName: "src/components/main-view/search-bar.jsx",
-                lineNumber: 22,
+                lineNumber: 25,
                 columnNumber: 7
             }, this)
         ]
