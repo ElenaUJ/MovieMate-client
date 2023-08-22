@@ -75,7 +75,7 @@ Ensure you have the following prerequisites installed and configured on your sys
 
    `parcel src/index.html`
 
-   This command will automatically open the app in your web browser. You should see the app running at http://localhost:1234.
+   The app will be available at http://localhost:1234.
 
 ### Using the App
 
