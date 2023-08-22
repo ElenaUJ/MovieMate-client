@@ -6,6 +6,8 @@
 - [Links](#links)
 - [Features](#features)
 - [Getting Started](#getting-started)
+  - [How to Run](#how-to-run)
+  - [Using the App](#using-the-app)
 - [Process](#process)
   - [Main Technologies and Dependencies](#main-technologies-and-dependencies)
   - [Linting and Formatting](#linting-and-formatting)
@@ -42,6 +44,8 @@ The client side user interface complements the REST API and MongoDB database whi
 
 ## Getting Started
 
+### How to Run
+
 **Prerequisites**
 
 Ensure you have the following prerequisites installed and configured on your system:
@@ -69,9 +73,13 @@ Ensure you have the following prerequisites installed and configured on your sys
 4. _Run the Development Server:_
    Start the development server and open the app in your default web browser:
 
-   `npm start`
+   `parcel src/index.html`
 
-   This command will automatically open the app in your web browser. You should see the app running at http://localhost:3000.
+   This command will automatically open the app in your web browser. You should see the app running at http://localhost:1234.
+
+### Using the App
+
+To access the app, register or use following test credentials: Username: Test; Password: test.
 
 ## Process
 
