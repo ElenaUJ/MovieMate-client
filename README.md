@@ -16,7 +16,7 @@
 
 ## Overview
 
-![Screenshot of the app's main page](img/screenshot_main_page.png)
+![Screenshot of the app's main page](img/screenshot_main_page.jpg)
 
 MovieMate is a movie app that allows users to access information about different movies. Users can register, update their personal information, and manage a list of their favourite movies.
 
