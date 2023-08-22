@@ -5,13 +5,13 @@
 - [Overview](#overview)
 - [Links](#links)
 - [Features](#features)
-- [Getting Started](#getting-started)
-  - [How to Run](#how-to-run)
-  - [Using the App](#using-the-app)
 - [Process](#process)
   - [Main Technologies and Dependencies](#main-technologies-and-dependencies)
   - [Linting and Formatting](#linting-and-formatting)
   - [API Documentation](#api-documentation)
+- [Getting Started](#getting-started)
+  - [How to Run](#how-to-run)
+  - [Using the App](#using-the-app)
 - [Credits](#credits)
 
 ## Overview
@@ -42,6 +42,23 @@ The client side user interface complements the REST API and MongoDB database whi
 
 - Loading Spinners: The app implements loading spinners to indicate the progress of fetch calls and improve user experience.
 
+## Process
+
+### Main Technologies and Dependencies
+
+**Technologies:** React, React Bootstrap
+
+**Dependencies:** For a complete list of dependencies, please refer to the [package.json](./package.json) file.
+
+### Linting and Formatting
+
+- ESLint Rules: [View rules](https://github.com/mydea/simple-pokedex-app/blob/master/.eslintrc)
+- Prettier configuration: [View configuration](https://stackoverflow.com/questions/55430906/prettier-single-quote-for-javascript-and-json-double-quote-for-html-sass-and-c)
+
+### API Documentation
+
+Information about the [API used in this project](https://github.com/ElenaUJ/MyFlix-movie-app) (e.g. endpoints, dependencies, error responses, data security information) can be found [here](https://myflix-movie-app-elenauj.onrender.com/documentation.html).
+
 ## Getting Started
 
 ### How to Run
@@ -63,7 +80,7 @@ Ensure you have the following prerequisites installed and configured on your sys
 2. _Navigate to the Project Directory:_
    Change your working directory to the project folder by entering this command:
 
-   `cd MovieMate-backendmovieMate-client`
+   `cd movieMate-client`
 
 3. _Install Dependencies:_
    Run the following command to install the required dependencies:
@@ -80,23 +97,6 @@ Ensure you have the following prerequisites installed and configured on your sys
 ### Using the App
 
 To access the app, register or use following test credentials: Username: Test; Password: test.
-
-## Process
-
-### Main Technologies and Dependencies
-
-**Technologies:** React, React Bootstrap
-
-**Dependencies:** For a complete list of dependencies, please refer to the [package.json](./package.json) file.
-
-### Linting and Formatting
-
-- ESLint Rules: [View rules](https://github.com/mydea/simple-pokedex-app/blob/master/.eslintrc)
-- Prettier configuration: [View configuration](https://stackoverflow.com/questions/55430906/prettier-single-quote-for-javascript-and-json-double-quote-for-html-sass-and-c)
-
-### API Documentation
-
-Information about the [API used in this project](https://github.com/ElenaUJ/MyFlix-movie-app) (e.g. endpoints, dependencies, error responses, data security information) can be found [here](https://myflix-movie-app-elenauj.onrender.com/documentation.html).
 
 ## Credits
 
