@@ -26,7 +26,7 @@ The client side user interface complements the REST API and MongoDB database whi
 
 - [Live site URL](https://my-moviemate.netlify.app)
 - [Code URL](https://github.com/ElenaUJ/MovieMate-client)
-- [API URL](https://myflix-movie-app-elenauj.onrender.com/)
+- [API URL](localhost:8080/)
 
 ## Features
 
@@ -57,7 +57,7 @@ The client side user interface complements the REST API and MongoDB database whi
 
 ### API Documentation
 
-Information about the [API used in this project](https://github.com/ElenaUJ/MyFlix-movie-app) (e.g. endpoints, dependencies, error responses, data security information) can be found [here](https://myflix-movie-app-elenauj.onrender.com/documentation.html).
+Information about the [API used in this project](https://github.com/ElenaUJ/MyFlix-movie-app) (e.g. endpoints, dependencies, error responses, data security information) can be found [here](localhost:8080/documentation.html).
 
 ## Getting Started
 

@@ -10,15 +10,12 @@ function DeleteUser({ onLoggedOut, token, user }) {
 
   const deleteUser = function () {
     setLoading(true);
-    fetch(
-      `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}`,
-      {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    fetch(`localhost:8080/users/${user.Username}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(function (response) {
         setLoading(false);
         if (response.status === 401) {

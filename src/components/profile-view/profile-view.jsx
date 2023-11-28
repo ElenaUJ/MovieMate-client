@@ -8,6 +8,7 @@ import { DeleteUser } from './delete-user.jsx';
 import { TopMovies } from './top-movies.jsx';
 import { UpdateUser } from './update-user.jsx';
 import { UserInfo } from './user-info.jsx';
+import { UploadImage } from './upload-image.jsx';
 
 function ProfileView({
   movies,
@@ -60,6 +61,14 @@ function ProfileView({
       </Row>
       <Row>
         <TopMovies movies={movies} removeMovie={removeMovie} user={user} />
+      </Row>
+      <Row>
+        <Col className="mt-2">
+          <h2>Upload images</h2>
+        </Col>
+      </Row>
+      <Row>
+        <UploadImage />
       </Row>
       <Row className="mb-4 mt-3">
         <div className="align-right">

@@ -39,17 +39,14 @@ function UpdateUser({ setUser, token, user }) {
       return;
     }
 
-    fetch(
-      `https://myflix-movie-app-elenauj.onrender.com/users/${user.Username}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`localhost:8080/users/${user.Username}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
       .then(function (response) {
         setLoading(false);
         if (response.status === 401) {
