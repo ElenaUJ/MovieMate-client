@@ -181,7 +181,7 @@ function MainView() {
             toast.error(error.message);
           } else {
             toast.error(
-              'An error occurred while trying to delete. Please try again later.'
+              'An error occurred while fetching the movies. Please try again later.'
             );
           }
           console.error('An error occurred:' + error);
@@ -319,6 +319,7 @@ function MainView() {
                         onLoggedOut={onLoggedOut}
                         removeMovie={removeMovie}
                         setUser={setUser}
+                        showSpinner={showSpinner}
                         token={token}
                         user={user}
                       />

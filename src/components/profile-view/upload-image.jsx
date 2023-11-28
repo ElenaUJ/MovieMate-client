@@ -15,6 +15,9 @@ function UploadImage({ token }) {
 
   const handleSubmit = function () {
     setLoading(true);
+    if (!file) {
+      toast.error('No image to upload!');
+    }
 
     const formData = new FormData();
     formData.append('image', file);

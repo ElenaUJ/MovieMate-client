@@ -9,12 +9,14 @@ import { TopMovies } from './top-movies.jsx';
 import { UpdateUser } from './update-user.jsx';
 import { UserInfo } from './user-info.jsx';
 import { UploadImage } from './upload-image.jsx';
+import { UserImages } from './user-images.jsx';
 
 function ProfileView({
   movies,
   onLoggedOut,
   removeMovie,
   setUser,
+  showSpinner,
   token,
   user,
 }) {
@@ -66,6 +68,9 @@ function ProfileView({
         <Col className="mt-2">
           <h2>Your images</h2>
         </Col>
+      </Row>
+      <Row>
+        <UserImages showSpinner={showSpinner} token={token} />
       </Row>
       <Row>
         <UploadImage token={token} />
