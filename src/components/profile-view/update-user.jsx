@@ -39,7 +39,7 @@ function UpdateUser({ setUser, token, user }) {
       return;
     }
 
-    fetch(`localhost:8080/users/${user.Username}`, {
+    fetch(`http://localhost:8080/users/${user.Username}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -66,7 +66,7 @@ function MainView() {
 
   // Logic to manage TopMovies list (needed in both ProfileView and MovieCard)
   const addMovie = function (movieId) {
-    fetch(`localhost:8080/users/${user.Username}/topMovies/${movieId}`, {
+    fetch(`http://localhost:8080/users/${user.Username}/topMovies/${movieId}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ function MainView() {
   };
 
   const removeMovie = function (movieId) {
-    fetch(`localhost:8080/users/${user.Username}/topMovies/${movieId}`, {
+    fetch(`http://localhost:8080/users/${user.Username}/topMovies/${movieId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -146,7 +146,7 @@ function MainView() {
       }
       setLoading(true);
 
-      fetch('localhost:8080/movies', {
+      fetch('http://localhost:8080/movies', {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(function (response) {

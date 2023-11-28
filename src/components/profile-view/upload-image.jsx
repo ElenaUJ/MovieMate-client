@@ -1,20 +1,30 @@
+import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ButtonSpinner } from '../button-spinner/button-spinner.jsx';
 
-function UploadImage() {
-  const handleSelectedImage = function () {
+function UploadImage({ token }) {
+  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
 
+  const handleChange = function (event) {
+    setFile(event.target.files[0]);
   };
 
-  const uploadImage = function () {
-    fetch(`localhost:8080/images`, {
+  const handleSubmit = function () {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    fetch(`http://localhost:8080/images`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
       },
-      body: 
+      body: formData,
     })
       .then(function (response) {
         setLoading(false);
@@ -22,13 +32,8 @@ function UploadImage() {
           throw new Error(
             "Sorry, you're not authorized to access this resource. "
           );
-        } else if (response.status === 400) {
-          throw new Error('User was not found.');
         } else if (response.ok) {
-          toast.success(
-            `You successfully deleted the account with the username of "${user.Username}".`
-          );
-          onLoggedOut();
+          toast.success(`You successfully uploaded "${file.name}".`);
         }
       })
       .catch(function (error) {
@@ -37,7 +42,7 @@ function UploadImage() {
           toast.error(error.message);
         } else {
           toast.error(
-            'An error occurred while trying to delete. Please try again later.'
+            'An error occurred while trying to upload the image. Please try again later.'
           );
         }
         console.error('An error occurred:' + error);
@@ -45,15 +50,26 @@ function UploadImage() {
   };
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Select an image to upload</Form.Label>
-          <Form.Control onChange={handleSelectedImage} type="file" />
+          <Form.Control onChange={handleChange} type="file" />
         </Form.Group>
       </Form>
-      <Button variant="primary" type="submit">
-        Upload Image
-      </Button>
+      {loading ? (
+        <Button className="spinner-button-wide" type="button">
+          <ButtonSpinner />
+        </Button>
+      ) : (
+        <Button
+          className="spinner-button-wide"
+          variant="primary"
+          onClick={handleSubmit}
+          type="button"
+        >
+          Upload image
+        </Button>
+      )}
     </>
   );
 }

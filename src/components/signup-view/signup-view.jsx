@@ -34,7 +34,7 @@ function SignupView() {
       Birthday: birthday,
     };
 
-    fetch('localhost:8080/users', {
+    fetch('http://localhost:8080/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

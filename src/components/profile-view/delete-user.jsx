@@ -10,7 +10,7 @@ function DeleteUser({ onLoggedOut, token, user }) {
 
   const deleteUser = function () {
     setLoading(true);
-    fetch(`localhost:8080/users/${user.Username}`, {
+    fetch(`http://localhost:8080/users/${user.Username}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,

@@ -64,11 +64,11 @@ function ProfileView({
       </Row>
       <Row>
         <Col className="mt-2">
-          <h2>Upload images</h2>
+          <h2>Your images</h2>
         </Col>
       </Row>
       <Row>
-        <UploadImage />
+        <UploadImage token={token} />
       </Row>
       <Row className="mb-4 mt-3">
         <div className="align-right">

@@ -22,7 +22,7 @@ function LoginView({ onLoggedIn }) {
       Password: password,
     };
 
-    fetch('localhost:8080/login', {
+    fetch('http://localhost:8080/login', {
       method: 'POST',
       // Specifies content being sent in request body so server can deal with it better
       headers: {
