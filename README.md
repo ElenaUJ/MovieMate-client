@@ -90,7 +90,7 @@ Ensure you have the following prerequisites installed and configured on your sys
 4. _Run the Development Server:_
    Start the development server and open the app in your default web browser:
 
-   `parcel src/index.html`
+   `npm run start`
 
    The app will be available at http://localhost:1234.
 
