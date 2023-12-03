@@ -10,12 +10,15 @@ function DeleteUser({ onLoggedOut, token, user }) {
 
   const deleteUser = function () {
     setLoading(true);
-    fetch(`http://localhost:8080/users/${user.Username}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/users/${user.Username}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then(function (response) {
         setLoading(false);
         if (response.status === 401) {

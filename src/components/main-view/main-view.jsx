@@ -66,12 +66,15 @@ function MainView() {
 
   // Logic to manage TopMovies list (needed in both ProfileView and MovieCard)
   const addMovie = function (movieId) {
-    fetch(`http://localhost:8080/users/${user.Username}/topMovies/${movieId}`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/users/${user.Username}/topMovies/${movieId}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then(function (response) {
         if (response.status === 401) {
           throw new Error(
@@ -100,12 +103,15 @@ function MainView() {
   };
 
   const removeMovie = function (movieId) {
-    fetch(`http://localhost:8080/users/${user.Username}/topMovies/${movieId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/users/${user.Username}/topMovies/${movieId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then(function (response) {
         if (response.status === 401) {
           throw new Error(
@@ -146,9 +152,12 @@ function MainView() {
       }
       setLoading(true);
 
-      fetch('http://localhost:8080/movies', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      fetch(
+        'http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/movies',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
         .then(function (response) {
           setLoading(false);
           if (response.status === 401) {

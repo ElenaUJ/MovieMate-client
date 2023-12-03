@@ -39,14 +39,17 @@ function UpdateUser({ setUser, token, user }) {
       return;
     }
 
-    fetch(`http://localhost:8080/users/${user.Username}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/users/${user.Username}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then(function (response) {
         setLoading(false);
         if (response.status === 401) {

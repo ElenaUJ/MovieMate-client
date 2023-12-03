@@ -18,9 +18,12 @@ function UserImages({ showSpinner, token }) {
       }
       setLoading(true);
 
-      fetch('http://localhost:8080/thumbnails', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      fetch(
+        'http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/thumbnails',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
         .then(function (response) {
           setLoading(false);
           if (response.status === 401) {

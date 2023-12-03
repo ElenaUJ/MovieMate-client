@@ -15,13 +15,16 @@ function UserImageModal({ imageName, onHide, show, showSpinner, token }) {
       }
       setLoading(true);
 
-      fetch(`http://localhost:8080/images/${imageName}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      fetch(
+        `http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/images/${imageName}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
         .then(function (response) {
           setLoading(false);
           console.log(
-            `fetch started using this endpoint: http://localhost:8080/images/${imageName}`
+            `fetch started using this endpoint: http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/images/${imageName}`
           );
           if (response.status === 401) {
             throw new Error(

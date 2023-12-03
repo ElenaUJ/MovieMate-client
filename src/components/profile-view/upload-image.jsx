@@ -22,13 +22,16 @@ function UploadImage({ token }) {
     const formData = new FormData();
     formData.append('image', file);
 
-    fetch(`http://localhost:8080/images`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    })
+    fetch(
+      `http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/images`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    )
       .then(function (response) {
         setLoading(false);
         if (response.status === 401) {

@@ -34,13 +34,16 @@ function SignupView() {
       Birthday: birthday,
     };
 
-    fetch('http://localhost:8080/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      'http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/users',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then(function (response) {
         setLoading(false);
         if (response.status === 401) {

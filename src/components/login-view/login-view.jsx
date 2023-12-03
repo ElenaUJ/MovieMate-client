@@ -22,14 +22,17 @@ function LoginView({ onLoggedIn }) {
       Password: password,
     };
 
-    fetch('http://localhost:8080/login', {
-      method: 'POST',
-      // Specifies content being sent in request body so server can deal with it better
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      'http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/login',
+      {
+        method: 'POST',
+        // Specifies content being sent in request body so server can deal with it better
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    )
       // Extracts JWT from response content in JSON format
       .then(function (response) {
         setLoading(false);
