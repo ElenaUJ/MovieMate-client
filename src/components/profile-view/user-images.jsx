@@ -13,19 +13,17 @@ function UserImages({ showSpinner, token }) {
 
   useEffect(
     function () {
-      if (!token) {
+      if (!token || selectedThumbnail) {
         return;
       }
       setLoading(true);
 
       fetch(
-        'http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/thumbnails',
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        'http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/thumbnails'
       )
         .then(function (response) {
           setLoading(false);
+          console.log('Fetch thumbnails is being called');
           if (response.status === 401) {
             throw new Error(
               "Sorry, you're not authorized to access this resource. "

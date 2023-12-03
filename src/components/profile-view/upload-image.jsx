@@ -58,7 +58,7 @@ function UploadImage({ token }) {
     <>
       <Form>
         <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Select an image to upload</Form.Label>
+          <Form.Label>Select an image to upload (10 MB maximum)</Form.Label>
           <Form.Control onChange={handleChange} type="file" />
         </Form.Group>
       </Form>
