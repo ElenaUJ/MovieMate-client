@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "build:scss": "sass src/index.scss dist/index.css",
+    "build": "npm run build:scss && parcel build src/index.html"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,7 @@
     "@anatoliygatt/heart-switch": "^1.0.12",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "bootstrap": "^5.2.3",
+    "bootstrap": "^5.3.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
@@ -32,6 +34,7 @@
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
     "parcel": "^2.10.3",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "sass": "^1.69.5"
   }
 }
