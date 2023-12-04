@@ -8,7 +8,6 @@ import { UserImageModal } from './user-image-modal';
 function UserImages({ showSpinner, token }) {
   const [loading, setLoading] = useState(false);
   const [thumbnails, setThumbnails] = useState([]);
-  // const [modalShow, setModalShow] = useState(false);
   const [selectedThumbnail, setSelectedThumbnail] = useState('');
 
   useEffect(
@@ -23,7 +22,6 @@ function UserImages({ showSpinner, token }) {
       )
         .then(function (response) {
           setLoading(false);
-          console.log('Fetch thumbnails is being called');
           if (response.status === 401) {
             throw new Error(
               "Sorry, you're not authorized to access this resource. "

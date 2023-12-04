@@ -26,9 +26,6 @@ function UploadImage({ token }) {
       `http://MyVPCLoadBalancer-1116653646.us-east-1.elb.amazonaws.com/images`,
       {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         body: formData,
       }
     )
